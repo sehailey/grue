@@ -1,5 +1,6 @@
 /*** ACTION TYPES ***/
 const MOVE = "MOVE"
+const GET_CURRENT_LOC = "GET_CURRENT_LOC"
 
 /*** INITIAL STATE ***/
 const defaultRoom = {
@@ -15,6 +16,13 @@ const defaultRoom = {
 /*** ACTION CREATORS ***/
 export const move = direction => ({
   type: MOVE,
+  direction
+})
+
+/*** THUNK CREATORS ***/
+
+export const getCurrentLoc = direction => ({
+  type: GET_CURRENT_LOC,
   direction
 })
 

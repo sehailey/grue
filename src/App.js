@@ -1,7 +1,5 @@
 import React, { Component } from "react"
-
 import "./App.css"
-
 import { Game, Map } from "./components"
 
 const map = new Map()
@@ -62,15 +60,13 @@ class App extends Component {
   }
 
   render() {
-    let loc = this.state.currentLoc
-
     return (
       <div className="container h-75 App">
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1 className="App-title">grue</h1>
         </header>
-        <Game take={this.take} />
+        <Game currentLoc={this.state.currentLoc} take={this.take} />
 
         <p className="App-intro">{this.state.response}</p>
       </div>
