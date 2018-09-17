@@ -13,9 +13,16 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "express-graphql": "^0.6.12",
+    "graphql": "0.13.0",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
