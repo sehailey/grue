@@ -3,23 +3,16 @@ import { connect } from "react-redux"
 import { getCurrentLoc, move } from "../store"
 
 class Game extends Component {
-  constructor() {
-    super()
-    this.state = {
-      currentLoc: {}
-    }
-  }
-
   componentDidMount() {
     this.props.fetchLoc()
   }
 
   render() {
-    const { currentLoc, take } = this.props
-    if (!currentLoc) return <div />
+    const { Move, location, take } = this.props
+
     return (
       <div className="mt-5 mb-5 game">
-        <p className="App-intro">{currentLoc.describeRoom()}</p>
+        <p className="App-intro">{location.description}</p>
 
         <div className="controls">
           <button
@@ -33,7 +26,7 @@ class Game extends Component {
             type="button"
             className="btn btn-dark"
             name="n"
-            onClick={move.bind(this)}
+            onClick={Move.bind(this)}
           >
             n
           </button>
@@ -41,7 +34,7 @@ class Game extends Component {
             type="button"
             className="btn btn-dark"
             name="e"
-            onClick={move.bind(this)}
+            onClick={Move.bind(this)}
           >
             e
           </button>
@@ -49,7 +42,7 @@ class Game extends Component {
             type="button"
             className="btn btn-dark"
             name="s"
-            onClick={move.bind(this)}
+            onClick={Move.bind(this)}
           >
             s
           </button>
@@ -57,7 +50,7 @@ class Game extends Component {
             type="button"
             className="btn btn-dark"
             name="w"
-            onClick={move.bind(this)}
+            onClick={Move.bind(this)}
           >
             w
           </button>
@@ -69,13 +62,15 @@ class Game extends Component {
 
 const mapState = state => {
   return {
-    currentLoc: state.currentLoc
+    location: state.location
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    move: direction => {
+    Move: e => {
+      const direction = e.target.name
+      console.log(direction)
       dispatch(move(direction))
     },
     fetchLoc: () => {

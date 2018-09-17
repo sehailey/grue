@@ -63,7 +63,7 @@ class App extends Component {
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1 className="App-title">grue</h1>
         </header>
-        <Game currentLoc={this.state.currentLoc} take={this.take} />
+        <Game />
 
         <p className="App-intro">{this.state.response}</p>
       </div>

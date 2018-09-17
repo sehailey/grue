@@ -7,7 +7,7 @@ const MOVE = "MOVE"
 const GOT_CURRENT_LOC = "GOT_CURRENT_LOC"
 
 /*** INITIAL STATE ***/
-const defaultRoom = {
+const defaultLocation = {
   name: "",
   description: "",
   n: null,
@@ -40,18 +40,18 @@ export const getCurrentLoc = () => async dispatch => {
   await dispatch(gotCurrentLoc(map.currentLoc))
 }
 
-export default function(state = defaultRoom, action) {
+export default function(location = defaultLocation, action) {
   switch (action.type) {
     case MOVE: {
-      if (state.currentLoc[action.direction]) {
-        return state.currentLoc[action.direction]
-      } else return state
+      if (location[action.direction]) {
+        return location[action.direction]
+      } else return location
     }
     case GOT_CURRENT_LOC: {
       return action.location
     }
     default: {
-      return state
+      return location
     }
   }
 }
