@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import "./App.css"
 import { Game, Map } from "./components"
 
 const map = new Map()
