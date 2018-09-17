@@ -1,7 +1,8 @@
 import React, { Component } from "react"
+
 import "./App.css"
 
-import { Torch, Map } from "./components"
+import { Game, Map } from "./components"
 
 const map = new Map()
 
@@ -69,52 +70,7 @@ class App extends Component {
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <h1 className="App-title">grue</h1>
         </header>
-
-        <div className="mt-5 mb-5 game">
-          <p className="App-intro">{this.state.currentLoc.describeRoom()}</p>
-        </div>
-
-        <div className="controls">
-          <button
-            type="button"
-            className="btn btn-dark"
-            onClick={() => this.take("torch").bind(this)}
-          >
-            Take
-          </button>
-          <button
-            type="button"
-            className="btn btn-dark"
-            name="n"
-            onClick={this.move.bind(this)}
-          >
-            n
-          </button>
-          <button
-            type="button"
-            className="btn btn-dark"
-            name="e"
-            onClick={this.move.bind(this)}
-          >
-            e
-          </button>
-          <button
-            type="button"
-            className="btn btn-dark"
-            name="s"
-            onClick={this.move.bind(this)}
-          >
-            s
-          </button>
-          <button
-            type="button"
-            className="btn btn-dark"
-            name="w"
-            onClick={this.move.bind(this)}
-          >
-            w
-          </button>
-        </div>
+        <Game take={this.take} />
 
         <p className="App-intro">{this.state.response}</p>
       </div>
