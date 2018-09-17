@@ -15,8 +15,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state)
-
     this.callApi()
       .then(res =>
         this.setState({
