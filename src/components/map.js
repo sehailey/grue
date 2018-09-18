@@ -10,37 +10,11 @@ export const Room = class Room {
     this.w = null
     this.contains = {}
   }
-
-  describeItems() {
-    let items = []
-    for (let key in this.contains) {
-      if (this.contains.hasOwnProperty(key) && !this.contains[key].hidden) {
-        items.push(this.contains[key].aOrAn)
-      }
-    }
-    return items.length > 0
-      ? "There is " +
-          items.slice(0, items.length).join(", ") +
-          ", and " +
-          items.slice(items.lenth - 2) +
-          " here."
-      : null
-  }
-  describeRoom() {
-    return this.description
-  }
 }
 
-export const Cave = class Cave extends Room {
-  constructor() {
-    super()
-    this.name = "cave"
-    this.description =
-      "It is pitch black. You are likely to be eaten by a grue."
-  }
-}
+const cave = new Room("cave")
 
-export const Outside = class Outside extends Room {
+class Outside extends Room {
   constructor() {
     super()
     this.name = "outside"

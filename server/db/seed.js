@@ -1,8 +1,8 @@
 const db = require("../db")
 const { Item, Room } = require("./models")
 const [items, rooms] = require("./objects")
+const fs = require("fs")
 
-console.log(items, rooms)
 async function runSeed() {
   await db.sync({ force: true })
   console.log("db synced!")
