@@ -1,9 +1,10 @@
-import { Torch } from "./items"
+import rooms from "./rooms"
+import { torch, letter } from "./items"
 
-export const Room = class Room {
-  constructor(name) {
+const Room = class Room {
+  constructor(name, description) {
     this.name = name
-    this.description = ""
+    this.description = description
     this.n = null
     this.s = null
     this.e = null
@@ -12,22 +13,29 @@ export const Room = class Room {
   }
 }
 
-const cave = new Room("cave")
-
-class Outside extends Room {
-  constructor() {
-    super()
-    this.name = "outside"
-    this.description = "You're outside."
-    this.contains = { torch: new Torch() }
-  }
+let roomObj = {}
+const restructureRooms = roomList => {
+  roomList.map(room => {
+    roomObj[room.name] = new Room(room.name, room.description)
+  })
 }
+restructureRooms(rooms)
 
-const cave = new Cave()
-const outside = new Outside()
+console.log(roomObj)
+
+const cave = roomObj.cave
+const outside = roomObj.outside
+const path = roomObj.path
+const house = roomObj.house
 
 cave.w = outside
 outside.e = cave
+outside.n = path
+path.s = outside
+path.n = house
+house.s = path
+
+outside.contains[torch] = torch
 
 export const Map = class Map {
   constructor() {
