@@ -1,11 +1,10 @@
 const router = require("express").Router()
-const { Item } = require("../db/models")
+//const { Map } = require("../db/models/map")
 module.exports = router
 
 router.get("/", async (req, res, next) => {
   try {
-    const items = await Item.findAll()
-    res.json(items)
+    await res.json({ map: "map" })
   } catch (err) {
     next(err)
   }
