@@ -2,8 +2,8 @@
   "name": "grue",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:1337/",
   "homepage": "https://grue.herokuapp.com/",
+  "proxy": "http://localhost:1337/",
   "scripts": {
     "client": "yarn start",
     "server": "nodemon server",
@@ -11,7 +11,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "dependencies": {
     "axios": "^0.18.0",
