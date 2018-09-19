@@ -1,3 +1,7 @@
+html,
+body {
+  height: 100%;
+}
 body {
   margin: 0;
   padding: 0;
@@ -40,4 +44,8 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.log {
+  white-space: pre-wrap;
 }
