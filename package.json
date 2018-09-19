@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:1337/",
+  "homepage": "https://grue.herokuapp.com/",
   "scripts": {
     "client": "yarn start",
     "server": "nodemon server",
