@@ -4,8 +4,9 @@ import thunkMiddleware from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension"
 
 import location from "./reducers/location"
+import log from "./reducers/log"
 
-const reducer = combineReducers({ location })
+const reducer = combineReducers({ location, log })
 //const reducer = items
 let middleware
 if (process.env.NODE_ENV === "development") {
@@ -17,4 +18,5 @@ if (process.env.NODE_ENV === "development") {
 
 const store = createStore(reducer, middleware)
 export * from "./reducers/location"
+export * from "./reducers/log"
 export default store
