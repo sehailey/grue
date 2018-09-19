@@ -9,7 +9,7 @@ const ControlPanel = props => {
       <button
         type="button"
         className="btn btn-dark"
-        onClick={() => Take("torch").bind(this)}
+        onClick={() => Take("torch")}
       >
         Take
       </button>
@@ -60,8 +60,8 @@ const mapDispatch = dispatch => {
       const direction = e.target.name
       dispatch(move(direction))
     },
-    Take: item => {
-      console.log("you took the item!", item)
+    Take: () => {
+      console.log("you took the item!")
     }
   }
 }
