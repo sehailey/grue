@@ -1,7 +1,7 @@
 import React from "react"
 
-const CurrentLocation = props => {
+const Log = props => {
   return <div className="card-body">{props.log}</div>
 }
 
-export default CurrentLocation
+export default Log

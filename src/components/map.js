@@ -1,5 +1,5 @@
 import rooms from "./rooms"
-import { torch, letter } from "./items"
+import { torch, letter, mailbox } from "./items"
 
 const Room = class Room {
   constructor(name, description) {
@@ -9,6 +9,7 @@ const Room = class Room {
     this.s = null
     this.e = null
     this.w = null
+    this.contains = []
   }
 }
 
@@ -33,6 +34,10 @@ outside.n = path
 path.s = outside
 path.n = house
 house.s = path
+
+outside.contains.push(torch)
+
+house.mailbox = mailbox
 
 export const Map = class Map {
   constructor() {

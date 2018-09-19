@@ -8,3 +8,10 @@ export const letter = {
   name: "letter",
   description: "addressed to John Zerzan"
 }
+
+export const mailbox = {
+  name: "mailbox",
+  description: "It's a pretty basic mailbox",
+  open: false,
+  contains: [letter]
+}
