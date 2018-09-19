@@ -15,3 +15,9 @@ export const mailbox = {
   open: false,
   contains: [letter]
 }
+
+export const TORCH = "TORCH"
+export const LETTER = "LETTER"
+export const MAILBOX = "MAILBOX"
+
+export const items = [TORCH, LETTER, MAILBOX]

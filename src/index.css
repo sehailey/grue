@@ -21,19 +21,11 @@ body {
 
 .log {
   height: 80vh;
-  overflow: hidden;
   border: 1px solid;
   border-color: #222;
   white-space: pre-line;
 }
-.control-panel {
-  position: absolute;
-  bottom: 0;
-  height: 10vh; /* Set the fixed height of the div here */
-  line-height: 10vh; /* Vertically center the div there */
-  background-color: #f5f5f5;
-}
 
 .btn {
-  margin: 1vw;
+  margin-left: 1vh;
 }

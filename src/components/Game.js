@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { Navbar, Log, ControlPanel } from "../components"
+import { Navbar, Log, ControlPanel, Parser } from "../components"
 import {
   getCurrentLoc,
   addItemToLoc,
@@ -12,11 +12,20 @@ import {
 } from "../store"
 
 class Game extends Component {
+  constructor() {
+    super()
+    this.state = {
+      input: "",
+      parsed: {}
+    }
+  }
   componentDidMount() {
     this.props.fetchLoc()
     this.Take = this.Take.bind(this)
     this.Move = this.Move.bind(this)
     this.Drop = this.Drop.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -60,6 +69,23 @@ class Game extends Component {
     } else this.props.addLog("You don't have that!")
   }
 
+  handleChange(event) {
+    console.log(this.state)
+    this.setState({ input: event.target.value })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    console.log(this.state.input)
+    const parsed = Parser(this.state.input)
+    if (typeof parsed === "string")
+      this.props.addLog("I don't know the word " + parsed + ".")
+    this.setState({ value: "" })
+    this.setState(() => {
+      return { parsed }
+    })
+  }
+
   render() {
     const { log } = this.props
 
@@ -67,7 +93,14 @@ class Game extends Component {
       <div className="container">
         <Navbar />
         <Log log={log} />
-        <ControlPanel Move={this.Move} Take={this.Take} Drop={this.Drop} />
+
+        <ControlPanel
+          Move={this.Move}
+          Take={this.Take}
+          Drop={this.Drop}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     )
   }
