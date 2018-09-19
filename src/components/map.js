@@ -36,7 +36,6 @@ path.n = house
 house.s = path
 
 outside.contains.push(torch)
-
 house.mailbox = mailbox
 
 export const Map = class Map {
