@@ -67,7 +67,7 @@ class Game extends Component {
       <div className="container">
         <Navbar />
         <Log log={log} />
-        <ControlPanel Move={this.Move} Take={this.Take} Drop={this.drop} />
+        <ControlPanel Move={this.Move} Take={this.Take} Drop={this.Drop} />
       </div>
     )
   }
