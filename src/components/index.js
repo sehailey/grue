@@ -1,3 +1,6 @@
 export { default as Game } from "./Game.js"
-export { Map } from "./map.js"
-export { Torch } from "./items.js"
+export { default as CurrentLocation } from "./CurrentLocation.js"
+export { default as ControlPanel } from "./ControlPanel.js"
+export { default as Map } from "./map.js"
+export { default as Log } from "./Log.js"
+export { default as Torch } from "./items.js"

@@ -9,7 +9,6 @@ const Room = class Room {
     this.s = null
     this.e = null
     this.w = null
-    this.contains = {}
   }
 }
 
@@ -34,8 +33,6 @@ outside.n = path
 path.s = outside
 path.n = house
 house.s = path
-
-outside.contains[torch] = torch
 
 export const Map = class Map {
   constructor() {
