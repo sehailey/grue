@@ -1,72 +1,39 @@
 import React from "react"
-import { connect } from "react-redux"
-import { move } from "../store"
 
 const ControlPanel = props => {
-  const { Move, Take } = props
+  const { Move, Take, Drop } = props
   return (
-    <div className="footer controls">
+    <div className="control-panel">
       <button
         type="button"
+        name="torch"
         className="btn btn-dark"
-        onClick={() => Take("torch")}
+        onClick={Take}
       >
         Take
       </button>
       <button
         type="button"
+        name="torch"
         className="btn btn-dark"
-        name="n"
-        onClick={Move.bind(this)}
+        onClick={Drop}
       >
+        Drop
+      </button>
+      <button type="button" className="btn btn-dark" name="n" onClick={Move}>
         n
       </button>
-      <button
-        type="button"
-        className="btn btn-dark"
-        name="e"
-        onClick={Move.bind(this)}
-      >
+      <button type="button" className="btn btn-dark" name="e" onClick={Move}>
         e
       </button>
-      <button
-        type="button"
-        className="btn btn-dark"
-        name="s"
-        onClick={Move.bind(this)}
-      >
+      <button type="button" className="btn btn-dark" name="s" onClick={Move}>
         s
       </button>
-      <button
-        type="button"
-        className="btn btn-dark"
-        name="w"
-        onClick={Move.bind(this)}
-      >
+      <button type="button" className="btn btn-dark" name="w" onClick={Move}>
         w
       </button>
     </div>
   )
 }
 
-const mapState = state => {
-  return {
-    currentLoc: state.currentLoc
-  }
-}
-const mapDispatch = dispatch => {
-  return {
-    Move: e => {
-      const direction = e.target.name
-      dispatch(move(direction))
-    },
-    Take: () => {
-      console.log("you took the item!")
-    }
-  }
-}
-
-export default connect(
-  mapState,
-  mapDispatch
-)(ControlPanel)
+export default ControlPanel

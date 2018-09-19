@@ -10,7 +10,7 @@ const outside = {
 
 const path = {
   name: "path",
-  description: "You are on a long, winding path"
+  description: "You are on a long, winding path."
 }
 
 const house = {
