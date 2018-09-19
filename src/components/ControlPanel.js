@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { move, take } from "../store"
+import { move } from "../store"
 
 const ControlPanel = props => {
   const { Move, Take } = props
@@ -58,7 +58,6 @@ const mapDispatch = dispatch => {
   return {
     Move: e => {
       const direction = e.target.name
-      console.log(direction)
       dispatch(move(direction))
     },
     Take: item => {

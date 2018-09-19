@@ -21,8 +21,6 @@ const restructureRooms = roomList => {
 }
 restructureRooms(rooms)
 
-console.log(roomObj)
-
 const cave = roomObj.cave
 const outside = roomObj.outside
 const path = roomObj.path

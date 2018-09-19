@@ -7,14 +7,14 @@ import location from "./reducers/location"
 
 const reducer = combineReducers({ location })
 //const reducer = items
-let store
+let middleware
 if (process.env.NODE_ENV === "development") {
   // add `redux-logger`
-  const middleware = composeWithDevTools(
+  middleware = composeWithDevTools(
     applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
   )
-  store = createStore(reducer, middleware)
-} else store = createStore(reducer)
+} else middleware = applyMiddleware(thunkMiddleware)
 
+const store = createStore(reducer, middleware)
 export * from "./reducers/location"
 export default store
