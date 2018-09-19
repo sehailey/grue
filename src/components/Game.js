@@ -1,13 +1,22 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { Log, ControlPanel, CurrentLocation } from "../components"
-import { getCurrentLoc, removeItemFromLoc, move, addLog } from "../store"
+import { Navbar, Log, ControlPanel } from "../components"
+import {
+  getCurrentLoc,
+  addItemToLoc,
+  removeItemFromLoc,
+  addItemToInv,
+  removeItemFromInv,
+  move,
+  addLog
+} from "../store"
 
 class Game extends Component {
   componentDidMount() {
     this.props.fetchLoc()
     this.Take = this.Take.bind(this)
     this.Move = this.Move.bind(this)
+    this.Drop = this.Drop.bind(this)
   }
 
   componentDidUpdate(prevProps) {
@@ -18,30 +27,43 @@ class Game extends Component {
 
   Move(e) {
     const direction = e.target.name
+    this.props.addLog("> " + direction)
     if (this.props.location[direction]) {
       this.props.Move(direction)
-    } else this.props.addLog("You can't go that way.\n")
+    } else this.props.addLog("You can't go that way.")
 
     this.props.Move(direction)
   }
 
   Take(e) {
     const itemName = e.target.name
+    this.props.addLog("> take " + itemName)
     const item = this.props.location.contains.find(ele => ele.name === itemName)
     if (item) {
       this.props.removeItemFromLoc(item)
-      this.props.addLog("You took the" + itemName + ".\n")
-    } else this.props.addLog("You don't see a " + itemName + " here.\n")
+      this.props.addItemToInv(item)
+      this.props.addLog("You took the" + itemName + ".")
+    } else this.props.addLog("You don't see a " + itemName + " here.")
+  }
+
+  Drop(e) {
+    const itemName = e.target.name
+    const item = this.props.player.inv.find(ele => ele.name === itemName)
+    if (item) {
+      this.props.removeItemFromInv(item)
+      this.props.addItemToLoc(item)
+      this.props.addLog("You dropped the " + itemName + ".")
+    } else this.props.addLog("You don't have that!")
   }
 
   render() {
-    const { log, location, Move, Take } = this.props
+    const { log } = this.props
 
     return (
-      <div className="game">
-        {/* <CurrentLocation location={location} /> */}
+      <div className="container">
+        <Navbar />
         <Log log={log} />
-        <ControlPanel Move={this.Move} Take={this.Take} />
+        <ControlPanel Move={this.Move} Take={this.Take} Drop={this.drop} />
       </div>
     )
   }
@@ -62,9 +84,20 @@ const mapDispatch = dispatch => {
     Move: direction => {
       dispatch(move(direction))
     },
+    addItemToLoc: itemName => {
+      console.log(itemName)
+      dispatch(addItemToLoc(itemName))
+    },
     removeItemFromLoc: itemName => {
       console.log(itemName)
       dispatch(removeItemFromLoc(itemName))
+    },
+    addItemToInv: itemName => {
+      console.log(itemName)
+      dispatch(addItemToInv(itemName))
+    },
+    removeItemFromInv: itemName => {
+      dispatch(removeItemFromInv(itemName))
     },
     addLog: log => {
       dispatch(addLog(log))

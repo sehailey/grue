@@ -5,6 +5,7 @@ const map = new Map()
 /*** ACTION TYPES ***/
 const MOVE = "MOVE"
 const REMOVE_ITEM_FROM_LOC = "REMOVE_ITEM_FROM_LOC"
+const ADD_ITEM_TO_LOC = "ADD_ITEM_TO_LOC"
 const GOT_CURRENT_LOC = "GOT_CURRENT_LOC"
 
 /*** INITIAL STATE ***/
@@ -26,6 +27,11 @@ export const move = direction => ({
 
 export const removeItemFromLoc = item => ({
   type: REMOVE_ITEM_FROM_LOC,
+  item
+})
+
+export const addItemToLoc = item => ({
+  type: ADD_ITEM_TO_LOC,
   item
 })
 
@@ -56,6 +62,11 @@ export default function(location = defaultLocation, action) {
     case GOT_CURRENT_LOC: {
       return action.location
     }
+    case ADD_ITEM_TO_LOC: {
+      const item = action.item
+      return { ...location, contains: location.contains.push(item) }
+    }
+
     case REMOVE_ITEM_FROM_LOC: {
       const item = action.item
 

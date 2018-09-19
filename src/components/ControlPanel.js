@@ -1,11 +1,9 @@
 import React from "react"
-import { connect } from "react-redux"
-import { move } from "../store"
 
 const ControlPanel = props => {
-  const { location, Move, Take } = props
+  const { Move, Take, Drop } = props
   return (
-    <div className="navbar-static-bottom control-panel" id="footer">
+    <div className="control-panel">
       <button
         type="button"
         name="torch"
@@ -13,6 +11,14 @@ const ControlPanel = props => {
         onClick={Take}
       >
         Take
+      </button>
+      <button
+        type="button"
+        name="torch"
+        className="btn btn-dark"
+        onClick={Drop}
+      >
+        Drop
       </button>
       <button
         type="button"

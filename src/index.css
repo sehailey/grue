@@ -1,51 +1,39 @@
-html,
-body {
-  height: 100%;
+html {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
 }
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: sans-serif;
+  margin: 0; /* Margin bottom by footer height */
+  min-height: 100%;
+  /* background-color: #222; */
+}
+
+.header {
+  background-color: #222;
+  /* height: 10vh;
+  padding: 20px;
+  color: white; */
+}
+
+.header h1 {
+}
+
+.log {
+  height: 80vh;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: #222;
+  white-space: pre-line;
+}
+.control-panel {
+  position: absolute;
+  bottom: 0;
+  height: 10vh; /* Set the fixed height of the div here */
+  line-height: 10vh; /* Vertically center the div there */
+  background-color: #f5f5f5;
 }
 
 .btn {
   margin: 1vw;
-}
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.log {
-  white-space: pre-wrap;
 }

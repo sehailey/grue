@@ -1,8 +1,12 @@
 import React from "react"
+import ScrollToBottom from "react-scroll-to-bottom"
 
 const Log = props => {
-  console.log(props.log)
-  return <div className="log">{props.log.join("\n")}</div>
+  return (
+    <ScrollToBottom className="log pt-1 pl-1 align-left">
+      {props.log.join("\n")}
+    </ScrollToBottom>
+  )
 }
 
 export default Log

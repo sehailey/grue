@@ -29,13 +29,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container h-75 App">
-        <header className="App-header">
-          <h1 className="App-title">grue</h1>
-        </header>
+      <div className="container">
         <Game />
-
-        <p className="App-intro">{this.state.response}</p>
+        <p className="intro">{this.state.response}</p>
       </div>
     )
   }
