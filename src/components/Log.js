@@ -1,7 +1,8 @@
 import React from "react"
 
 const Log = props => {
-  return <div className="card-body">{props.log}</div>
+  console.log(props.log)
+  return <div className="log">{props.log.join("\n")}</div>
 }
 
 export default Log
