@@ -31,18 +31,22 @@ class Game extends Component {
     if (this.props.location[direction]) {
       this.props.Move(direction)
     } else this.props.addLog("You can't go that way.")
-
-    this.props.Move(direction)
   }
 
   Take(e) {
+    // name currently comes from button
     const itemName = e.target.name
+
+    // log take action
     this.props.addLog("> take " + itemName)
     const item = this.props.location.contains.find(ele => ele.name === itemName)
+
     if (item) {
       this.props.removeItemFromLoc(item)
       this.props.addItemToInv(item)
       this.props.addLog("You took the" + itemName + ".")
+    } else if (this.props.player.inv.includes(item)) {
+      this.props.addLog("You already have that!")
     } else this.props.addLog("You don't see a " + itemName + " here.")
   }
 
@@ -72,7 +76,8 @@ class Game extends Component {
 const mapState = state => {
   return {
     location: state.location,
-    log: state.log
+    log: state.log,
+    player: state.player
   }
 }
 
@@ -84,20 +89,20 @@ const mapDispatch = dispatch => {
     Move: direction => {
       dispatch(move(direction))
     },
-    addItemToLoc: itemName => {
-      console.log(itemName)
-      dispatch(addItemToLoc(itemName))
+    addItemToLoc: item => {
+      console.log(item)
+      dispatch(addItemToLoc(item))
     },
-    removeItemFromLoc: itemName => {
-      console.log(itemName)
-      dispatch(removeItemFromLoc(itemName))
+    removeItemFromLoc: item => {
+      console.log(item)
+      dispatch(removeItemFromLoc(item))
     },
-    addItemToInv: itemName => {
-      console.log(itemName)
-      dispatch(addItemToInv(itemName))
+    addItemToInv: item => {
+      console.log("ITEM", item)
+      dispatch(addItemToInv(item))
     },
-    removeItemFromInv: itemName => {
-      dispatch(removeItemFromInv(itemName))
+    removeItemFromInv: item => {
+      dispatch(removeItemFromInv(item))
     },
     addLog: log => {
       dispatch(addLog(log))

@@ -63,19 +63,15 @@ export default function(location = defaultLocation, action) {
       return action.location
     }
     case ADD_ITEM_TO_LOC: {
-      const item = action.item
-      return { ...location, contains: location.contains.push(item) }
+      const newContains = location.contains.concat(action.item)
+      return { ...location, contains: newContains }
     }
 
     case REMOVE_ITEM_FROM_LOC: {
-      const item = action.item
-
-      if (location.contains.includes(item)) {
-        const newContains = location.contains.filter(
-          ele => ele.name !== item.name
-        )
-        return { ...location, contains: newContains }
-      } else return location
+      const newContains = location.contains.filter(
+        ele => ele.name !== action.item.name
+      )
+      return { ...location, contains: newContains }
     }
     default: {
       return location

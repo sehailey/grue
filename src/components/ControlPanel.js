@@ -20,36 +20,16 @@ const ControlPanel = props => {
       >
         Drop
       </button>
-      <button
-        type="button"
-        className="btn btn-dark"
-        name="n"
-        onClick={Move.bind(this)}
-      >
+      <button type="button" className="btn btn-dark" name="n" onClick={Move}>
         n
       </button>
-      <button
-        type="button"
-        className="btn btn-dark"
-        name="e"
-        onClick={Move.bind(this)}
-      >
+      <button type="button" className="btn btn-dark" name="e" onClick={Move}>
         e
       </button>
-      <button
-        type="button"
-        className="btn btn-dark"
-        name="s"
-        onClick={Move.bind(this)}
-      >
+      <button type="button" className="btn btn-dark" name="s" onClick={Move}>
         s
       </button>
-      <button
-        type="button"
-        className="btn btn-dark"
-        name="w"
-        onClick={Move.bind(this)}
-      >
+      <button type="button" className="btn btn-dark" name="w" onClick={Move}>
         w
       </button>
     </div>
