@@ -3,13 +3,14 @@ import { connect } from "react-redux"
 import { move } from "../store"
 
 const ControlPanel = props => {
-  const { Move, Take } = props
+  const { location, Move, Take } = props
   return (
-    <div className="footer controls">
+    <div className="navbar-static-bottom control-panel" id="footer">
       <button
         type="button"
+        name="torch"
         className="btn btn-dark"
-        onClick={() => Take("torch")}
+        onClick={Take}
       >
         Take
       </button>
@@ -49,24 +50,4 @@ const ControlPanel = props => {
   )
 }
 
-const mapState = state => {
-  return {
-    currentLoc: state.currentLoc
-  }
-}
-const mapDispatch = dispatch => {
-  return {
-    Move: e => {
-      const direction = e.target.name
-      dispatch(move(direction))
-    },
-    Take: () => {
-      console.log("you took the item!")
-    }
-  }
-}
-
-export default connect(
-  mapState,
-  mapDispatch
-)(ControlPanel)
+export default ControlPanel
