@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 
 const ControlPanel = props => {
-  const { Move, Take, Drop, handleSubmit, handleChange } = props
+  const { Move, Take, Drop, handleSubmit, handleChange } = props;
   return (
     <div className="control-panel mt-2">
       <form onSubmit={handleSubmit} onChange={handleChange}>
@@ -66,7 +66,7 @@ const ControlPanel = props => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default ControlPanel
+export default ControlPanel;
