@@ -11,18 +11,20 @@ const Parser = props => {
         verb: '',
         noun1: '',
         proposition: '',
-        noun2: ''
+        noun2: '',
+        unknown: ''
     }
 
-    const string = this.props.input.toString().toUpperCase()
+    const { input } = props
+
+    const string = input.toString().toUpperCase()
     const command = string.split(' ').filter(word => word !== 'THE')
 
     console.log(command)
     for (let i = 0; i < command.length; i++) {
         if (!dictionary.includes(command[i])) {
-            console.log('I don\'t know the word', command[i].toLowerCase())
-
-            return command[i]
+            const unknown = command[i]
+            console.log('I don\'t know the word', unknown.toLowerCase())
         }
     }
     let verb = command.shift()
@@ -56,9 +58,9 @@ const Parser = props => {
     return parser
 }
 
-const mapState = state => ({
-    location: state.location,
-    player: state.player
-})
+// const mapState = state => ({
+//     location: state.location,
+//     player: state.player
+// })
 
 export default Parser
