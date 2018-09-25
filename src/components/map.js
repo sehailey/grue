@@ -1,23 +1,23 @@
-import rooms from "./rooms"
-import { torch, letter, mailbox } from "./items"
+import rooms from './rooms'
+import { torch, letter, mailbox } from './items'
 
 const Room = class Room {
-  constructor(name, description) {
-    this.name = name
-    this.description = description
-    this.n = null
-    this.s = null
-    this.e = null
-    this.w = null
-    this.contains = []
-  }
+    constructor(name, description) {
+        this.name = name
+        this.description = description
+        this.n = null
+        this.s = null
+        this.e = null
+        this.w = null
+        this.contains = []
+    }
 }
 
 let roomObj = {}
 const restructureRooms = roomList => {
-  roomList.map(room => {
-    roomObj[room.name] = new Room(room.name, room.description)
-  })
+    roomList.map(room => {
+        roomObj[room.name] = new Room(room.name, room.description)
+    })
 }
 restructureRooms(rooms)
 
@@ -37,15 +37,15 @@ outside.contains.push(torch)
 house.mailbox = mailbox
 
 export const Map = class Map {
-  constructor() {
-    this.currentLoc = cave
-    this.rooms = [cave, outside]
-  }
-
-  move(direction) {
-    if (!this.currentLoc[direction]) {
-      return "You can't go that way."
+    constructor() {
+        this.currentLoc = cave
+        this.rooms = [cave, outside]
     }
-    this.currentLoc = this.currentLoc[direction]
-  }
+
+    move(direction) {
+        if (!this.currentLoc[direction]) {
+            return 'You can\'t go that way.'
+        }
+        this.currentLoc = this.currentLoc[direction]
+    }
 }

@@ -16,7 +16,7 @@ class Game extends Component {
         super()
         this.state = {
             input: '',
-            parsed: {}
+            command: {}
         }
     }
     componentDidMount() {
