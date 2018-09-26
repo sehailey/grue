@@ -1,5 +1,4 @@
 import React from 'react'
-import Parser from './Parser'
 
 const ControlPanel = props => {
     const { Move, Take, Drop, handleSubmit, handleChange } = props
@@ -8,9 +7,10 @@ const ControlPanel = props => {
             <form onSubmit={handleSubmit} onChange={handleChange}>
                 <div className="form-group row">
                     <div className="col-sm-5">
-                        <Parser
-                            onSubmit={handleSubmit}
-                            onChange={handleChange}
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter command"
                         />
                     </div>
                     <div className="col">

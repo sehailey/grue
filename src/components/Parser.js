@@ -6,7 +6,7 @@ const prepositions = ['AN', 'A', 'THE']
 const dictionary = verbs.concat(items).concat(prepositions)
 console.log(dictionary)
 
-const Parser = props => {
+const Parser = input => {
     const parser = {
         verb: '',
         noun1: '',
@@ -14,8 +14,6 @@ const Parser = props => {
         noun2: '',
         unknown: ''
     }
-
-    const { input } = props
 
     const string = input.toString().toUpperCase()
     const command = string.split(' ').filter(word => word !== 'THE')

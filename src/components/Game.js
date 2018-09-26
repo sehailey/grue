@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Navbar, Log, ControlPanel, Parser } from '../components'
 import {
+    doActionOnObject,
     getCurrentLoc,
     addItemToLoc,
     removeItemFromLoc,
@@ -82,8 +83,9 @@ class Game extends Component {
         event.preventDefault()
         console.log(this.state.input)
         const parsed = Parser(this.state.input)
-        if (typeof parsed === 'string')
+        if (this.state.unknown) {
             this.props.addLog('I don\'t know the word ' + parsed + '.')
+        }
         this.setState({ value: '' })
         this.setState(() => {
             return { parsed }
@@ -143,6 +145,9 @@ const mapDispatch = dispatch => {
         },
         addLog: log => {
             dispatch(addLog(log))
+        },
+        doActionOnObject: action => {
+            dispatch(doActionOnObject(action))
         }
     }
 }
