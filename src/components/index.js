@@ -1,7 +1,8 @@
-export { default as Navbar } from "./Navbar.js"
-export { default as Torch } from "./items.js"
-export { default as Game } from "./Game.js"
-export { default as CurrentLocation } from "./CurrentLocation.js"
-export { default as ControlPanel } from "./ControlPanel.js"
-export { default as Map } from "./map.js"
-export { default as Log } from "./Log.js"
+export {default as Navbar} from './Navbar'
+export {default as Torch} from './items'
+export {default as Game} from './Game'
+export {default as CurrentLocation} from './CurrentLocation'
+export {default as ControlPanel} from './ControlPanel'
+export {default as Map} from './map'
+export {default as Log} from './Log'
+export {default as Parser} from './Parser'
