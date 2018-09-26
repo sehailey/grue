@@ -1,19 +1,21 @@
 import React from 'react'
 
 const ControlPanel = props => {
-    const { Move, Take, Drop, handleSubmit, handleChange } = props
+    const {Move, Take, Drop, handleSubmit, handleChange, value} = props
     return (
         <div className="control-panel mt-2">
-            <form onSubmit={handleSubmit} onChange={handleChange}>
+            <form onSubmit={handleSubmit}>
                 <div className="form-group row">
-                    <div className="col-sm-5">
+                    <div className="col">
                         <input
                             type="text"
+                            value={value}
+                            onChange={handleChange}
                             className="form-control"
                             placeholder="Enter command"
                         />
                     </div>
-                    <div className="col">
+                    {/* <div className="col">
                         <button
                             type="button"
                             name="torch"
@@ -62,7 +64,7 @@ const ControlPanel = props => {
                         >
                             w
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </form>
         </div>

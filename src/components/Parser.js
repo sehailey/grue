@@ -1,64 +1,81 @@
-import { verbs } from './verbs'
-import { items } from './items'
+import {verbs} from './verbs'
+import {items} from './items'
+console.log(verbs)
 
 const prepositions = ['AN', 'A', 'THE']
+const look = ['L', 'LOOK']
+const inventory = ['I', 'INVENTORY']
+const directions = ['N', 'NORTH', 'W', 'WEST']
 
-const dictionary = verbs.concat(items).concat(prepositions)
+const dictionary = verbs
+    .concat(items)
+    .concat(prepositions)
+    .concat(look)
+    .concat(inventory)
+    .concat(directions)
+
 console.log(dictionary)
 
-const Parser = input => {
-    const parser = {
+const Parser = string => {
+    const output = {
+        isUnknown: false,
+        isInvalid: false,
+        isDirection: false,
+        isLook: false,
+        isInv: false,
+        doActionOnItem: false,
+        unknown: '',
+        direction: '',
         verb: '',
-        noun1: '',
-        proposition: '',
-        noun2: '',
-        unknown: ''
+        item: '',
+        object: '',
     }
 
-    const string = input.toString().toUpperCase()
-    const command = string.split(' ').filter(word => word !== 'THE')
+    const input = string.toString().toUpperCase()
+    const command = input
+        .split(' ')
+        .filter(word => !prepositions.includes(word))
 
-    console.log(command)
+    // test for unknown words
     for (let i = 0; i < command.length; i++) {
         if (!dictionary.includes(command[i])) {
-            const unknown = command[i]
-            console.log('I don\'t know the word', unknown.toLowerCase())
+            output.isUnknown = true
+            output.unknown = command[i]
+            return output
         }
     }
-    let verb = command.shift()
-    console.log('VERB:', verb)
 
-    if (verbs.includes(verb)) {
-        parser.verb = verb
-    } else {
-        console.log('First word wasn\'t a verb.')
+    const firstWord = command.shift()
+    if (look.includes(firstWord)) {
+        output.isLook = true
+        return output
     }
 
-    if (prepositions.includes(command[0])) command.shift()
-
-    let noun1 = command.shift()
-    console.log('NOUN1:', noun1)
-    if (items.includes(noun1)) {
-        parser.noun1 = noun1
-    } else {
-        console.log('Noun1 wasn\'t a noun.')
+    if (inventory.includes(firstWord)) {
+        output.isInventory = true
+        return output
     }
 
-    if (prepositions.includes(command[0])) command.shift()
-
-    let noun2 = command.shift()
-    if (items.includes(noun2)) {
-        parser.noun2 = noun2
-    } else {
-        console.log('next word wasn\'t a noun.')
+    if (directions.includes(firstWord)) {
+        output.direction = firstWord
+        output.isDirection = true
+        return output
     }
 
-    return parser
+    if (!verbs.includes(firstWord)) {
+        output.isInvalid = true
+        return output
+    } else output.verb = firstWord
+
+    const secondWord = command.shift()
+    if (!items.includes(secondWord)) {
+        return output
+    } else {
+        output.doActionOnItem = true
+        output.noun = secondWord
+    }
+
+    return output
 }
-
-// const mapState = state => ({
-//     location: state.location,
-//     player: state.player
-// })
 
 export default Parser

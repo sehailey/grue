@@ -1,4 +1,4 @@
-import { Map } from '../../components/map'
+import {Map} from '../../components/map'
 //import axios from "axios"
 const map = new Map()
 
@@ -16,28 +16,28 @@ const defaultLocation = {
     s: null,
     e: null,
     w: null,
-    contains: {}
+    contains: [],
 }
 
 /*** ACTION CREATORS ***/
 export const move = direction => ({
     type: MOVE,
-    direction
+    direction,
 })
 
 export const removeItemFromLoc = item => ({
     type: REMOVE_ITEM_FROM_LOC,
-    item
+    item,
 })
 
 export const addItemToLoc = item => ({
     type: ADD_ITEM_TO_LOC,
-    item
+    item,
 })
 
 export const gotCurrentLoc = location => ({
     type: GOT_CURRENT_LOC,
-    location
+    location,
 })
 
 /*** THUNK CREATORS ***/
@@ -64,14 +64,14 @@ export default function(location = defaultLocation, action) {
     }
     case ADD_ITEM_TO_LOC: {
         const newContains = location.contains.concat(action.item)
-        return { ...location, contains: newContains }
+        return {...location, contains: newContains}
     }
 
     case REMOVE_ITEM_FROM_LOC: {
         const newContains = location.contains.filter(
             ele => ele.name !== action.item.name
         )
-        return { ...location, contains: newContains }
+        return {...location, contains: newContains}
     }
     default: {
         return location

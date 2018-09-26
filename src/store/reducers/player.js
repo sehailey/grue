@@ -3,30 +3,30 @@ const REMOVE_ITEM_FROM_INV = 'REMOVE_ITEM_FROM_INV'
 
 export const addItemToInv = item => ({
     type: ADD_ITEM_TO_INV,
-    item
+    item,
 })
 
 export const removeItemFromInv = item => ({
     type: REMOVE_ITEM_FROM_INV,
-    item
+    item,
 })
 
 const defaultPlayer = {
     name: 'notnull',
-    inv: []
+    inv: [],
 }
 
 export default function(player = defaultPlayer, action) {
     switch (action.type) {
     case ADD_ITEM_TO_INV: {
-        player.inv.push(action.item)
-        return { ...player }
+        const newInv = player.inv.concat(action.item)
+        return {...player, inv: newInv}
     }
     case REMOVE_ITEM_FROM_INV: {
         const newInv = player.inv.filter(
             ele => ele.name !== action.item.name
         )
-        return { ...player, inv: newInv }
+        return {...player, inv: newInv}
     }
     default: {
         return player

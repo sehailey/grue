@@ -1,5 +1,5 @@
 import rooms from './rooms'
-import { torch, letter, mailbox } from './items'
+import {torch, letter, mailbox} from './items'
 
 const Room = class Room {
     constructor(name, description) {
@@ -10,6 +10,13 @@ const Room = class Room {
         this.e = null
         this.w = null
         this.contains = []
+    }
+
+    describe() {
+        let itemsD = ''
+        if (this.contains.length)
+            itemsD = 'You see some items: ' + this.contains.join(', ')
+        return this.description + itemsD
     }
 }
 
