@@ -1,8 +1,11 @@
 class OBJECT {
-    constructor(name, description) {
+    constructor(name, aName, pName) {
         this.name = name
-        this.description = description
+        this.aName = aName
+        this.pName = pName
+        this.description = ''
         this.contains = []
+
         this.canExamine = true
         this.canTake = false
         this.canLight = false
