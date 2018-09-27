@@ -1,5 +1,4 @@
-const Move = (props, d) => {
-    const direction = d.toLowerCase()
+const Move = (props, direction) => {
     const {location} = props
 
     if (location[direction]) {

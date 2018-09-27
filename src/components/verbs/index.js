@@ -1,21 +1,6 @@
-import Take from './Take'
-import Drop from './Drop'
-import Examine from './Examine'
-import Light from './Light'
-
-const TAKE = 'TAKE'
-const DROP = 'DROP'
-const EXAMINE = 'EXAMINE'
-const LIGHT = 'LIGHT'
-
-export const DoActionOnItem = (props, verb, item = null) => {
-    if (verb === TAKE) Take(props, item)
-    if (verb === DROP) Drop(props, item)
-    if (verb === EXAMINE) Examine(props, item)
-    if (verb === LIGHT) Light(props, item)
-}
-
-export {default as Move} from './Move'
-export {default as Look} from './Look'
-
-export const verbs = [TAKE, DROP, EXAMINE, LIGHT]
+export {default as MOVE} from './MOVE'
+export {default as LOOK} from './LOOK'
+export {default as TAKE} from './TAKE'
+export {default as DROP} from './DROP'
+export {default as LIGHT} from './LIGHT'
+export {default as EXAMINE} from './EXAMINE'

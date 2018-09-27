@@ -1,5 +1,8 @@
-import {verbs} from './verbs'
-import {items} from './items'
+import * as VERB from './verbs'
+import * as ITEM from './items'
+
+const verbs = Object.keys(VERB)
+const items = Object.keys(ITEM)
 console.log(verbs)
 
 const prepositions = ['AN', 'A', 'THE']

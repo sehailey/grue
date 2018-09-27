@@ -12,13 +12,14 @@ import {
     addLog,
 } from '../store'
 
-import {DoActionOnItem, Move, Look} from './verbs/'
+import * as VERB from './verbs'
 
 class Game extends Component {
     constructor() {
         super()
         this.state = {
             input: '',
+            moves: 0,
         }
     }
     componentDidMount() {
@@ -29,10 +30,8 @@ class Game extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (
-            prevProps.location.description !== this.props.location.description
-        ) {
-            this.props.addLog(this.props.location.description)
+        if (prevProps.location.name !== this.props.location.name) {
+            VERB.LOOK(this.props)
         }
     }
 
@@ -54,11 +53,11 @@ class Game extends Component {
             this.props.addLog(
                 'I don\'t know the word ' + parsed.unknown.toLowerCase() + '.'
             )
-        else if (parsed.isLook) Look(this.props)
+        else if (parsed.isLook) VERB.LOOK(this.props)
         else if (parsed.isInv) this.props.addLog(this.props.player.inv)
-        else if (parsed.isDirection) Move(this.props, parsed.direction)
+        else if (parsed.isDirection) VERB.MOVE(this.props, parsed.direction)
         else if (parsed.doActionOnItem)
-            DoActionOnItem(this.props, parsed.verb, parsed.noun)
+            VERB[parsed.verb](this.props, parsed.noun)
         else this.props.addLog('I\'m not sure what you\'re trying to say.')
     }
 
@@ -67,7 +66,7 @@ class Game extends Component {
 
         return (
             <div className="container">
-                <Navbar />
+                <Navbar moves={this.state.moves} />
                 <Log log={log} />
 
                 <ControlPanel

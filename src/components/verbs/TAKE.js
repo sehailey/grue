@@ -1,4 +1,4 @@
-const Take = (props, i) => {
+const TAKE = (props, i) => {
     const itemName = i.toLowerCase()
     const item = props.location.contains.find(ele => ele.name === itemName)
 
@@ -11,4 +11,4 @@ const Take = (props, i) => {
     } else props.addLog('You don\'t see a ' + itemName + ' here.')
 }
 
-export default Take
+export default TAKE
