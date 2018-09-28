@@ -1,17 +1,23 @@
 import {OBJECT} from '../classes'
 
 const TORCH = new OBJECT('torch', 'a torch', 'torches')
+TORCH.descriptions = {
+    unlit: 'It\'s a torch. It\'s currently unlit.',
+    lit: 'It\'s a torch. It\'s currently lit.',
+}
+TORCH.description = TORCH.descriptions.unlit
+
 TORCH.canLight = true
 TORCH.canTake = true
 
 TORCH.LIGHT = function() {
     if (!this.isInv) {
-        console.log('WHY IS THIS NOT ISINV', this, this.isInv)
         return 'You don\'t have that!'
     } else if (this.isLit) return 'It\'s already lit.'
     else {
         this.isLit = true
-        return 'You lit the torch'
+        this.description = this.descriptions.lit
+        return 'You lit the torch.'
     }
 }
 

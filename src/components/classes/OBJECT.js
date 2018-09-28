@@ -29,8 +29,12 @@ class OBJECT {
 
         this.TAKE = () => {
             if (!this.canTake) return 'You can\'t take that!'
-            else return 'You took the ' + this.name
+            else return 'You took the ' + this.name + '.'
         }
+        this.EXAMINE = this.EXAMINE.bind(this)
+    }
+    EXAMINE() {
+        return this.description
     }
 }
 

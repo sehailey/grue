@@ -15,7 +15,7 @@ const dictionary = verbs
     .concat(look)
     .concat(inventory)
     .concat(directions)
-
+console.log(dictionary)
 const Parser = string => {
     const output = {
         isUnknown: false,

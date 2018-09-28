@@ -124,6 +124,9 @@ const mapDispatch = dispatch => {
         dispatchMove: direction => {
             dispatch(move(direction))
         },
+        addItemToInv: item => {
+            dispatch(addItemToInv(item))
+        },
         take: item => {
             dispatch(removeItemFromLoc(item))
             dispatch(addItemToInv(item))
