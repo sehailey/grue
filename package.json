@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "chai": "^4.2.0",
     "express-graphql": "^0.6.12",
     "graphql": "0.13.0",
     "pg": "^7.4.3",

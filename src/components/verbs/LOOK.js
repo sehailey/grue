@@ -8,8 +8,8 @@ const Look = props => {
     if (items.length > 2)
         itemDescription +=
             'You see ' +
-            items.slice(0, items.length - 2).join(', ') +
-            'and ' +
+            items.slice(0, items.length - 1).join(', ') +
+            ', and ' +
             items[items.length - 1] +
             ' here.'
 

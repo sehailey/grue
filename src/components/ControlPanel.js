@@ -1,7 +1,7 @@
 import React from 'react'
 
 const ControlPanel = props => {
-    const {Move, Take, Drop, handleSubmit, handleChange, value} = props
+    const {handleSubmit, handleChange, value} = props
     return (
         <div className="control-panel mt-2">
             <form onSubmit={handleSubmit}>

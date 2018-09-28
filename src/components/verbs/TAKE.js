@@ -3,7 +3,6 @@ const TAKE = (props, i) => {
     const item = props.location.contains.find(ele => ele.name === itemName)
 
     if (item) {
-        console.log(item)
         props.take(item)
         props.addLog('You took the ' + itemName + '.')
     } else if (props.player.inv.includes(item)) {

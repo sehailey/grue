@@ -3,12 +3,11 @@ import * as ITEM from './items'
 
 const verbs = Object.keys(VERB)
 const items = Object.keys(ITEM)
-console.log(verbs)
 
-const prepositions = ['AN', 'A', 'THE']
+const prepositions = ['AN', 'A', 'THE', 'AT']
 const look = ['L', 'LOOK']
 const inventory = ['I', 'INVENTORY']
-const directions = ['N', 'NORTH', 'W', 'WEST']
+const directions = ['N', 'NORTH', 'W', 'WEST', 'S', 'SOUTH', 'E', 'EAST']
 
 const dictionary = verbs
     .concat(items)
@@ -17,15 +16,15 @@ const dictionary = verbs
     .concat(inventory)
     .concat(directions)
 
-console.log(dictionary)
-
 const Parser = string => {
     const output = {
         isUnknown: false,
         isInvalid: false,
-        isDirection: false,
+        isMove: false,
         isLook: false,
         isInv: false,
+        isTake: false,
+        isDrop: false,
         doActionOnItem: false,
         unknown: '',
         direction: '',
@@ -60,8 +59,8 @@ const Parser = string => {
     }
 
     if (directions.includes(firstWord)) {
-        output.direction = firstWord
-        output.isDirection = true
+        output.direction = firstWord.charAt(0)
+        output.isMove = true
         return output
     }
 
@@ -75,7 +74,7 @@ const Parser = string => {
         return output
     } else {
         output.doActionOnItem = true
-        output.noun = secondWord
+        output.item = secondWord
     }
 
     return output

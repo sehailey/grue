@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Navbar, Log, ControlPanel, Parser} from '../components'
 import {
-    doActionOnObject,
     getCurrentLoc,
     addItemToLoc,
     removeItemFromLoc,
     addItemToInv,
     removeItemFromInv,
+    changeItemInInv,
+    changeItemInLoc,
     move,
     addLog,
 } from '../store'
@@ -22,9 +23,9 @@ class Game extends Component {
             moves: 0,
         }
     }
+
     componentDidMount() {
         this.props.fetchLoc()
-        //this.Take = this.Take.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
@@ -35,12 +36,18 @@ class Game extends Component {
         }
     }
 
+    incrementMoves() {
+        let newMoves = this.state.moves
+        newMoves++
+        this.setState(() => ({moves: newMoves}))
+    }
     handleChange(event) {
         this.setState({input: event.target.value})
     }
 
     handleSubmit(event) {
         event.preventDefault()
+        this.incrementMoves()
         this.props.addLog('> ' + this.state.input)
         const parsed = Parser(this.state.input)
         this.setState({input: ''})
@@ -48,6 +55,21 @@ class Game extends Component {
         this.dispatchAction(parsed)
     }
 
+    doActionOnItem(item, verb) {
+        const playerItem = this.props.player.inv.find(
+            ele => ele.name === item.toLowerCase()
+        )
+        const locationItem = this.props.location[item]
+        if (playerItem) {
+            const action = playerItem[verb]()
+            this.props.addLog(action)
+            this.props.changeItemInInv(this.props.player)
+        } else if (locationItem) {
+            const action = locationItem[verb]()
+            this.props.addLog(action)
+            this.props.changeItemInLoc(this.props.location)
+        }
+    }
     dispatchAction(parsed) {
         if (parsed.isUnknown)
             this.props.addLog(
@@ -55,10 +77,12 @@ class Game extends Component {
             )
         else if (parsed.isLook) VERB.LOOK(this.props)
         else if (parsed.isInv) this.props.addLog(this.props.player.inv)
-        else if (parsed.isDirection) VERB.MOVE(this.props, parsed.direction)
-        else if (parsed.doActionOnItem)
-            VERB[parsed.verb](this.props, parsed.noun)
-        else this.props.addLog('I\'m not sure what you\'re trying to say.')
+        else if (parsed.isMove) VERB.MOVE(this.props, parsed.direction)
+        else if (parsed.verb === 'TAKE') VERB.TAKE(this.props, parsed.item)
+        else if (parsed.verb === 'DROP') VERB.DROP(this.props, parsed.item)
+        else if (parsed.doActionOnItem) {
+            this.doActionOnItem(parsed.item, parsed.verb)
+        } else this.props.addLog('I\'m not sure what you\'re trying to say.')
     }
 
     render() {
@@ -106,8 +130,11 @@ const mapDispatch = dispatch => {
             dispatch(addItemToLoc(item))
             dispatch(removeItemFromInv(item))
         },
-        doActionOnObject: action => {
-            dispatch(doActionOnObject(action))
+        changeItemInInv: (item, verb) => {
+            dispatch(changeItemInInv(item, verb))
+        },
+        changeItemInLoc: (item, verb) => {
+            dispatch(changeItemInLoc(item, verb))
         },
     }
 }
