@@ -1,19 +1,13 @@
 class OBJECT {
-    constructor(name, aName, pName) {
+    constructor(name) {
         this.name = name
-        this.aName = aName
-        this.pName = pName
+        this.aName = 'a ' + name
+        this.pName = name + 's'
+        this.loc = null
         this.description = ''
         this.contains = []
 
-        this.isInv = false
-        this.canExamine = true
         this.canTake = false
-        this.canLight = false
-        this.canOpen = false
-
-        this.isLit = false
-        this.isOpen = false
 
         this.LIGHT = () => {
             return 'You can\'t light that!'
@@ -29,7 +23,23 @@ class OBJECT {
 
         this.TAKE = () => {
             if (!this.canTake) return 'You can\'t take that!'
-            else return 'You took the ' + this.name
+            else if (this.loc === 'player') return 'You already have that!'
+            else {
+                this.loc = 'player'
+                return 'Taken.'
+            }
+        }
+
+        this.DROP = loc => {
+            if (!this.loc === 'player') return 'You don\'t have that!'
+            else {
+                this.loc = loc
+                return 'Dropped.'
+            }
+        }
+
+        this.EXAMINE = () => {
+            return this.description
         }
     }
 }

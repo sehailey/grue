@@ -1,3 +1,5 @@
+export {default as INV} from './INV'
+export {default as I} from './INV'
 export {default as MOVE} from './MOVE'
 export {default as LOOK} from './LOOK'
 export {default as TAKE} from './TAKE'

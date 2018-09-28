@@ -6,7 +6,7 @@ const items = Object.keys(ITEM)
 
 const prepositions = ['AN', 'A', 'THE', 'AT']
 const look = ['L', 'LOOK']
-const inventory = ['I', 'INVENTORY']
+const inventory = ['I', 'INV', 'INVENTORY']
 const directions = ['N', 'NORTH', 'W', 'WEST', 'S', 'SOUTH', 'E', 'EAST']
 
 const dictionary = verbs
@@ -54,7 +54,7 @@ const Parser = string => {
     }
 
     if (inventory.includes(firstWord)) {
-        output.isInventory = true
+        output.isInv = true
         return output
     }
 

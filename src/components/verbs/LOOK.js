@@ -1,20 +1,16 @@
-const Look = props => {
-    let items = props.location.contains.map(item => item.aName)
-    let itemDescription = ''
+import {listItems} from '../classes'
 
-    if (items.length === 1) itemDescription += 'You see ' + items[0] + ' here.'
-    if (items.length === 2)
-        itemDescription += 'You see ' + items[0] + ' and ' + items[1] + ' here.'
-    if (items.length > 2)
-        itemDescription +=
-            'You see ' +
-            items.slice(0, items.length - 1).join(', ') +
-            ', and ' +
-            items[items.length - 1] +
-            ' here.'
+const LOOK = props => {
+    let visisibleItems = props.items.filter(
+        item => item.loc === props.location.name
+    )
+    let itemDescription = ''
+    let itemList = listItems(visisibleItems)
+
+    if (itemList.length > 0) itemDescription = 'You see ' + itemList + ' here.'
 
     let description = [props.location.description, itemDescription].join(' ')
     props.addLog(description)
 }
 
-export default Look
+export default LOOK

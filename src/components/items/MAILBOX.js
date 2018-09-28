@@ -1,7 +1,10 @@
 import {OBJECT, listItems} from '../classes'
 import LETTER from './LETTER'
-const MAILBOX = new OBJECT('mailbox', 'a mailbox', 'mailboxes')
+const MAILBOX = new OBJECT('mailbox')
+MAILBOX.pname = 'mailboxes'
+MAILBOX.loc = 'house'
 
+MAILBOX.canTake = false
 MAILBOX.descriptions = {
     closed: 'The mailbox is closed.',
     open: 'The mailbox is open.',
