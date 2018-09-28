@@ -2,6 +2,7 @@ import {OBJECT} from '../classes'
 
 const TORCH = new OBJECT('torch', 'a torch', 'torches')
 TORCH.canLight = true
+TORCH.canTake = true
 
 TORCH.LIGHT = function() {
     if (!this.isInv) {

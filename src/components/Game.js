@@ -59,7 +59,9 @@ class Game extends Component {
         const playerItem = this.props.player.inv.find(
             ele => ele.name === item.toLowerCase()
         )
-        const locationItem = this.props.location[item]
+        const locationItem = this.props.location.contains.find(
+            ele => ele.name === item.toLowerCase()
+        )
         if (playerItem) {
             const action = playerItem[verb]()
             this.props.addLog(action)
@@ -68,7 +70,7 @@ class Game extends Component {
             const action = locationItem[verb]()
             this.props.addLog(action)
             this.props.changeItemInLoc(this.props.location)
-        }
+        } else this.props.addLog('You don\'t see that here.')
     }
     dispatchAction(parsed) {
         if (parsed.isUnknown)

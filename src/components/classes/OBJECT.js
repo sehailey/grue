@@ -15,11 +15,9 @@ class OBJECT {
         this.isLit = false
         this.isOpen = false
 
-        // this.LIGHT = () => {
-        //     return 'You can\'t light that!'
-        // }
-
-        this.LIGHT = this.LIGHT.bind(this)
+        this.LIGHT = () => {
+            return 'You can\'t light that!'
+        }
 
         this.OPEN = () => {
             return 'You can\'t open that!'
@@ -28,10 +26,11 @@ class OBJECT {
         this.READ = () => {
             return 'It doesn\'t say anything very interesting.'
         }
-    }
 
-    LIGHT() {
-        return 'You can\'t light that!'
+        this.TAKE = () => {
+            if (!this.canTake) return 'You can\'t take that!'
+            else return 'You took the ' + this.name
+        }
     }
 }
 
