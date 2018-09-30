@@ -98,7 +98,7 @@ const Parser = function(string) {
     } else {
         output.item2 = fourthWord
     }
-
+    console.log(output)
     return output
 }
 

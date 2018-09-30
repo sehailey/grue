@@ -2,6 +2,6 @@ import {OBJECT} from '../../classes'
 
 export const HOUSE = new OBJECT('house')
 
-HOUSE.location = 'thehouse'
+HOUSE.loc = 'thehouse'
 
 export {default as MAILBOX} from './MAILBOX'

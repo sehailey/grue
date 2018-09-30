@@ -4,17 +4,13 @@ class OBJECT {
         this.aName = 'a ' + name
         this.pName = name + 's'
         this.loc = null
-        this.description = 'It\'s just an ordinary ' + this.name
+        this.description = 'It\'s just an ordinary ' + this.name + '.'
         this.isInvItem = false
         this.isContainer = false
         this.contains = []
 
         this.describe = () => {
             return this.description
-        }
-
-        this.LIGHT = () => {
-            return 'You can\'t light that!'
         }
 
         this.OPEN = () => {

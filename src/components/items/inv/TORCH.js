@@ -11,7 +11,7 @@ TORCH.description = TORCH.descriptions.unlit
 
 TORCH.loc = 'outside'
 
-TORCH.canLight = true
+TORCH.isFlammable = true
 TORCH.canTake = true
 
 TORCH.BURN = function() {

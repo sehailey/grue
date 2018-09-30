@@ -12,6 +12,8 @@ class Game extends Component {
         this.state = {
             input: '',
             moves: 0,
+            commands: [],
+            commandPointer: 0,
         }
     }
 
@@ -21,7 +23,7 @@ class Game extends Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
-        //this.itemContainer = this.itemContainer.bind(this)
+        this.handleKeyDown = this.handleKeyDown.bind(this)
     }
 
     componentDidUpdate(prevProps) {
@@ -42,9 +44,25 @@ class Game extends Component {
     handleSubmit(event) {
         event.preventDefault()
         this.incrementMoves()
-        this.props.addLog('> ' + this.state.input)
+        const command = this.state.input
+        this.props.addLog('> ' + command)
         this.dispatchAction(Parser(this.state.input))
-        this.setState({input: ''})
+        this.setState(prevState => {
+            return {commands: [command, ...prevState.commands], input: ''}
+        })
+    }
+
+    handleKeyDown(e) {
+        e.preventDefault()
+        let commands = this.state.commands
+        if (e.key === 'ArrowUp' && commands.length > this.state.commandPointer)
+            this.setState(prevState => {
+                return {
+                    input: commands[prevState.commandPointer],
+                    commandPointer: prevState.commandPointer++,
+                }
+            })
+        else this.handleChange(e)
     }
 
     findItem(ITEMNAME) {
@@ -80,11 +98,14 @@ class Game extends Component {
 
     doActionOnItem(verb, item1Name, prep, item2Name) {
         let item1 = this.findItem(item1Name)
-        let item2 = null
+        let item2
         let itemNotHere = false
 
         if (item2Name) {
-            item2 = this.findItem(item2Name)
+            if (item2Name === 'FIRE')
+                item2 = {name: 'FIRE', loc: this.props.location.name}
+            else item2 = this.findItem(item2Name)
+            console.log(item2)
             if (!this.itemIsVisible(item2)) itemNotHere = true
         }
 
@@ -95,7 +116,6 @@ class Game extends Component {
             VERB[verb](this.props, item1, prep, item2)
             this.props.updateItems(this.props.items)
         }
-        VERB[verb](this.props, item1, prep, item2)
     }
 
     dispatchAction(parsed) {
@@ -126,6 +146,7 @@ class Game extends Component {
 
                 <ControlPanel
                     value={this.state.input}
+                    handleKeyDown={this.handleKeyDown}
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                 />
