@@ -1,4 +1,4 @@
-import {OBJECT} from '../classes'
+import {OBJECT} from '../../classes'
 const LETTER = new OBJECT('letter')
 
 LETTER.loc = 'mailbox'

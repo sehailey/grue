@@ -1,15 +1,21 @@
 import * as VERB from './verbs'
 import * as ITEM from './items'
-import {filler, look, inventory, directions, prepositions} from './dictionary'
+import {
+    filler,
+    look,
+    inventory,
+    directions,
+    prepositions,
+    misc,
+} from './dictionary'
 
-const items = Object.keys(ITEM)
+const items = Object.keys(ITEM).concat(misc)
 const verbs = Object.keys(VERB).concat(look)
 
 const dictionary = verbs
     .concat(items)
     .concat(filler)
     .concat(prepositions)
-    .concat(look)
     .concat(inventory)
     .concat(directions)
 
@@ -48,7 +54,7 @@ const Parser = function(string) {
         output.isInvalid = true
         return output
     }
-    console.log(command)
+
     const firstWord = command[0]
 
     if (inventory.includes(firstWord) && command.length === 1) {

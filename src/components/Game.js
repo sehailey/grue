@@ -26,11 +26,6 @@ class Game extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.location.name !== this.props.location.name) {
-            console.log(
-                'INSIDE UPDATE',
-                prevProps.location.name,
-                this.props.location.name
-            )
             VERB.LOOK(this.props)
         }
     }
@@ -100,10 +95,10 @@ class Game extends Component {
             VERB[verb](this.props, item1, prep, item2)
             this.props.updateItems(this.props.items)
         }
+        VERB[verb](this.props, item1, prep, item2)
     }
 
     dispatchAction(parsed) {
-        console.log(parsed)
         if (parsed.isUnknown)
             this.props.addLog(
                 'I don\'t know the word ' + parsed.unknown.toLowerCase() + '.'

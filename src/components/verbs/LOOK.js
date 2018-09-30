@@ -5,7 +5,6 @@ const LOOK = props => {
         item => item.loc === props.location.name
     )
 
-    console.log(itemsInCurrentLoc)
     let invItemsInCurrentLoc = itemsInCurrentLoc.filter(item => item.isInvItem)
 
     let containers = itemsInCurrentLoc.filter(

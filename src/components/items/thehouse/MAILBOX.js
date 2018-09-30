@@ -1,4 +1,4 @@
-import {OBJECT} from '../classes'
+import {OBJECT} from '../../classes'
 const MAILBOX = new OBJECT('mailbox')
 MAILBOX.pname = 'mailboxes'
 MAILBOX.loc = 'house'
@@ -27,6 +27,10 @@ MAILBOX.CLOSE = function() {
     this.isOpen = false
     this.description = this.descriptions.closed
     return 'You close the mailbox.'
+}
+
+MAILBOX.TAKE = function() {
+    return 'It is securely anchored.'
 }
 
 export default MAILBOX

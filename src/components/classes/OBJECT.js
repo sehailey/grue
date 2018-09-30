@@ -4,7 +4,7 @@ class OBJECT {
         this.aName = 'a ' + name
         this.pName = name + 's'
         this.loc = null
-        this.description = ''
+        this.description = 'It\'s just an ordinary ' + this.name
         this.isInvItem = false
         this.isContainer = false
         this.contains = []

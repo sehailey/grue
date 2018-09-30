@@ -1,4 +1,4 @@
-import {OBJECT} from '../classes'
+import {OBJECT} from '../../classes'
 
 const TORCH = new OBJECT('torch')
 TORCH.descriptions = {
@@ -14,7 +14,7 @@ TORCH.loc = 'outside'
 TORCH.canLight = true
 TORCH.canTake = true
 
-TORCH.LIGHT = function() {
+TORCH.BURN = function() {
     if (!this.loc === 'player') {
         return 'You don\'t have that!'
     } else if (this.isLit) return 'It\'s already lit.'
