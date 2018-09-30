@@ -1,6 +1,6 @@
 import {listItems} from '../classes'
 
-const Examine = function(props, item, prep) {
+const EXAMINE = function(props, item, prep) {
     let description = item.description
     let contentsDescription = ''
     //if it's an open container, list it's contents
