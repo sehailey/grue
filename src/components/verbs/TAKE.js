@@ -1,13 +1,8 @@
-const TAKE = function(props, item, item2) {
-    let container = item2
-    console.log(container)
-    let action = item.TAKE()
-
-    console.log(item, action)
+const TAKE = function(props, item1, prep, item2) {
+    let action = item1.TAKE()
     props.addLog(action)
-    props.updateItems(props.items)
 
-    return item
+    return item1
 }
 
 export default TAKE

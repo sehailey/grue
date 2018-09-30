@@ -66,28 +66,38 @@ class Game extends Component {
     }
 
     // only return container if it is another item
-    itemContainer(item) {
+    itemIsInContainer(item) {
         return this.props.items.find(i => i.name === item.loc)
     }
 
     itemIsVisible(item) {
-        let container = this.itemContainer(item)
-        return (
-            this.itemIsInInv(item) ||
-            this.itemIsInCurrentLoc(item) ||
-            (this.itemIsInInv(container) && container.isOpen) ||
-            (this.itemIsInCurrentLoc(container) && container.isOpen)
-        )
+        if (this.itemIsInInv(item) || this.itemIsInCurrentLoc(item)) return true
+        else {
+            let container = this.itemIsInContainer(item)
+            if (container) {
+                return (
+                    (this.itemIsInInv(container) && container.isOpen) ||
+                    (this.itemIsInCurrentLoc(container) && container.isOpen)
+                )
+            }
+        }
     }
 
-    doActionOnItem(itemName, item2Name, verb) {
-        let item = this.findItem(itemName)
-        let item2 = this.findItem(item2Name)
+    doActionOnItem(verb, item1Name, prep, item2Name) {
+        let item1 = this.findItem(item1Name)
+        let item2 = null
+        let itemNotHere = false
 
-        if (!this.itemIsVisible(item) || (item2 && !this.itemIsVisible(item2)))
-            this.props.addLog('You don\'t see that here.')
+        if (item2Name) {
+            item2 = this.findItem(item2Name)
+            if (!this.itemIsVisible(item2)) itemNotHere = true
+        }
+
+        if (!this.itemIsVisible(item1)) itemNotHere = true
+
+        if (itemNotHere) this.props.addLog('You don\'t see that here.')
         else {
-            VERB[verb](this.props, item, item2)
+            VERB[verb](this.props, item1, prep, item2)
             this.props.updateItems(this.props.items)
         }
     }
@@ -102,7 +112,12 @@ class Game extends Component {
         else if (parsed.isLook) VERB.LOOK(this.props)
         else if (parsed.isMove) VERB.MOVE(this.props, parsed.direction)
         else if (parsed.doActionOnItem) {
-            this.doActionOnItem(parsed.item, parsed.item2, parsed.verb)
+            this.doActionOnItem(
+                parsed.verb,
+                parsed.item1,
+                parsed.prep,
+                parsed.item2
+            )
         } else this.props.addLog('I\'m not sure what you\'re trying to say.')
     }
 

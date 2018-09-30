@@ -1,19 +1,20 @@
 import {listItems} from '../classes'
 
-const Examine = function(props, item) {
+const Examine = function(props, item, prep) {
     let description = item.description
+    let contentsDescription = ''
     //if it's an open container, list it's contents
     if (item.isOpen) {
         let contents = props.items.filter(i => i.loc === item.name)
         if (contents.length === 0)
-            description += 'The ' + item.name + ' is empty.'
+            contentsDescription += 'The ' + item.name + ' is empty.'
         else
-            description +=
+            contentsDescription +=
                 'The ' + item.name + ' contains ' + listItems(contents) + '.'
     }
 
-    props.addLog(description)
-    return item
+    if (prep === 'INSIDE') props.addLog(contentsDescription)
+    else props.addLog([description, contentsDescription].join(' '))
 }
 
 export default Examine

@@ -1,16 +1,13 @@
 import * as VERB from './verbs'
 import * as ITEM from './items'
+import {filler, look, inventory, directions, prepositions} from './dictionary'
 
-const verbs = Object.keys(VERB)
 const items = Object.keys(ITEM)
-
-const prepositions = ['AN', 'A', 'THE', 'AT']
-const look = ['L', 'LOOK']
-const inventory = ['I', 'INV', 'INVENTORY']
-const directions = ['N', 'NORTH', 'W', 'WEST', 'S', 'SOUTH', 'E', 'EAST']
+const verbs = Object.keys(VERB).concat(look)
 
 const dictionary = verbs
     .concat(items)
+    .concat(filler)
     .concat(prepositions)
     .concat(look)
     .concat(inventory)
@@ -28,15 +25,15 @@ const Parser = function(string) {
         doActionOnItem: false,
         unknown: '',
         direction: '',
-        verb: '',
-        item: '',
-        item2: '',
-        object: '',
+        verb: null,
+        item1: null,
+        prep: null,
+        item2: null,
+        command: [],
     }
     const input = string.toString().toUpperCase()
-    const command = input
-        .split(' ')
-        .filter(word => !prepositions.includes(word))
+    const command = input.split(' ').filter(word => !filler.includes(word))
+    output.command = command
 
     // test for unknown words
     for (let i = 0; i < command.length; i++) {
@@ -47,8 +44,12 @@ const Parser = function(string) {
         }
     }
 
-    const firstWord = command[0]
+    if (command.length > 4) {
+        output.isInvalid = true
+        return output
+    }
     console.log(command)
+    const firstWord = command[0]
 
     if (inventory.includes(firstWord) && command.length === 1) {
         output.isInv = true
@@ -70,7 +71,7 @@ const Parser = function(string) {
         if (command.length === 1) {
             output.isLook = true
             return output
-        } else output.verb = 'examine'
+        } else output.verb = 'EXAMINE'
     }
 
     const secondWord = command[1]
@@ -78,14 +79,14 @@ const Parser = function(string) {
         return output
     } else {
         output.doActionOnItem = true
-        output.item = secondWord
+        output.item1 = secondWord
     }
 
-    const thirdWord = command[2]
+    output.prep = command[2]
     //this should be 'with', 'from', 'on' etc
 
     const fourthWord = command[3]
-    if (!items.includes(fourthWord)) {
+    if (fourthWord && !items.includes(fourthWord)) {
         output.isInvalid = true
         return output
     } else {
