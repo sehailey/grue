@@ -5,9 +5,13 @@ class OBJECT {
         this.pName = name + 's'
         this.loc = null
         this.description = ''
+        this.isInvItem = false
+        this.isContainer = false
         this.contains = []
 
-        this.canTake = false
+        this.describe = () => {
+            return this.description
+        }
 
         this.LIGHT = () => {
             return 'You can\'t light that!'
@@ -22,7 +26,7 @@ class OBJECT {
         }
 
         this.TAKE = () => {
-            if (!this.canTake) return 'You can\'t take that!'
+            if (!this.isInvItem) return 'You can\'t take that!'
             else if (this.loc === 'player') return 'You already have that!'
             else {
                 this.loc = 'player'
@@ -38,8 +42,8 @@ class OBJECT {
             }
         }
 
-        this.EXAMINE = () => {
-            return this.description
+        this.EXAMINE = function() {
+            return this.describe()
         }
     }
 }

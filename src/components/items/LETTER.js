@@ -1,10 +1,8 @@
 import {OBJECT} from '../classes'
-const LETTER = new OBJECT()
-LETTER.name = 'letter'
+const LETTER = new OBJECT('letter')
 
 LETTER.loc = 'mailbox'
 
 LETTER.description = 'It\'s a letter addressed to John Zerzan'
-LETTER.canTake = true
-
+LETTER.isInvItem = true
 export default LETTER

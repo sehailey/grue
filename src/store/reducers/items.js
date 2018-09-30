@@ -9,7 +9,7 @@ for (let item in ITEMS) {
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const ADD_ITEM = 'ADD_ITEM'
 const GOT_ALL_ITEMS = 'GOT_ALL_ITEMS'
-const CHANGE_ITEM = 'CHANGE_ITEM'
+const UPDATE_ITEMS = 'UPDATE_ITEMS'
 
 /*** INITIAL STATE ***/
 const defaultItems = []
@@ -26,8 +26,8 @@ export const addItem = item => ({
     item,
 })
 
-export const changeItem = items => ({
-    type: CHANGE_ITEM,
+export const updateItems = items => ({
+    type: UPDATE_ITEMS,
     items,
 })
 
@@ -48,11 +48,8 @@ export default function(items = defaultItems, action) {
     case GOT_ALL_ITEMS: {
         return [...action.items]
     }
-    case CHANGE_ITEM: {
-        const newItems = items.filter(
-            item => item.name !== action.item.name
-        )
-        return [...newItems, action.item]
+    case UPDATE_ITEMS: {
+        return [...action.items]
     }
     default: {
         return items

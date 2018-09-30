@@ -16,7 +16,7 @@ const dictionary = verbs
     .concat(inventory)
     .concat(directions)
 
-const Parser = string => {
+const Parser = function(string) {
     const output = {
         isUnknown: false,
         isInvalid: false,
@@ -30,9 +30,9 @@ const Parser = string => {
         direction: '',
         verb: '',
         item: '',
+        item2: '',
         object: '',
     }
-
     const input = string.toString().toUpperCase()
     const command = input
         .split(' ')
@@ -47,18 +47,15 @@ const Parser = string => {
         }
     }
 
-    const firstWord = command.shift()
-    if (look.includes(firstWord)) {
-        output.isLook = true
-        return output
-    }
+    const firstWord = command[0]
+    console.log(command)
 
-    if (inventory.includes(firstWord)) {
+    if (inventory.includes(firstWord) && command.length === 1) {
         output.isInv = true
         return output
     }
 
-    if (directions.includes(firstWord)) {
+    if (directions.includes(firstWord) && command.length === 1) {
         output.direction = firstWord.charAt(0)
         output.isMove = true
         return output
@@ -69,12 +66,30 @@ const Parser = string => {
         return output
     } else output.verb = firstWord
 
-    const secondWord = command.shift()
+    if (look.includes(firstWord)) {
+        if (command.length === 1) {
+            output.isLook = true
+            return output
+        } else output.verb = 'examine'
+    }
+
+    const secondWord = command[1]
     if (!items.includes(secondWord)) {
         return output
     } else {
         output.doActionOnItem = true
         output.item = secondWord
+    }
+
+    const thirdWord = command[2]
+    //this should be 'with', 'from', 'on' etc
+
+    const fourthWord = command[3]
+    if (!items.includes(fourthWord)) {
+        output.isInvalid = true
+        return output
+    } else {
+        output.item2 = fourthWord
     }
 
     return output
