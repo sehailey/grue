@@ -1,17 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+
 import {Navbar, Log, ControlPanel, Parser} from '../components'
-import {
-    getCurrentLoc,
-    addItemToLoc,
-    removeItemFromLoc,
-    addItemToInv,
-    removeItemFromInv,
-    changeItemInInv,
-    changeItemInLoc,
-    move,
-    addLog,
-} from '../store'
+import {getCurrentLoc, getAllItems, updateItems, move, addLog} from '../store'
 
 import * as VERB from './verbs'
 
@@ -26,12 +17,20 @@ class Game extends Component {
 
     componentDidMount() {
         this.props.fetchLoc()
+        this.props.fetchItems()
+
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        //this.itemContainer = this.itemContainer.bind(this)
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.location.name !== this.props.location.name) {
+            console.log(
+                'INSIDE UPDATE',
+                prevProps.location.name,
+                this.props.location.name
+            )
             VERB.LOOK(this.props)
         }
     }
@@ -49,41 +48,76 @@ class Game extends Component {
         event.preventDefault()
         this.incrementMoves()
         this.props.addLog('> ' + this.state.input)
-        const parsed = Parser(this.state.input)
+        this.dispatchAction(Parser(this.state.input))
         this.setState({input: ''})
-        console.log(parsed)
-        this.dispatchAction(parsed)
     }
 
-    doActionOnItem(item, verb) {
-        const playerItem = this.props.player.inv.find(
-            ele => ele.name === item.toLowerCase()
-        )
-        const locationItem = this.props.location.contains.find(
-            ele => ele.name === item.toLowerCase()
-        )
-        if (playerItem) {
-            const action = playerItem[verb]()
-            this.props.addLog(action)
-            this.props.changeItemInInv(this.props.player)
-        } else if (locationItem) {
-            const action = locationItem[verb]()
-            this.props.addLog(action)
-            this.props.changeItemInLoc(this.props.location)
-        } else this.props.addLog('You don\'t see that here.')
+    findItem(ITEMNAME) {
+        let itemName = ITEMNAME.toLowerCase()
+        return this.props.items.find(item => item.name === itemName)
     }
+
+    itemIsInInv(item) {
+        return item.loc === 'player'
+    }
+
+    itemIsInCurrentLoc(item) {
+        return item.loc === this.props.location.name
+    }
+
+    // only return container if it is another item
+    itemIsInContainer(item) {
+        return this.props.items.find(i => i.name === item.loc)
+    }
+
+    itemIsVisible(item) {
+        if (this.itemIsInInv(item) || this.itemIsInCurrentLoc(item)) return true
+        else {
+            let container = this.itemIsInContainer(item)
+            if (container) {
+                return (
+                    (this.itemIsInInv(container) && container.isOpen) ||
+                    (this.itemIsInCurrentLoc(container) && container.isOpen)
+                )
+            }
+        }
+    }
+
+    doActionOnItem(verb, item1Name, prep, item2Name) {
+        let item1 = this.findItem(item1Name)
+        let item2 = null
+        let itemNotHere = false
+
+        if (item2Name) {
+            item2 = this.findItem(item2Name)
+            if (!this.itemIsVisible(item2)) itemNotHere = true
+        }
+
+        if (!this.itemIsVisible(item1)) itemNotHere = true
+
+        if (itemNotHere) this.props.addLog('You don\'t see that here.')
+        else {
+            VERB[verb](this.props, item1, prep, item2)
+            this.props.updateItems(this.props.items)
+        }
+    }
+
     dispatchAction(parsed) {
+        console.log(parsed)
         if (parsed.isUnknown)
             this.props.addLog(
                 'I don\'t know the word ' + parsed.unknown.toLowerCase() + '.'
             )
+        else if (parsed.isInv) VERB.INV(this.props)
         else if (parsed.isLook) VERB.LOOK(this.props)
-        else if (parsed.isInv) this.props.addLog(this.props.player.inv)
         else if (parsed.isMove) VERB.MOVE(this.props, parsed.direction)
-        else if (parsed.verb === 'TAKE') VERB.TAKE(this.props, parsed.item)
-        else if (parsed.verb === 'DROP') VERB.DROP(this.props, parsed.item)
         else if (parsed.doActionOnItem) {
-            this.doActionOnItem(parsed.item, parsed.verb)
+            this.doActionOnItem(
+                parsed.verb,
+                parsed.item1,
+                parsed.prep,
+                parsed.item2
+            )
         } else this.props.addLog('I\'m not sure what you\'re trying to say.')
     }
 
@@ -107,8 +141,9 @@ class Game extends Component {
 
 const mapState = state => {
     return {
-        location: state.location,
         log: state.log,
+        location: state.location,
+        items: state.items,
         player: state.player,
     }
 }
@@ -118,28 +153,18 @@ const mapDispatch = dispatch => {
         fetchLoc: () => {
             dispatch(getCurrentLoc())
         },
+        fetchItems: () => {
+            dispatch(getAllItems())
+        },
         addLog: log => {
             dispatch(addLog(log))
         },
         dispatchMove: direction => {
             dispatch(move(direction))
         },
-        addItemToInv: item => {
-            dispatch(addItemToInv(item))
-        },
-        take: item => {
-            dispatch(removeItemFromLoc(item))
-            dispatch(addItemToInv(item))
-        },
-        drop: item => {
-            dispatch(addItemToLoc(item))
-            dispatch(removeItemFromInv(item))
-        },
-        changeItemInInv: (item, verb) => {
-            dispatch(changeItemInInv(item, verb))
-        },
-        changeItemInLoc: (item, verb) => {
-            dispatch(changeItemInLoc(item, verb))
+
+        updateItems: item => {
+            dispatch(updateItems(item))
         },
     }
 }

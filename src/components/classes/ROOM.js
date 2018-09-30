@@ -10,8 +10,6 @@ class Room {
 
         this.isLit = true
 
-        this.contains = []
-
         this.describeLocation = () => {
             return this.description
         }

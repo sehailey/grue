@@ -1,24 +1,11 @@
-const OPEN = (props, itemName) => {
-    const playerItem = props.player.inv.find(
-        ele => ele.name === itemName.toLowerCase()
-    )
-    const locationItem = props.location[itemName]
+import {listItems} from '../classes'
 
-    if (playerItem) {
-        if (!playerItem.canOpen) props.addLog('You can\'t open that!')
-        else {
-            playerItem.OPEN()
-            props.changeItemInInv(playerItem)
-            props.addLog('You opened the ' + playerItem.name)
-        }
-    } else if (locationItem) {
-        if (!locationItem.canOpen) props.addLog('You can\'t open that!')
-        else {
-            locationItem.OPEN()
-            props.changeItemInLoc(locationItem)
-            props.addLog('You opened the ' + locationItem.name)
-        }
-    } else console.log('OPEN FAILURE')
+const OPEN = (props, item) => {
+    let description = item.OPEN()
+    let contents = props.items.filter(i => i.loc === item.name)
+    if (contents.length === 0) description += ' It is empty.'
+    else description += ' You see ' + listItems(contents) + ' inside.'
+    props.addLog(description)
 }
 
 export default OPEN

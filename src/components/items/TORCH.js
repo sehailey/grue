@@ -1,17 +1,21 @@
 import {OBJECT} from '../classes'
 
-const TORCH = new OBJECT('torch', 'a torch', 'torches')
+const TORCH = new OBJECT('torch')
 TORCH.descriptions = {
-    unlit: 'It\'s a torch. It\'s currently unlit.',
-    lit: 'It\'s a torch. It\'s currently lit.',
+    unlit: 'It\'s a torch. It is currently unlit.',
+    lit: 'It\'s a torch. It is currently lit.',
 }
+
+TORCH.isInvItem = true
 TORCH.description = TORCH.descriptions.unlit
+
+TORCH.loc = 'outside'
 
 TORCH.canLight = true
 TORCH.canTake = true
 
 TORCH.LIGHT = function() {
-    if (!this.isInv) {
+    if (!this.loc === 'player') {
         return 'You don\'t have that!'
     } else if (this.isLit) return 'It\'s already lit.'
     else {

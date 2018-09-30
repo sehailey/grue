@@ -1,22 +1,19 @@
 import * as VERB from './verbs'
 import * as ITEM from './items'
+import {filler, look, inventory, directions, prepositions} from './dictionary'
 
-const verbs = Object.keys(VERB)
 const items = Object.keys(ITEM)
-
-const prepositions = ['AN', 'A', 'THE', 'AT']
-const look = ['L', 'LOOK']
-const inventory = ['I', 'INVENTORY']
-const directions = ['N', 'NORTH', 'W', 'WEST', 'S', 'SOUTH', 'E', 'EAST']
+const verbs = Object.keys(VERB).concat(look)
 
 const dictionary = verbs
     .concat(items)
+    .concat(filler)
     .concat(prepositions)
     .concat(look)
     .concat(inventory)
     .concat(directions)
-console.log(dictionary)
-const Parser = string => {
+
+const Parser = function(string) {
     const output = {
         isUnknown: false,
         isInvalid: false,
@@ -28,15 +25,15 @@ const Parser = string => {
         doActionOnItem: false,
         unknown: '',
         direction: '',
-        verb: '',
-        item: '',
-        object: '',
+        verb: null,
+        item1: null,
+        prep: null,
+        item2: null,
+        command: [],
     }
-
     const input = string.toString().toUpperCase()
-    const command = input
-        .split(' ')
-        .filter(word => !prepositions.includes(word))
+    const command = input.split(' ').filter(word => !filler.includes(word))
+    output.command = command
 
     // test for unknown words
     for (let i = 0; i < command.length; i++) {
@@ -47,18 +44,19 @@ const Parser = string => {
         }
     }
 
-    const firstWord = command.shift()
-    if (look.includes(firstWord)) {
-        output.isLook = true
+    if (command.length > 4) {
+        output.isInvalid = true
+        return output
+    }
+    console.log(command)
+    const firstWord = command[0]
+
+    if (inventory.includes(firstWord) && command.length === 1) {
+        output.isInv = true
         return output
     }
 
-    if (inventory.includes(firstWord)) {
-        output.isInventory = true
-        return output
-    }
-
-    if (directions.includes(firstWord)) {
+    if (directions.includes(firstWord) && command.length === 1) {
         output.direction = firstWord.charAt(0)
         output.isMove = true
         return output
@@ -69,12 +67,30 @@ const Parser = string => {
         return output
     } else output.verb = firstWord
 
-    const secondWord = command.shift()
+    if (look.includes(firstWord)) {
+        if (command.length === 1) {
+            output.isLook = true
+            return output
+        } else output.verb = 'EXAMINE'
+    }
+
+    const secondWord = command[1]
     if (!items.includes(secondWord)) {
         return output
     } else {
         output.doActionOnItem = true
-        output.item = secondWord
+        output.item1 = secondWord
+    }
+
+    output.prep = command[2]
+    //this should be 'with', 'from', 'on' etc
+
+    const fourthWord = command[3]
+    if (fourthWord && !items.includes(fourthWord)) {
+        output.isInvalid = true
+        return output
+    } else {
+        output.item2 = fourthWord
     }
 
     return output

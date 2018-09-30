@@ -1,20 +1,49 @@
-const Look = props => {
-    let items = props.location.contains.map(item => item.aName)
+import {listItems} from '../classes'
+
+const LOOK = props => {
+    let itemsInCurrentLoc = props.items.filter(
+        item => item.loc === props.location.name
+    )
+
+    console.log(itemsInCurrentLoc)
+    let invItemsInCurrentLoc = itemsInCurrentLoc.filter(item => item.isInvItem)
+
+    let containers = itemsInCurrentLoc.filter(
+        item => item.isContainer && item.isOpen
+    )
     let itemDescription = ''
+    let containerDescription = ''
 
-    if (items.length === 1) itemDescription += 'You see ' + items[0] + ' here.'
-    if (items.length === 2)
-        itemDescription += 'You see ' + items[0] + ' and ' + items[1] + ' here.'
-    if (items.length > 2)
-        itemDescription +=
-            'You see ' +
-            items.slice(0, items.length - 1).join(', ') +
-            ', and ' +
-            items[items.length - 1] +
-            ' here.'
+    if (containers) {
+        for (let i = 0; i < containers.length; i++) {
+            let itemsInContainer = props.items.filter(
+                item => item.loc === containers[i].name
+            )
 
-    let description = [props.location.description, itemDescription].join(' ')
+            if (itemsInContainer.length === 0) {
+                containerDescription +=
+                    'The ' + containers[i].name + ' is empty.'
+            } else {
+                containerDescription +=
+                    'The ' +
+                    containers[i].name +
+                    ' contains ' +
+                    listItems(itemsInContainer) +
+                    '.'
+            }
+        }
+    }
+
+    let itemList = listItems(invItemsInCurrentLoc)
+
+    if (itemList.length > 0) itemDescription = 'You see ' + itemList + ' here.'
+
+    let description = [
+        props.location.description,
+        itemDescription,
+        containerDescription,
+    ].join(' ')
     props.addLog(description)
 }
 
-export default Look
+export default LOOK
