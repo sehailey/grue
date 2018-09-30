@@ -17,4 +17,4 @@ const Examine = function(props, item, prep) {
     else props.addLog([description, contentsDescription].join(' '))
 }
 
-export default Examine
+export default EXAMINE

@@ -45,6 +45,10 @@ class OBJECT {
         this.EXAMINE = function() {
             return this.describe()
         }
+        this.EXAMINE = this.EXAMINE.bind(this)
+    }
+    EXAMINE() {
+        return this.description
     }
 }
 
