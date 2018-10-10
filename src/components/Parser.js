@@ -19,87 +19,43 @@ const dictionary = verbs
     .concat(inventory)
     .concat(directions)
 
-const Parser = function(string) {
-    const output = {
-        isUnknown: false,
-        isInvalid: false,
-        isMove: false,
-        isLook: false,
-        isInv: false,
-        isTake: false,
-        isDrop: false,
-        doActionOnItem: false,
-        unknown: '',
-        direction: '',
-        verb: null,
-        item1: null,
-        prep: null,
-        item2: null,
-        command: [],
-    }
-    const input = string.toString().toUpperCase()
-    const command = input.split(' ').filter(word => !filler.includes(word))
-    output.command = command
+console.log(dictionary)
+
+const Parser = function(string, command) {
+    const splitString = string
+        .toString()
+        .toUpperCase()
+        .split(' ')
+        .filter(word => !filler.includes(word))
+
+    const words = command.words.concat(splitString)
+    const newCommand = {...command}
+    console.log('WORDS', words[0], directions, directions.includes(words[0]))
 
     // test for unknown words
-    for (let i = 0; i < command.length; i++) {
-        if (!dictionary.includes(command[i])) {
-            output.isUnknown = true
-            output.unknown = command[i]
-            return output
+    for (let i = 0; i < words.length; i++) {
+        if (!dictionary.includes(words[i])) {
+            newCommand.isUnknown = true
+            newCommand.unknown = words[i]
+            return newCommand
         }
     }
 
-    if (command.length > 4) {
-        output.isInvalid = true
-        return output
-    }
+    const firstWord = words[0]
+    if (directions.includes(firstWord)) {
+        newCommand.isDirection = true
+        newCommand.direction = words.shift()
+        console.log('words after shift', words)
+        if (words.length > 0) newCommand.isInvalid = true
+        return newCommand
+    } else if (!verbs.includes(firstWord)) {
+        newCommand.isInvalid = true
+        return newCommand
+    } else newCommand.verb = words.shift()
 
-    const firstWord = command[0]
+    newCommand.words = words
 
-    if (inventory.includes(firstWord) && command.length === 1) {
-        output.isInv = true
-        return output
-    }
-
-    if (directions.includes(firstWord) && command.length === 1) {
-        output.direction = firstWord.charAt(0)
-        output.isMove = true
-        return output
-    }
-
-    if (!verbs.includes(firstWord)) {
-        output.isInvalid = true
-        return output
-    } else output.verb = firstWord
-
-    if (look.includes(firstWord)) {
-        if (command.length === 1) {
-            output.isLook = true
-            return output
-        } else output.verb = 'EXAMINE'
-    }
-
-    const secondWord = command[1]
-    if (!items.includes(secondWord)) {
-        return output
-    } else {
-        output.doActionOnItem = true
-        output.item1 = secondWord
-    }
-
-    output.prep = command[2]
-    //this should be 'with', 'from', 'on' etc
-
-    const fourthWord = command[3]
-    if (fourthWord && !items.includes(fourthWord)) {
-        output.isInvalid = true
-        return output
-    } else {
-        output.item2 = fourthWord
-    }
-    console.log(output)
-    return output
+    return newCommand
 }
 
 export default Parser

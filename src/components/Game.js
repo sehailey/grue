@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import {Navbar, Log, ControlPanel, Parser} from '../components'
+import {Navbar, Log, Interpreter} from '../components'
 import {getCurrentLoc, getAllItems, updateItems, move, addLog} from '../store'
 
 import * as VERB from './verbs'
@@ -12,18 +12,12 @@ class Game extends Component {
         this.state = {
             input: '',
             moves: 0,
-            commands: [],
-            commandPointer: 0,
         }
     }
 
     componentDidMount() {
         this.props.fetchLoc()
         this.props.fetchItems()
-
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleKeyDown = this.handleKeyDown.bind(this)
     }
 
     componentDidUpdate(prevProps) {
@@ -37,104 +31,6 @@ class Game extends Component {
         newMoves++
         this.setState(() => ({moves: newMoves}))
     }
-    handleChange(event) {
-        this.setState({input: event.target.value})
-    }
-
-    handleSubmit(event) {
-        event.preventDefault()
-        this.incrementMoves()
-        const command = this.state.input
-        this.props.addLog('> ' + command)
-        this.dispatchAction(Parser(this.state.input))
-        this.setState(prevState => {
-            return {commands: [command, ...prevState.commands], input: ''}
-        })
-    }
-
-    handleKeyDown(e) {
-        e.preventDefault()
-        let commands = this.state.commands
-        if (e.key === 'ArrowUp' && commands.length > this.state.commandPointer)
-            this.setState(prevState => {
-                return {
-                    input: commands[prevState.commandPointer],
-                    commandPointer: prevState.commandPointer++,
-                }
-            })
-        else this.handleChange(e)
-    }
-
-    findItem(ITEMNAME) {
-        let itemName = ITEMNAME.toLowerCase()
-        return this.props.items.find(item => item.name === itemName)
-    }
-
-    itemIsInInv(item) {
-        return item.loc === 'player'
-    }
-
-    itemIsInCurrentLoc(item) {
-        return item.loc === this.props.location.name
-    }
-
-    // only return container if it is another item
-    itemIsInContainer(item) {
-        return this.props.items.find(i => i.name === item.loc)
-    }
-
-    itemIsVisible(item) {
-        if (this.itemIsInInv(item) || this.itemIsInCurrentLoc(item)) return true
-        else {
-            let container = this.itemIsInContainer(item)
-            if (container) {
-                return (
-                    (this.itemIsInInv(container) && container.isOpen) ||
-                    (this.itemIsInCurrentLoc(container) && container.isOpen)
-                )
-            }
-        }
-    }
-
-    doActionOnItem(verb, item1Name, prep, item2Name) {
-        let item1 = this.findItem(item1Name)
-        let item2
-        let itemNotHere = false
-
-        if (item2Name) {
-            if (item2Name === 'FIRE')
-                item2 = {name: 'FIRE', loc: this.props.location.name}
-            else item2 = this.findItem(item2Name)
-            console.log(item2)
-            if (!this.itemIsVisible(item2)) itemNotHere = true
-        }
-
-        if (!this.itemIsVisible(item1)) itemNotHere = true
-
-        if (itemNotHere) this.props.addLog('You don\'t see that here.')
-        else {
-            VERB[verb](this.props, item1, prep, item2)
-            this.props.updateItems(this.props.items)
-        }
-    }
-
-    dispatchAction(parsed) {
-        if (parsed.isUnknown)
-            this.props.addLog(
-                'I don\'t know the word ' + parsed.unknown.toLowerCase() + '.'
-            )
-        else if (parsed.isInv) VERB.INV(this.props)
-        else if (parsed.isLook) VERB.LOOK(this.props)
-        else if (parsed.isMove) VERB.MOVE(this.props, parsed.direction)
-        else if (parsed.doActionOnItem) {
-            this.doActionOnItem(
-                parsed.verb,
-                parsed.item1,
-                parsed.prep,
-                parsed.item2
-            )
-        } else this.props.addLog('I\'m not sure what you\'re trying to say.')
-    }
 
     render() {
         const {log} = this.props
@@ -144,9 +40,8 @@ class Game extends Component {
                 <Navbar moves={this.state.moves} />
                 <Log log={log} />
 
-                <ControlPanel
+                <Interpreter
                     value={this.state.input}
-                    handleKeyDown={this.handleKeyDown}
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                 />

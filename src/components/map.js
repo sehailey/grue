@@ -1,15 +1,18 @@
-import {CAVE, OUTSIDE, PATH, THEHOUSE} from './rooms'
+import {northOfHouse, westOfHouse, southOfHouse, behindHouse} from './rooms'
 
-CAVE.W = OUTSIDE
-OUTSIDE.E = CAVE
-OUTSIDE.N = PATH
-PATH.S = OUTSIDE
-PATH.N = THEHOUSE
-THEHOUSE.S = PATH
+//pivotaltracker
+westOfHouse.N = northOfHouse
+westOfHouse.S = southOfHouse
+
+southOfHouse.W = westOfHouse
+southOfHouse.E = behindHouse
+
+northOfHouse.W = westOfHouse
+northOfHouse.E = behindHouse
 
 export const Map = class Map {
     constructor() {
-        this.currentLoc = CAVE
-        this.rooms = [CAVE, OUTSIDE, PATH, THEHOUSE]
+        this.currentLoc = westOfHouse
+        this.rooms = [westOfHouse, northOfHouse, southOfHouse, behindHouse]
     }
 }

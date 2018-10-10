@@ -1,9 +1,10 @@
 import {OBJECT} from '../../classes'
 const MAILBOX = new OBJECT('mailbox')
 MAILBOX.pname = 'mailboxes'
-MAILBOX.loc = 'thehouse'
+MAILBOX.loc = 'westOfHouse'
 
 MAILBOX.canTake = false
+MAILBOX.isContainer = true
 MAILBOX.descriptions = {
     closed: 'The mailbox is closed.',
     open: 'The mailbox is open.',
@@ -14,7 +15,6 @@ MAILBOX.describe = function() {
     else return this.descriptions.open
 }
 MAILBOX.description = MAILBOX.descriptions.closed
-MAILBOX.isContainer = true
 
 MAILBOX.OPEN = function() {
     this.isOpen = true

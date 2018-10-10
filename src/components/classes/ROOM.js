@@ -1,6 +1,7 @@
 class Room {
     constructor(name) {
         this.name = name
+        this.title = ''
         this.description = ''
 
         this.N = null
@@ -8,6 +9,7 @@ class Room {
         this.E = null
         this.W = null
 
+        this.isBlocked = {N: null, S: null, E: null, W: null}
         this.isLit = true
 
         this.describeLocation = () => {

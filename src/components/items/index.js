@@ -6,4 +6,4 @@ export {default as LETTER} from './inv/LETTER'
 
 /*HOUSE*/
 // export {default as MAILBOX} from './thehouse/MAILBOX'
-export {MAILBOX, HOUSE} from './thehouse'
+export {WINDOW, MAILBOX, HOUSE} from './thehouse'
