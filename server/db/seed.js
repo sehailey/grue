@@ -1,23 +1,30 @@
-const db = require("../db")
-const { Item, Room } = require("./models")
-const [items, rooms] = require("./objects")
-const fs = require("fs")
+const db = require("../db");
+const { Item, Room } = require("./models");
+const [items, rooms] = require("./constructors");
+const fs = require("fs");
+
+// const torch = {
+//   name: 'torch',
+//   descripton: "it's a torch",
+//   location: 'westOfHouse',
+//   isInvItem: true,
+// }
 
 async function runSeed() {
-  await db.sync({ force: true })
-  console.log("db synced!")
-  console.log("seeding...")
+  await db.sync({ force: true });
+  console.log("db synced!");
+  console.log("seeding...");
   try {
-    await Promise.all([Item.bulkCreate(items), Room.bulkCreate(rooms)])
-    console.log(`seeded successfully`)
+    await Promise.all([Item.bulkCreate(items), Room.bulkCreate(rooms)]);
+    console.log("seeded successfully");
   } catch (err) {
-    console.error(err)
-    process.exitCode = 1
+    console.error(err);
+    process.exitCode = 1;
   } finally {
-    console.log("closing db connection")
-    await db.close()
-    console.log("db connection closed")
+    console.log("closing db connection");
+    await db.close();
+    console.log("db connection closed");
   }
 }
 
-runSeed()
+runSeed();

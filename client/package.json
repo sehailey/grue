@@ -1,0 +1,35 @@
+{
+  "name": "grue",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://grue.herokuapp.com/",
+  "proxy": "http://localhost:1337/",
+  "scripts": {
+    "client": "yarn start",
+    "server": "nodemon server",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "yarn && yarn run build"
+  },
+  "dependencies": {
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.5",
+    "react-scroll-to-bottom": "^1.1.0",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "sequelize": "^4.38.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "eslint": "^5.6.0",
+    "eslint-config-fullstack": "^6.0.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.11.1"
+  }
+}
