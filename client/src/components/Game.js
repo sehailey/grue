@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import {Navbar, Log, Interpreter} from '../components'
+import {Navbar, Log, CommandLine} from '../components'
 import {getMap, getAllItems, updateItems, addLog} from '../store'
 
 import * as VERB from '../verbs'
@@ -44,7 +44,7 @@ class Game extends Component {
         <Navbar moves={this.state.moves} />
         <Log log={log} />
 
-        <Interpreter
+        <CommandLine
           value={this.state.input}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}

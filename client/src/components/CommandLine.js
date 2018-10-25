@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Parser from './Parser'
-import {updateItems, addLog} from '../store'
+
+import {updateItems, addLog, parseCommand} from '../store'
 
 import * as VERB from '../verbs'
 
@@ -18,17 +18,15 @@ const defaultCommand = {
   words: [],
 }
 
-class Interpreter extends Component {
+class CommandLine extends Component {
   constructor() {
     super()
-    this.state = {
-      input: '',
-      command: defaultCommand,
-    }
+    this.state = {input: ''}
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.findItem = this.findItem.bind(this)
+    this.clearCommand = this.clearCommand.bind(this)
   }
 
   handleChange(event) {
@@ -38,22 +36,27 @@ class Interpreter extends Component {
   handleSubmit(event) {
     event.preventDefault()
     const input = this.state.input
+    this.props.addLog('> ' + input)
 
     this.setState({input: ''})
-    this.props.addLog('> ' + input)
-    const command = Parser(input, this.state.command)
-
-    console.log('COMMAND', command)
-    if (command.isUnknown) this.unknownWord(command.unknown)
-    else if (command.isInvalid) this.invalidCommand()
-    //else if (command.isDirection) VERB.MOVE(this.props, command.direction)
-    else if (!this.itemIsVisible(command.words[0])) this.itemNotVisible()
-    else this.dispatchAction(command)
+    const command = this.props.parse(input)
+    console.log(command)
+    // // const action = interpret(command)
+    //
+    // console.log('COMMAND', command)
+    // if (command.isUnknown) this.unknownWord(command.unknown)
+    // else if (command.isInvalid) this.invalidCommand()
+    // else VERB.OPEN(command, this.props)
+    // //else if (command.isDirection) VERB.MOVE(this.props, command.direction)
+    // // else if (command.item1 && !this.itemIsVisible(command.item1))
+    // //   this.itemNotVisible()
+    // // else this.dispatchAction(command)
   }
-
   clearCommand() {
     this.setState(() => {
-      return {command: defaultCommand}
+      return {
+        command: defaultCommand,
+      }
     })
   }
 
@@ -72,8 +75,7 @@ class Interpreter extends Component {
     this.clearCommand()
   }
 
-  findItem(ITEMNAME) {
-    let itemName = ITEMNAME.toLowerCase()
+  findItem(itemName) {
     return this.props.items.find(item => item.name === itemName)
   }
 
@@ -145,9 +147,9 @@ const mapDispatch = dispatch => {
     addLog: log => {
       dispatch(addLog(log))
     },
-    // dispatchMove: direction => {
-    //   dispatch(move(direction))
-    // },
+    parse: command => {
+      dispatch(parseCommand(command))
+    },
 
     updateItems: item => {
       dispatch(updateItems(item))
@@ -158,4 +160,4 @@ const mapDispatch = dispatch => {
 export default connect(
   mapState,
   mapDispatch
-)(Interpreter)
+)(CommandLine)

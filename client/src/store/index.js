@@ -7,6 +7,7 @@ import Map from './reducers/Map'
 import log from './reducers/log'
 import player from './reducers/player'
 import items from './reducers/items'
+import command from './reducers/command'
 
 const reducer = combineReducers({items, player, Map, log})
 //const reducer = items
@@ -21,6 +22,8 @@ if (process.env.NODE_ENV === 'development') {
 const store = createStore(reducer, middleware)
 export * from './reducers/Map'
 export * from './reducers/log'
+export * from './reducers/player'
+export * from './reducers/command'
 export * from './reducers/player'
 export * from './reducers/items'
 export default store
