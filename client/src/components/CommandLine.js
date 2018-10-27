@@ -1,22 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-
-import {updateItems, addLog, parseCommand} from '../store'
-
-import * as VERB from '../verbs'
-
-const defaultCommand = {
-  isInvalid: false,
-  isUnknown: false,
-  isDirection: false,
-  unknown: null,
-  direction: null,
-  verb: null,
-  item1: null,
-  prep: null,
-  item2: null,
-  words: [],
-}
+import {addLog, parseCommand} from '../store'
 
 class CommandLine extends Component {
   constructor() {
@@ -25,8 +9,6 @@ class CommandLine extends Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.findItem = this.findItem.bind(this)
-    this.clearCommand = this.clearCommand.bind(this)
   }
 
   handleChange(event) {
@@ -35,81 +17,13 @@ class CommandLine extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    const input = this.state.input
-    this.props.addLog('> ' + input)
+    this.props.addLog('> ' + this.state.input)
+
+    const command = this.props.command
+    command.input = this.state.input
+    this.props.parse({...command})
 
     this.setState({input: ''})
-    const command = this.props.parse(input)
-    console.log(command)
-    // // const action = interpret(command)
-    //
-    // console.log('COMMAND', command)
-    // if (command.isUnknown) this.unknownWord(command.unknown)
-    // else if (command.isInvalid) this.invalidCommand()
-    // else VERB.OPEN(command, this.props)
-    // //else if (command.isDirection) VERB.MOVE(this.props, command.direction)
-    // // else if (command.item1 && !this.itemIsVisible(command.item1))
-    // //   this.itemNotVisible()
-    // // else this.dispatchAction(command)
-  }
-  clearCommand() {
-    this.setState(() => {
-      return {
-        command: defaultCommand,
-      }
-    })
-  }
-
-  invalidCommand() {
-    this.props.addLog("I'm not sure what you're trying to say.")
-    this.clearCommand()
-  }
-
-  unknownWord(word) {
-    this.props.addLog("I don't know the word " + word.toLowerCase() + '.')
-    this.clearCommand()
-  }
-
-  itemNotVisible() {
-    this.props.addLog("You don't see that here!")
-    this.clearCommand()
-  }
-
-  findItem(itemName) {
-    return this.props.items.find(item => item.name === itemName)
-  }
-
-  itemIsInInv(item) {
-    return item.loc === 'player'
-  }
-
-  itemIsInCurrentLoc(item) {
-    console.log(item.loc, this.props.location.name)
-    return item.loc === this.props.location.name
-  }
-
-  // only return container if it is another item
-  itemIsInContainer(item) {
-    return this.props.items.find(i => i.name === item.loc)
-  }
-
-  itemIsVisible(item) {
-    if (this.itemIsInInv(item) || this.itemIsInCurrentLoc(item)) return true
-    else {
-      let container = this.itemIsInContainer(item)
-      if (container) {
-        return (
-          (this.itemIsInInv(container) && container.isOpen) ||
-          (this.itemIsInCurrentLoc(container) && container.isOpen)
-        )
-      }
-    }
-  }
-  dispatchAction(command) {
-    console.log('DISPATCH ACTION', command)
-    const result = VERB[command.verb](this.props, command)
-    console.log('RESULT', result)
-    this.props.addLog(result)
   }
 
   render() {
@@ -139,21 +53,14 @@ const mapState = state => {
     player: state.player,
     items: state.items,
     log: state.log,
+    command: state.command,
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    addLog: log => {
-      dispatch(addLog(log))
-    },
-    parse: command => {
-      dispatch(parseCommand(command))
-    },
-
-    updateItems: item => {
-      dispatch(updateItems(item))
-    },
+    addLog: log => dispatch(addLog(log)),
+    parse: command => dispatch(parseCommand(command)),
   }
 }
 

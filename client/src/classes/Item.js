@@ -1,5 +1,6 @@
-class Object {
-  constructor({name, description, loc, isInvItem, isContainer}) {
+class Item {
+  constructor ({ id, name, description, loc, isInvItem, isContainer }) {
+    this.id = id
     this.name = name
     this.aName = 'a ' + name
     this.pName = name + 's'
@@ -37,12 +38,12 @@ class Object {
   //   }
   // }
 
-  EXAMINE = function() {
+  EXAMINE = function () {
     return this.describe()
   }
 }
 
-export default Object
+export default Item
 
 // class OBJECT {
 //     constructor(name) {

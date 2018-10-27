@@ -1,4 +1,4 @@
-import {listItems} from '../classes'
+//import {listItems} from '../classes'
 
 const OPEN = (props, command) => {
   console.log(props, command)

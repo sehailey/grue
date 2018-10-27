@@ -12,6 +12,7 @@ import axios from 'axios'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const ADD_ITEM = 'ADD_ITEM'
 const GOT_ALL_ITEMS = 'GOT_ALL_ITEMS'
+//const GET_CURRENT_ITEMS = 'GET_CURRENT_ITEMS'
 const UPDATE_ITEMS = 'UPDATE_ITEMS'
 
 /*** INITIAL STATE ***/
@@ -21,32 +22,32 @@ const defaultItems = []
 
 export const removeItem = item => ({
   type: REMOVE_ITEM,
-  item,
+  item
 })
 
 export const addItem = item => ({
   type: ADD_ITEM,
-  item,
+  item
 })
 
 export const updateItems = items => ({
   type: UPDATE_ITEMS,
-  items,
+  items
 })
 
 export const gotAllItems = items => ({
   type: GOT_ALL_ITEMS,
-  items,
+  items
 })
 
 /*** HELPER FUNCTION ***/
 const constructItems = items => {
-  const allItems = []
-  items.map(item => {
+  const allItems = items.map(item => {
     try {
-      allItems.push(new ITEMS[item.name](item))
+      return new ITEMS[item.name](item)
     } catch (e) {
       console.log(item.name + ' not a valid item')
+      return e
     }
   })
   return allItems
@@ -55,23 +56,23 @@ const constructItems = items => {
 /*** THUNK CREATORS ***/
 
 export const getAllItems = () => async dispatch => {
-  const {data} = await axios.get('/api/items')
+  const { data } = await axios.get('/api/items')
 
   const items = constructItems(data)
   dispatch(gotAllItems(items))
 }
 
 /** REDUCER **/
-export default function(items = defaultItems, action) {
+export default function (items = defaultItems, action) {
   switch (action.type) {
-    case GOT_ALL_ITEMS: {
-      return [...action.items]
-    }
-    case UPDATE_ITEMS: {
-      return [...action.items]
-    }
-    default: {
-      return items
-    }
+  case GOT_ALL_ITEMS: {
+    return [...action.items]
+  }
+  case UPDATE_ITEMS: {
+    return [...action.items]
+  }
+  default: {
+    return items
+  }
   }
 }

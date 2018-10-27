@@ -18,7 +18,6 @@ export const changeItemInInv = player => ({
 
 const defaultPlayer = {
   name: 'notnull',
-  inv: [],
   currentLoc: 'westOfHouse',
 }
 
