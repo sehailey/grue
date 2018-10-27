@@ -1,4 +1,5 @@
-const items = require('./items')
-const rooms = require('./rooms')
+const invItems = require("./invItems");
+const nonInvItems = require("./nonInvItems");
+const rooms = require("./rooms");
 
-module.exports = [items, rooms]
+module.exports = [invItems, nonInvItems, rooms];

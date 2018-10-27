@@ -1,7 +1,7 @@
 //import {listItems} from '../classes'
 
-const OPEN = (props, command) => {
-  console.log(props, command)
+const OPEN = (...args) => {
+  console.log(...args)
   // let item = props.findItem(command.words[0])
   //
   // console.log('ITEM', item)

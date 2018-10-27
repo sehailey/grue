@@ -56,8 +56,6 @@ const Parser = function (command) {
 
   //test if second word is item
   const second = command.words[1]
-  console.log(items)
-  console.log(second, items.includes(second))
   if (second && items.includes(second)) {
     command.item1 = second.toLowerCase()
   }

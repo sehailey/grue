@@ -24,10 +24,8 @@ class Game extends Component {
   }
 
   render () {
-    const { log } = this.props
-    // const currentLoc = rooms.find(room => room.name === player.currentLoc)
-    // if (!currentLoc) return <div />
-    // if (log.length === 0) addLog(currentLoc.description)
+    const { log, player, rooms, items } = this.props
+    if (!player || rooms.length === 0 || items.length === 0) return <div />
 
     return (
       <div className="container">
@@ -53,9 +51,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchData: async () => {
-      await dispatch(getMap())
       await dispatch(getAllItems())
-      return true
+      await dispatch(getMap())
     },
     initializeCommands: () => {
       dispatch(clearCommand())

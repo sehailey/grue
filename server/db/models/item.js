@@ -12,7 +12,8 @@ const Item = db.define("item", {
   loc: { type: Sequelize.STRING },
   isContainer: { type: Sequelize.BOOLEAN, defaultValue: false },
   isOpen: { type: Sequelize.BOOLEAN, defaultValue: false },
-  isInvItem: { type: Sequelize.BOOLEAN, defaultValue: false }
+  isInvItem: { type: Sequelize.BOOLEAN, defaultValue: false },
+  isLit: { type: Sequelize.BOOLEAN, defaultValue: false }
 });
 
 Item.prototype.describe = () => this.description;

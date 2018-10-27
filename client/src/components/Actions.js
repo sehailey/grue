@@ -11,17 +11,17 @@ class Actions extends Component {
     }
   }
   componentDidMount () {
+    const { items, rooms, log, player, addLog } = this.props
+    const currentLoc = rooms.find(room => room.name === player.currentLoc)
+    if (log.length === 0) addLog(currentLoc.description)
     console.log('ACTION COMPONENT MOUNTED!', this.props, this.state)
-    const visibleOpenContainerNames = this.props.items
-      .filter(
-        item => item.isContainer && item.isOpen && (item.loc === 'player' || item.loc === this.props.player.currentLoc)
-      )
+    const visibleOpenContainerNames = items
+      .filter(item => item.isContainer && item.isOpen && (item.loc === 'player' || item.loc === player.currentLoc))
       .map(item => item.name)
     console.log('visible open containers:', visibleOpenContainerNames)
 
-    const visibleItems = this.props.items.filter(
-      item =>
-        item.loc === this.props.player.currentLoc || item.loc === 'player' || visibleOpenContainerNames.includes(item)
+    const visibleItems = items.filter(
+      item => item.loc === player.currentLoc || item.loc === 'player' || visibleOpenContainerNames.includes(item)
     )
     console.log('visibleItems:', visibleItems)
     this.setState({ visibleItems })
@@ -30,14 +30,10 @@ class Actions extends Component {
     if (prevProps.command.words === this.props.command.words) return false
     return true
   }
-  isVisible (item) {
-    return item.loc === 'player' || this.props.player.currentLoc
-  }
+
   render () {
     const { addLog, clearCommand, command, items } = this.props
-    if (!command.words.length || !items) return <div />
-    // if (command.item1) locateItem1(command.item1)
-    // if (command.item2) locateItem2(command.item2)
+
     console.log('I got a new command! the words are now:', command.words)
     if (command.isUnknown) {
       addLog('I don\'t know the word ' + command.unknown.toLowerCase() + '.')
@@ -46,7 +42,7 @@ class Actions extends Component {
       addLog('Someday you\'ll be able to move.')
     } else if (command.verb) {
       try {
-        const complete = VERB[command.verb](this.props)
+        const complete = VERB[command.verb]({ ...this.props, ...this.state })
         if (complete) clearCommand()
       } catch (e) {
         console.log(e)

@@ -1,5 +1,5 @@
 class Item {
-  constructor ({ id, name, description, loc, isInvItem, isContainer }) {
+  constructor ({ id, name, description, loc, isInvItem, isContainer, isLit }) {
     this.id = id
     this.name = name
     this.aName = 'a ' + name
@@ -8,6 +8,7 @@ class Item {
     this.description = description
     this.isInvItem = isInvItem
     this.isContainer = isContainer
+    this.isLit = isLit
   }
   describe = () => {
     return this.description

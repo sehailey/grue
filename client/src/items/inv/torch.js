@@ -1,8 +1,6 @@
 import { Item } from '../../classes'
 
 const torch = torch => new Item(torch)
-torch.isInvItem = true
-torch.isLit = false
 
 torch.BURN = function (fire) {
   if (this.isLit === false) {

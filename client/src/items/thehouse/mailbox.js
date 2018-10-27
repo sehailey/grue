@@ -1,19 +1,10 @@
-// import { Item } from '../../classes'
-// const mailbox = new Item('mailbox')
-// mailbox.pname = 'mailboxes'
-// mailbox.loc = 'westOfHouse'
-//
+import { Item } from '../../classes'
+const mailbox = mailbox => new Item(mailbox)
+mailbox.pname = 'mailboxes'
+
 // mailbox.canTake = false
 // mailbox.isContainer = true
-// mailbox.descriptions = {
-//   closed: 'The mailbox is closed.',
-//   open: 'The mailbox is open.'
-// }
-//
-// mailbox.describe = function () {
-//   if (!this.isOpen) return this.descriptions.closed
-//   else return this.descriptions.open
-// }
+
 // mailbox.description = mailbox.descriptions.closed
 //
 // mailbox.OPEN = function () {
@@ -31,5 +22,5 @@
 // mailbox.TAKE = function () {
 //   return 'It is securely anchored.'
 // }
-//
-// export default mailbox
+
+export default mailbox
