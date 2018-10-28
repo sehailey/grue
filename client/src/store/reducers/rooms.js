@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import * as ROOMS from '../../rooms'
 // /*** ACTION TYPES ***/
 const GOT_MAP = 'GOT_MAP'
 const MAP_ERROR = 'MAP_ERROR'
@@ -16,12 +16,26 @@ export const mapError = error => ({
 
 const defaultMap = []
 
+/*** HELPER FUNCTION ***/
+const constructRooms = rooms => {
+  const allRooms = rooms.map(room => {
+    try {
+      return new ROOMS[room.name](room)
+    } catch (e) {
+      console.log(room.name + ' not a valid room')
+      return e
+    }
+  })
+  return allRooms
+}
+
 /*** THUNK CREATORS ***/
 
 export const getMap = () => async dispatch => {
   try {
     const { data } = await axios.get('/api/rooms')
-    dispatch(gotMap(data))
+    const rooms = constructRooms(data)
+    dispatch(gotMap(rooms))
   } catch (err) {
     console.error(err)
     dispatch(mapError(err))

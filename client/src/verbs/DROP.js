@@ -1,5 +1,5 @@
 export default (props, visibleItems) => {
-  const { command, addLog, updateItem } = props
+  const { command, addLog } = props
   let complete = true
 
   if (!command.item1) {

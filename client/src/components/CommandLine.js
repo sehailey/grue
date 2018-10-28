@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { interpret } from '../functions'
-import { addLog, clearCommand, parseCommand, updateItem } from '../store'
-
+import { addLog, clearCommand, parseCommand, updateItem, movePlayer } from '../store'
+import LOOK from '../verbs/LOOK'
 class CommandLine extends Component {
   constructor () {
     super()
@@ -63,7 +63,9 @@ const mapDispatch = dispatch => {
     addLog: log => dispatch(addLog(log)),
     clearCommand: () => dispatch(clearCommand()),
     parse: command => dispatch(parseCommand(command)),
-    updateItem: item => dispatch(updateItem(item))
+    updateItem: item => dispatch(updateItem(item)),
+    movePlayer: loc => dispatch(movePlayer(loc)),
+    LOOK: props => LOOK(props)
   }
 }
 

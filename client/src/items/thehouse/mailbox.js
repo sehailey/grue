@@ -2,12 +2,19 @@ import { Item } from '../../classes'
 // import { listItems } from '../../functions'
 
 class mailbox extends Item {
-  constructor (mailbox) {
-    super(mailbox)
+  EXAMINE = props => {
+    if (!this.isOpen) props.addLog('The small mailbox is closed.')
+    else {
+      const items = this.getItemsInside(props)
+      props.addLog(`the small mailbox contains ${items}.`)
+    }
   }
+
+  getItemsInside = props => props.items.filter(item => item.loc === this.name).map(item => item.aName)
+
   OPEN = props => {
     this.isOpen = true
-    const itemsInside = props.items.filter(item => item.loc === this.name).map(item => item.aName)
+    const itemsInside = this.getItemsInside(props)
     if (itemsInside.length) {
       props.addLog('Opening the mailbox reveals a letter inside.')
     } else props.addLog('Opened.')

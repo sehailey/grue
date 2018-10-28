@@ -1,7 +1,3 @@
 import { InvItem } from '../../classes'
-class bandana extends InvItem {
-  constructor (bandana) {
-    super(bandana)
-  }
-}
+class bandana extends InvItem {}
 export default bandana

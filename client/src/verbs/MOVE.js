@@ -1,13 +1,16 @@
-const Move = (props, direction) => {
-    console.log('PROPS', props)
-    const {location} = props
-    console.log('LOCATION', location)
+const MOVE = (props, direction) => {
+  console.log(direction)
+  const { rooms, player, addLog, LOOK } = props
+  let complete = true
+  const currentLoc = rooms.find(room => room.name === player.currentLoc)
+  if (!currentLoc[direction]) {
+    addLog('You can\'t go that way.')
+  } else {
+    let success = currentLoc[direction](props)
+    if (success) LOOK(props)
+  }
 
-    if (location.isBlocked[direction]) {
-        props.addLog(location.isBlocked[direction])
-    } else if (!location[direction]) {
-        props.addLog('You can\'t go that way.')
-    } else props.dispatchMove(direction)
+  return complete
 }
 
-export default Move
+export default MOVE

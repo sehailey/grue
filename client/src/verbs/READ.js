@@ -16,7 +16,7 @@ const READ = (props, visibleItems) => {
   }
 
   if (!target.READ) {
-    addLog(`How does one read a ${this.name}`)
+    addLog(`How does one read a ${target.name}?`)
     return complete
   }
 

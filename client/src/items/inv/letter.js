@@ -1,14 +1,8 @@
 import { InvItem } from '../../classes'
 
 class letter extends InvItem {
-  constructor (letter) {
-    super(letter)
-  }
-
-  TKAE = props => {
-    if (this.loc === 'player') {
-      props.addLog('You already have that!')
-    }
+  EXAMINE = props => {
+    return this.description
   }
   READ = props => {
     if (this.loc !== 'player') {

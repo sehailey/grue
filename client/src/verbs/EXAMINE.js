@@ -1,11 +1,9 @@
-import impossibleAction from '../functions/impossibleAction'
-
-export default (props, visibleItems) => {
+const EXAMINE = (props, visibleItems) => {
   const { command, addLog, updateItem } = props
   let complete = true
 
   if (!command.item1) {
-    addLog('What do you want to take?')
+    addLog('What do you want to examine?')
     complete = false
     return complete
   }
@@ -16,16 +14,14 @@ export default (props, visibleItems) => {
     addLog('You don\'t see that here!')
     return complete
   }
-
-  if (!target.TAKE) {
-    const log = impossibleAction()
-    addLog(log)
+  if (!target.EXAMINE) {
+    addLog(`It looks like an ordinary ${command.item1}`)
     return complete
   }
 
-  if (visibleItems.includes(target)) {
-    const result = target.TAKE(props)
-    if (result) updateItem(target)
-  }
+  const result = target.EXAMINE(props)
+  if (result) updateItem(target)
   return complete
 }
+
+export default EXAMINE

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { Navbar, Log, CommandLine } from '../components'
-import { getMap, getAllItems, updateItem, addLog, clearCommand } from '../store'
-import findVisibleItems from '../functions/findVisibleItems'
+import { getMap, getAllItems, updateItem, movePlayer, addLog, clearCommand } from '../store'
+import LOOK from '../verbs/LOOK'
 
 class Game extends Component {
   constructor () {
@@ -13,21 +13,19 @@ class Game extends Component {
       visibleItems: []
     }
   }
-  componentWillMount () {
-    console.log('Game component will mount')
-  }
+  // componentWillMount () {
+  //   console.log('Game component will mount')
+  // }
   async componentDidMount () {
     await this.props.fetchData()
-    const { rooms, log, player, addLog } = this.props
-    const currentLoc = rooms.find(room => room.name === player.currentLoc)
-    if (log.length === 0) addLog(currentLoc.description)
-    console.log('Game component did mount')
+    //console.log('Game component did mount')
     this.setState({ loading: false })
+    LOOK(this.props)
   }
-  componentWillUpdate () {
+  componentWillUpdate (nextProps) {
     console.log('Game component will update')
   }
-  componentDidUpdate () {
+  componentDidUpdate (prevProps) {
     console.log('Game component did update')
   }
 
@@ -67,13 +65,7 @@ const mapDispatch = dispatch => {
       await dispatch(clearCommand())
     },
 
-    addLog: log => {
-      dispatch(addLog(log))
-    },
-
-    updateItem: item => {
-      dispatch(updateItem(item))
-    }
+    addLog: log => dispatch(addLog(log))
   }
 }
 
