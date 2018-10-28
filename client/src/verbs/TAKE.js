@@ -1,33 +1,33 @@
-// export default props => {
-//   let complete = true
-//   const { addLog, clearCommand, player, isVisible, items } = props
-//   const { item1, item2, prep } = props.command
-//
-//   const target = items.find(item => item.name === item1)
-//   if (!target) {
-//     addLog('What do you want to take?')
-//     return false
-//   }
-//
-//   console.log(isVisible(target))
-//   // const visibleOpenContainer = items.find(item => {
-//   //   return (
-//   //     item.name === item1.loc &&
-//   //     item.isOpen &&
-//   //     item.loc === (player.currentLoc || 'player')
-//   //   )
-//   // })
-//
-//   console.log('TAKE VERB CHECKS')
-//   console.log('target loc:', target.loc)
-//   // console.log('target is visible?', targetIsVisible)
-//   // console.log('visible open container?', visibleOpenContainer)
-//
-//   // if (target.loc === 'player') {
-//   //   addLog('You already have that!')
-//   // } else if (!targetIsVisible) {
-//   //   addLog("You don't see that here!")
-//   // } else {
-//   //   target.TAKE(props)
-//   // }
-// }
+import impossibleAction from '../functions/impossibleAction'
+
+export default (props, visibleItems) => {
+  const { command, addLog, updateItem } = props
+  let complete = true
+
+  if (!command.item1) {
+    addLog('What do you want to take?')
+    complete = false
+    return complete
+  }
+
+  const target = visibleItems.find(item => item.name === command.item1)
+
+  if (!target) {
+    addLog('You don\'t see that here!')
+    return complete
+  }
+
+  console.log('TARGET HAS OWN PROPERTY TAKE', target.hasOwnProperty('TAKE'))
+
+  if (!target.TAKE) {
+    const log = impossibleAction()
+    addLog(log)
+    return complete
+  }
+
+  if (visibleItems.includes(target)) {
+    const result = target.TAKE(props)
+    if (result) updateItem(target)
+  }
+  return complete
+}

@@ -1,3 +1,7 @@
-import { Item } from '../../classes'
-const bandana = bandana => new Item(bandana)
+import { InvItem } from '../../classes'
+class bandana extends InvItem {
+  constructor (bandana) {
+    super(bandana)
+  }
+}
 export default bandana

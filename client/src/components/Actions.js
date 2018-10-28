@@ -1,38 +1,49 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateItems, clearCommand, addLog } from '../store'
+import { updateItem, clearCommand, addLog } from '../store'
+import findVisibleItems from '../functions/findVisibleItems'
 import * as VERB from '../verbs'
 
 class Actions extends Component {
   constructor () {
+    console.log('constructor')
     super()
     this.state = {
       visibleItems: []
     }
   }
+  componentWillMount () {
+    console.log('component will mount.')
+  }
   componentDidMount () {
-    const { items, rooms, log, player, addLog } = this.props
+    const { rooms, log, player, addLog } = this.props
     const currentLoc = rooms.find(room => room.name === player.currentLoc)
     if (log.length === 0) addLog(currentLoc.description)
-    console.log('ACTION COMPONENT MOUNTED!', this.props, this.state)
-    const visibleOpenContainerNames = items
-      .filter(item => item.isContainer && item.isOpen && (item.loc === 'player' || item.loc === player.currentLoc))
-      .map(item => item.name)
-    console.log('visible open containers:', visibleOpenContainerNames)
-
-    const visibleItems = items.filter(
-      item => item.loc === player.currentLoc || item.loc === 'player' || visibleOpenContainerNames.includes(item)
-    )
-    console.log('visibleItems:', visibleItems)
-    this.setState({ visibleItems })
+    console.log('component did mount')
   }
+
   shouldComponentUpdate (prevProps) {
+    console.log('should component update?')
     if (prevProps.command.words === this.props.command.words) return false
     return true
   }
 
+  componentWillUpdate () {
+    console.log('component will update! visibleItems:', this.state.visibleItems)
+  }
+
+  componentDidUpdate () {
+    console.log('component did update!')
+  }
+
+  setVisibleItems () {
+    const visibleItems = findVisibleItems(this.props)
+    this.setState({ visibleItems })
+  }
+
   render () {
-    const { addLog, clearCommand, command, items } = this.props
+    const { addLog, clearCommand, command } = this.props
+    if (!command.words.length) return <div />
 
     console.log('I got a new command! the words are now:', command.words)
     if (command.isUnknown) {
@@ -42,7 +53,7 @@ class Actions extends Component {
       addLog('Someday you\'ll be able to move.')
     } else if (command.verb) {
       try {
-        const complete = VERB[command.verb]({ ...this.props, ...this.state })
+        const complete = VERB[command.verb](this.props, this.state)
         if (complete) clearCommand()
       } catch (e) {
         console.log(e)
@@ -69,7 +80,7 @@ const mapDispatch = dispatch => {
       dispatch(addLog(log))
     },
     updateItems: item => {
-      dispatch(updateItems(item))
+      dispatch(updateItem(item))
     },
     clearCommand: () => {
       dispatch(clearCommand())

@@ -1,22 +1,38 @@
-//import {listItems} from '../classes'
+const OPEN = (props, visibleItems) => {
+  const { command, addLog, updateItem } = props
+  let complete = true
+  console.log(props, visibleItems)
 
-const OPEN = (...args) => {
-  console.log(...args)
-  // let item = props.findItem(command.words[0])
-  //
-  // console.log('ITEM', item)
-  // let result
-  // if (item.isBarrier) {
-  //     result = props.location.OPEN(item)
-  //     return result
-  // } else if (item.isContainer) {
-  //     // need to locate item
-  //     result = item.OPEN()
-  //     let contents = props.items.filter(i => i.loc === item.name)
-  //     if (contents.length === 0) result += ' It is empty.'
-  //     else result += ' You see ' + listItems(contents) + ' inside.'
-  //     return result
-  // }
+  if (!command.item1) {
+    addLog('What do you want to open?')
+    complete = false
+    return complete
+  }
+
+  const target = visibleItems.find(item => item.name === command.item1)
+
+  if (!target) {
+    addLog('You don\'t see that here!')
+    return complete
+  }
+
+  if (!target.OPEN) {
+    addLog(`You must tell me how to do that with a ${target.name}`)
+    return complete
+  }
+
+  if (target.isOpen) {
+    addLog('It\'s already open.')
+    return complete
+  }
+
+  if (target.isContainer && visibleItems.includes(target)) {
+    const result = target.OPEN(props)
+    if (result) updateItem(target)
+    return complete
+  }
+
+  return complete
 }
 
 export default OPEN

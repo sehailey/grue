@@ -1,20 +1,34 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Navbar, Log, CommandLine, Actions } from '../components'
-import { getMap, getAllItems, updateItems, addLog, clearCommand } from '../store'
+import { Navbar, Log, CommandLine } from '../components'
+import { getMap, getAllItems, updateItem, addLog, clearCommand } from '../store'
+import findVisibleItems from '../functions/findVisibleItems'
 
 class Game extends Component {
   constructor () {
     super()
     this.state = {
-      input: '',
-      moves: 0
+      moves: 0,
+      visibleItems: []
     }
   }
-
-  componentDidMount () {
-    this.props.fetchData()
+  componentWillMount () {
+    console.log('Game component will mount')
+  }
+  async componentDidMount () {
+    await this.props.fetchData()
+    const { rooms, log, player, addLog } = this.props
+    const currentLoc = rooms.find(room => room.name === player.currentLoc)
+    if (log.length === 0) addLog(currentLoc.description)
+    console.log('Game component did mount')
+    this.setState({ loading: false })
+  }
+  componentWillUpdate () {
+    console.log('Game component will update')
+  }
+  componentDidUpdate () {
+    console.log('Game component did update')
   }
 
   incrementMoves () {
@@ -22,7 +36,6 @@ class Game extends Component {
     newMoves++
     this.setState(() => ({ moves: newMoves }))
   }
-
   render () {
     const { log, player, rooms, items } = this.props
     if (!player || rooms.length === 0 || items.length === 0) return <div />
@@ -31,9 +44,7 @@ class Game extends Component {
       <div className="container">
         <Navbar moves={this.state.moves} />
         <Log log={log} />
-
-        <CommandLine value={this.state.input} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
-        <Actions />
+        <CommandLine />
       </div>
     )
   }
@@ -53,16 +64,15 @@ const mapDispatch = dispatch => {
     fetchData: async () => {
       await dispatch(getAllItems())
       await dispatch(getMap())
+      await dispatch(clearCommand())
     },
-    initializeCommands: () => {
-      dispatch(clearCommand())
-    },
+
     addLog: log => {
       dispatch(addLog(log))
     },
 
-    updateItems: item => {
-      dispatch(updateItems(item))
+    updateItem: item => {
+      dispatch(updateItem(item))
     }
   }
 }

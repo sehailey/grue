@@ -1,26 +1,30 @@
 import { Item } from '../../classes'
-const mailbox = mailbox => new Item(mailbox)
-mailbox.pname = 'mailboxes'
+// import { listItems } from '../../functions'
 
-// mailbox.canTake = false
-// mailbox.isContainer = true
+class mailbox extends Item {
+  constructor (mailbox) {
+    super(mailbox)
+  }
+  OPEN = props => {
+    this.isOpen = true
+    const itemsInside = props.items.filter(item => item.loc === this.name).map(item => item.aName)
+    if (itemsInside.length) {
+      props.addLog('Opening the mailbox reveals a letter inside.')
+    } else props.addLog('Opened.')
 
-// mailbox.description = mailbox.descriptions.closed
-//
-// mailbox.OPEN = function () {
-//   this.isOpen = true
-//   this.description = this.descriptions.open
-//   return 'You open the mailbox.'
-// }
-//
-// mailbox.CLOSE = function () {
-//   this.isOpen = false
-//   this.description = this.descriptions.closed
-//   return 'You close the mailbox.'
-// }
-//
-// mailbox.TAKE = function () {
-//   return 'It is securely anchored.'
-// }
+    return true
+  }
+
+  CLOSE = props => {
+    this.isOpen = false
+    props.addLog(`You closed the ${this.name}.`)
+
+    return true
+  }
+
+  TAKE = props => {
+    props.addLog('It\'s securely anchored.')
+  }
+}
 
 export default mailbox

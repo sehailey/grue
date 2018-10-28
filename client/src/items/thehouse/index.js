@@ -1,8 +1,7 @@
 import { Item } from '../../classes'
 
-export const house = new Item('house')
+const house = house => new Item(house)
 
-house.loc = 'thehouse'
-
+export { house }
 export { default as mailbox } from './mailbox'
 export { default as windows } from './window'

@@ -14,28 +14,36 @@ class Item {
     return this.description
   }
 
-  // OPEN = () => {
-  //   return "You can't open that!"
-  // }
-  //
-  // READ = () => {
-  //   return "It doesn't say anything very interesting."
-  // }
-  //
-  // TAKE = () => {
-  //   if (!this.isInvItem) return "You can't take that!"
-  //   else if (this.loc === 'player') return 'You already have that!'
+  // OPEN = props => {
+  //   if (!this.isContainer) props.addLog(`You must tell me how to do that with a ${this.name}`)
+  //   else if (this.isOpen) props.addLog('It\'s already open.')
   //   else {
-  //     this.loc = 'player'
-  //     return 'Taken.'
+  //     this.isOpen = true
+  //     props.updateItem(this)
+  //     props.addLog(`You open the ${this.name}`)
   //   }
   // }
   //
-  // DROP = loc => {
-  //   if (!this.loc === 'player') return "You don't have that!"
+  // READ = () => {
+  //   return 'It doesn\'t say anything very interesting.'
+  // }
+  //
+  // TAKE = props => {
+  //   if (!this.isInvItem) props.addLog('You can\'t take that!')
+  //   else if (this.loc === 'player') props.addLog(`You already have the ${this.name}`)
   //   else {
-  //     this.loc = loc
-  //     return 'Dropped.'
+  //     this.loc = 'player'
+  //     props.addLog('Taken.')
+  //     return true
+  //   }
+  // }
+  // //
+  // DROP = props => {
+  //   if (this.loc === 'player') props.addLog(`You don't have the ${this.name}`)
+  //   else {
+  //     this.loc = props.player.currentLoc
+  //     props.addLog('Dropped.')
+  //     return true
   //   }
   // }
 

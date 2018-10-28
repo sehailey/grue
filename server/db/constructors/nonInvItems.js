@@ -5,4 +5,10 @@ const mailbox = {
   isContainer: true
 };
 
-module.exports = [mailbox];
+const westhouse = {
+  name: "house",
+  description: "It's an ordinary looking house.",
+  loc: "westOfHouse"
+};
+
+module.exports = [mailbox, westhouse];

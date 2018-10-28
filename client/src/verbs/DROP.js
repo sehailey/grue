@@ -1,9 +1,23 @@
-const Drop = (props, item) => {
-    let action
-    if (item.loc !== 'player') action = 'You don\'t have that!'
-    else action = item.DROP(props.location.name)
-    props.addLog(action)
-    return item
-}
+export default (props, visibleItems) => {
+  const { command, addLog, updateItem } = props
+  let complete = true
 
-export default Drop
+  if (!command.item1) {
+    addLog('What do you want to drop?')
+    complete = false
+    return complete
+  }
+
+  const target = props.items.find(item => item.loc === 'player')
+
+  if (!target) {
+    addLog(`You don't have the ${this.name}`)
+    return complete
+  } else {
+    target.loc = props.player.currentLoc
+    props.addLog('Dropped.')
+    props.updateItem(this)
+  }
+
+  return complete
+}

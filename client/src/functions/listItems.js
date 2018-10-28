@@ -1,5 +1,4 @@
-const listItems = container => {
-  let items = container.map(item => item.aName)
+const listItems = items => {
   let itemList = ''
 
   if (items.length === 1) itemList += items[0]

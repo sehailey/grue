@@ -1,32 +1,34 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {addLog, parseCommand} from '../store'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { interpret } from '../functions'
+import { addLog, clearCommand, parseCommand, updateItem } from '../store'
 
 class CommandLine extends Component {
-  constructor() {
+  constructor () {
     super()
-    this.state = {input: ''}
+    this.state = { input: '' }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange(event) {
-    this.setState({input: event.target.value})
+  handleChange (event) {
+    this.setState({ input: event.target.value })
   }
 
-  handleSubmit(event) {
+  async handleSubmit (event) {
     event.preventDefault()
     this.props.addLog('> ' + this.state.input)
 
     const command = this.props.command
     command.input = this.state.input
-    this.props.parse({...command})
+    await this.props.parse({ ...command })
+    interpret({ ...this.props })
 
-    this.setState({input: ''})
+    this.setState({ input: '' })
   }
 
-  render() {
+  render () {
     return (
       <div className="control-panel mt-2">
         <form onSubmit={this.handleSubmit}>
@@ -49,18 +51,19 @@ class CommandLine extends Component {
 
 const mapState = state => {
   return {
-    location: state.location,
-    player: state.player,
-    items: state.items,
-    log: state.log,
     command: state.command,
+    items: state.items,
+    player: state.player,
+    rooms: state.rooms
   }
 }
 
 const mapDispatch = dispatch => {
   return {
     addLog: log => dispatch(addLog(log)),
+    clearCommand: () => dispatch(clearCommand()),
     parse: command => dispatch(parseCommand(command)),
+    updateItem: item => dispatch(updateItem(item))
   }
 }
 
