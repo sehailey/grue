@@ -5,6 +5,8 @@ import { filler, look, inventory, directions, prepositions, misc } from '../dict
 const items = Object.keys(ITEM)
   .concat(misc)
   .map(word => word.toUpperCase())
+  .map(word => word.replace(/[\W_]+/, ''))
+console.log(items)
 const verbs = Object.keys(VERB).concat(look)
 
 const dictionary = verbs
@@ -52,6 +54,9 @@ const Parser = function (command) {
 
   if (verbs.includes(first)) {
     command.verb = first
+  } else {
+    command.isInvalid = true
+    return command
   }
 
   //test if second word is item
