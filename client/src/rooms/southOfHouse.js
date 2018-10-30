@@ -1,4 +1,11 @@
-import {Room} from '../classes'
+import { Room } from '../classes'
 
-const southOfHouse = constructor => new Room(constructor)
+class southOfHouse extends Room {
+  N = props => props.addLog('The windows are all boarded.')
+
+  W = props => {
+    props.movePlayer('westOfHouse')
+    return true
+  }
+}
 export default southOfHouse

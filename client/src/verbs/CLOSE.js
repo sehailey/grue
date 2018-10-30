@@ -11,7 +11,6 @@ const CLOSE = (props, visibleItems) => {
   }
 
   const target = visibleItems.find(item => item.name === command.item1)
-  console.log('TARGET', target)
   if (!target) {
     addLog('You don\'t see that here!')
     return complete
