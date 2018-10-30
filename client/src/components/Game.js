@@ -25,9 +25,9 @@ class Game extends Component {
   // componentWillUpdate (nextProps) {
   //   console.log('Game component will update')
   // }
-  // componentDidUpdate (prevProps) {
-  //   console.log('Game component did update')
-  // }
+  componentDidUpdate (prevProps) {
+    console.log('Game component did update')
+  }
 
   incrementMoves () {
     let newMoves = this.state.moves

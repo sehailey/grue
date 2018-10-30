@@ -1,4 +1,4 @@
-import { InvItem } from '../../classes'
+import { InvItem } from '../classes'
 
 class torch extends InvItem {
   BURN = props => {

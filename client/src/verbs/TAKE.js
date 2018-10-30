@@ -1,7 +1,7 @@
 import impossibleAction from '../functions/impossibleAction'
 
 export default (props, visibleItems) => {
-  const { command, addLog, updateItem } = props
+  const { command, addLog } = props
   let complete = true
 
   if (!command.item1) {
@@ -17,6 +17,11 @@ export default (props, visibleItems) => {
     return complete
   }
 
+  if (target.loc === 'player') {
+    props.addLog('You already have the ' + target.name + '.')
+    return complete
+  }
+
   if (!target.TAKE) {
     const log = impossibleAction()
     addLog(log)
@@ -24,8 +29,8 @@ export default (props, visibleItems) => {
   }
 
   if (visibleItems.includes(target)) {
-    const result = target.TAKE(props)
-    if (result) updateItem(target)
+    target.TAKE(props)
+    return complete
   }
   return complete
 }

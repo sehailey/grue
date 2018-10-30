@@ -1,4 +1,4 @@
-import { Item } from '../../classes'
+import { Item } from '../classes'
 // import { listItems } from '../../functions'
 
 class mailbox extends Item {
@@ -10,7 +10,8 @@ class mailbox extends Item {
     }
   }
 
-  getItemsInside = props => props.items.filter(item => item.loc === this.name).map(item => item.aName)
+  getItemsInside = props =>
+    props.items.filter(item => item.loc === this.name).map(item => item.aName)
 
   OPEN = props => {
     this.isOpen = true

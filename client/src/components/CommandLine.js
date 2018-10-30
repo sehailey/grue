@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { interpret } from '../functions'
-import { addLog, clearCommand, parseCommand, updateItem, movePlayer } from '../store'
+import {
+  addLog,
+  clearCommand,
+  parseCommand,
+  updateItem,
+  movePlayer
+} from '../store'
 import LOOK from '../verbs/LOOK'
 class CommandLine extends Component {
   constructor () {

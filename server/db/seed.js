@@ -1,6 +1,8 @@
 const db = require("../db");
 const { Item, Room } = require("./models");
-const [invItems, nonInvItems, rooms] = require("./constructors");
+//const [invItems, nonInvItems, rooms] = require("./constructors");
+const items = require("../../client/src/items/constructors");
+const rooms = require("../../client/src/rooms/constructors");
 const fs = require("fs");
 
 // const torch = {
@@ -15,11 +17,7 @@ async function runSeed() {
   console.log("db synced!");
   console.log("seeding...");
   try {
-    await Promise.all([
-      Item.bulkCreate(invItems),
-      Item.bulkCreate(nonInvItems),
-      Room.bulkCreate(rooms)
-    ]);
+    await Promise.all([Item.bulkCreate(items), Room.bulkCreate(rooms)]);
     console.log("seeded successfully");
   } catch (err) {
     console.error(err);

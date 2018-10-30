@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as ROOMS from './rooms'
+import * as ROOMS from '../../rooms'
 
 const defaultMap = []
 

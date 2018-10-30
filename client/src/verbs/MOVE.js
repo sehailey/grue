@@ -5,8 +5,8 @@ const MOVE = (props, direction) => {
   if (!currentLoc[direction]) {
     addLog('You can\'t go that way.')
   } else {
-    let success = currentLoc[direction](props)
-    if (success === true) LOOK(props)
+    currentLoc[direction](props)
+    if (currentLoc.name !== props.player.currentLoc) LOOK(props)
   }
 
   return complete
