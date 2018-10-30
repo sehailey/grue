@@ -8,25 +8,12 @@ isInvItem
 }
  */
 
-const letter = {
-  name: "letter",
-  description: "it's a letter addressed to John Zerzan",
+const leaflet = {
+  name: "leaflet",
+  description:
+    "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!",
   loc: "mailbox",
   isInvItem
 };
 
-const torch = {
-  name: "torch",
-  description: "it's a torch. it is currently unlit.",
-  loc: "westOfHouse",
-  isInvItem
-};
-
-const bandana = {
-  name: "bandana",
-  description: "You could probably hide your identity pretty well with this.",
-  loc: "southOfHouse",
-  isInvItem
-};
-
-module.exports = [letter, torch, bandana];
+module.exports = [leaflet];

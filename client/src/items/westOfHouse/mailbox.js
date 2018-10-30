@@ -16,7 +16,7 @@ class mailbox extends Item {
     this.isOpen = true
     const itemsInside = this.getItemsInside(props)
     if (itemsInside.length) {
-      props.addLog('Opening the mailbox reveals a letter inside.')
+      props.addLog('Opening the mailbox reveals a leaflet inside.')
     } else props.addLog('Opened.')
 
     return true

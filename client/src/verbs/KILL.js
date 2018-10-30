@@ -1,7 +1,6 @@
 const KILL = (props, visibleItems) => {
   const { command, addLog, items } = props
   let complete = true
-  console.log(props, visibleItems)
 
   if (!command.item1) {
     addLog('What do you want to kill?')

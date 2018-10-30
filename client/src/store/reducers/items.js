@@ -1,5 +1,6 @@
 import * as ITEMS from '../../items'
 import axios from 'axios'
+console.log(ITEMS)
 
 /*
   Constructs the objects by retrieving them from the database, importing all of
@@ -9,8 +10,6 @@ import axios from 'axios'
 
 /*** ACTION TYPES ***/
 
-const REMOVE_ITEM = 'REMOVE_ITEM'
-const ADD_ITEM = 'ADD_ITEM'
 const GOT_ALL_ITEMS = 'GOT_ALL_ITEMS'
 //const GET_CURRENT_ITEMS = 'GET_CURRENT_ITEMS'
 const UPDATE_ITEM = 'UPDATE_ITEM'
@@ -19,16 +18,6 @@ const UPDATE_ITEM = 'UPDATE_ITEM'
 const defaultItems = []
 
 /*** ACTION CREATORS ***/
-
-export const removeItem = item => ({
-  type: REMOVE_ITEM,
-  item
-})
-
-export const addItem = item => ({
-  type: ADD_ITEM,
-  item
-})
 
 export const updateItem = item => ({
   type: UPDATE_ITEM,
@@ -46,10 +35,11 @@ const constructItems = items => {
     try {
       return new ITEMS[item.name](item)
     } catch (e) {
-      console.log(item.name + ' not a valid item')
+      //console.log(item.name + ' not a valid item')
       return e
     }
   })
+
   return allItems
 }
 
@@ -69,9 +59,8 @@ export default function (items = defaultItems, action) {
     return [...action.items]
   }
   case UPDATE_ITEM: {
-    console.log(action.item)
-    // const oldItems = items.filter(item => item.name !== action.item.name)
-    // return oldItems.concat(action.item)
+    const oldItems = items.filter(item => item.name !== action.item.name)
+    return oldItems.concat(action.item)
   }
   default: {
     return items

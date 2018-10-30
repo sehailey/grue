@@ -22,7 +22,7 @@ const constructRooms = rooms => {
     try {
       return new ROOMS[room.name](room)
     } catch (e) {
-      console.log(room.name + ' not a valid room')
+      //console.log(room.name + ' not a valid room')
       return e
     }
   })

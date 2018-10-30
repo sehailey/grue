@@ -7,5 +7,9 @@ class northOfHouse extends Room {
     props.movePlayer('westOfHouse')
     return true
   }
+  E = props => {
+    props.movePlayer('behindHouse')
+    return true
+  }
 }
 export default northOfHouse

@@ -6,7 +6,6 @@ const items = Object.keys(ITEM)
   .concat(misc)
   .map(word => word.toUpperCase())
   .map(word => word.replace(/[\W_]+/, ''))
-console.log(items)
 const verbs = Object.keys(VERB).concat(look)
 
 const dictionary = verbs
@@ -16,16 +15,6 @@ const dictionary = verbs
   .concat(inventory)
   .concat(directions)
   .map(word => word.toUpperCase())
-
-/*
-  considerations
-  the object coming in contains flags, slots, the input string, and the words.
-  I am getting stuck with a procedure for how to parse.
-
-  maybe check the slots and then word shift and then check the words...
-  keep in mind that if there are words left over the command is invalid.
-  but only the action will know this :-\
-*/
 
 const Parser = function (command) {
   command.words = command.words.concat(

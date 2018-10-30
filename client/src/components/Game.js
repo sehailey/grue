@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { Navbar, Log, CommandLine } from '../components'
-import { getMap, getAllItems, updateItem, movePlayer, addLog, clearCommand } from '../store'
+import { getMap, getAllItems, addLog, clearCommand } from '../store'
 import LOOK from '../verbs/LOOK'
 
 class Game extends Component {
@@ -22,12 +22,12 @@ class Game extends Component {
     this.setState({ loading: false })
     LOOK(this.props)
   }
-  componentWillUpdate (nextProps) {
-    console.log('Game component will update')
-  }
-  componentDidUpdate (prevProps) {
-    console.log('Game component did update')
-  }
+  // componentWillUpdate (nextProps) {
+  //   console.log('Game component will update')
+  // }
+  // componentDidUpdate (prevProps) {
+  //   console.log('Game component did update')
+  // }
 
   incrementMoves () {
     let newMoves = this.state.moves
