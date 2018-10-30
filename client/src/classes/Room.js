@@ -1,5 +1,6 @@
 class Room {
-  constructor({name, title, description, isLit}) {
+  constructor ({ id, name, title, description, isLit }) {
+    this.id = id
     this.name = name
     this.title = title
     this.description = description

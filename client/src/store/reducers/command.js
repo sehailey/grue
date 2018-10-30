@@ -4,7 +4,7 @@ const PARSE_COMMAND = 'PARSE_COMMAND'
 const CLEAR_COMMAND = 'CLEAR_COMMAND'
 
 export const parseCommand = command => ({type: PARSE_COMMAND, command})
-export const clearCommand = command => ({type: CLEAR_COMMAND})
+export const clearCommand = () => ({type: CLEAR_COMMAND})
 
 const defaultCommand = {
   isInvalid: false,

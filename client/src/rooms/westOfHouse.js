@@ -1,7 +1,12 @@
-import {Room} from '../classes'
+import { Room } from '../classes'
 
-const westOfHouse = constructor => new Room(constructor)
-westOfHouse.isBlocked = {
-  E: "The door is boarded and you can't remove the boards.",
+class westOfHouse extends Room {
+  E = props => props.addLog('The door is boarded and you can\'t remove the boards.')
+
+  N = props => {
+    props.movePlayer('northOfHouse')
+    return true
+  }
 }
+
 export default westOfHouse

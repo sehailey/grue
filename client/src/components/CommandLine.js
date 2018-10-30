@@ -1,118 +1,34 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-
-import {updateItems, addLog, parseCommand} from '../store'
-
-import * as VERB from '../verbs'
-
-const defaultCommand = {
-  isInvalid: false,
-  isUnknown: false,
-  isDirection: false,
-  unknown: null,
-  direction: null,
-  verb: null,
-  item1: null,
-  prep: null,
-  item2: null,
-  words: [],
-}
-
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { interpret } from '../functions'
+import { addLog, clearCommand, parseCommand, updateItem, movePlayer } from '../store'
+import LOOK from '../verbs/LOOK'
 class CommandLine extends Component {
-  constructor() {
+  constructor () {
     super()
-    this.state = {input: ''}
+    this.state = { input: '' }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.findItem = this.findItem.bind(this)
-    this.clearCommand = this.clearCommand.bind(this)
   }
 
-  handleChange(event) {
-    this.setState({input: event.target.value})
+  handleChange (event) {
+    this.setState({ input: event.target.value })
   }
 
-  handleSubmit(event) {
+  async handleSubmit (event) {
     event.preventDefault()
-    const input = this.state.input
-    this.props.addLog('> ' + input)
+    this.props.addLog('> ' + this.state.input)
 
-    this.setState({input: ''})
-    const command = this.props.parse(input)
-    console.log(command)
-    // // const action = interpret(command)
-    //
-    // console.log('COMMAND', command)
-    // if (command.isUnknown) this.unknownWord(command.unknown)
-    // else if (command.isInvalid) this.invalidCommand()
-    // else VERB.OPEN(command, this.props)
-    // //else if (command.isDirection) VERB.MOVE(this.props, command.direction)
-    // // else if (command.item1 && !this.itemIsVisible(command.item1))
-    // //   this.itemNotVisible()
-    // // else this.dispatchAction(command)
-  }
-  clearCommand() {
-    this.setState(() => {
-      return {
-        command: defaultCommand,
-      }
-    })
+    const command = this.props.command
+    command.input = this.state.input
+    await this.props.parse({ ...command })
+    interpret({ ...this.props })
+
+    this.setState({ input: '' })
   }
 
-  invalidCommand() {
-    this.props.addLog("I'm not sure what you're trying to say.")
-    this.clearCommand()
-  }
-
-  unknownWord(word) {
-    this.props.addLog("I don't know the word " + word.toLowerCase() + '.')
-    this.clearCommand()
-  }
-
-  itemNotVisible() {
-    this.props.addLog("You don't see that here!")
-    this.clearCommand()
-  }
-
-  findItem(itemName) {
-    return this.props.items.find(item => item.name === itemName)
-  }
-
-  itemIsInInv(item) {
-    return item.loc === 'player'
-  }
-
-  itemIsInCurrentLoc(item) {
-    console.log(item.loc, this.props.location.name)
-    return item.loc === this.props.location.name
-  }
-
-  // only return container if it is another item
-  itemIsInContainer(item) {
-    return this.props.items.find(i => i.name === item.loc)
-  }
-
-  itemIsVisible(item) {
-    if (this.itemIsInInv(item) || this.itemIsInCurrentLoc(item)) return true
-    else {
-      let container = this.itemIsInContainer(item)
-      if (container) {
-        return (
-          (this.itemIsInInv(container) && container.isOpen) ||
-          (this.itemIsInCurrentLoc(container) && container.isOpen)
-        )
-      }
-    }
-  }
-  dispatchAction(command) {
-    console.log('DISPATCH ACTION', command)
-    const result = VERB[command.verb](this.props, command)
-    console.log('RESULT', result)
-    this.props.addLog(result)
-  }
-
-  render() {
+  render () {
     return (
       <div className="control-panel mt-2">
         <form onSubmit={this.handleSubmit}>
@@ -135,25 +51,21 @@ class CommandLine extends Component {
 
 const mapState = state => {
   return {
-    location: state.location,
-    player: state.player,
+    command: state.command,
     items: state.items,
-    log: state.log,
+    player: state.player,
+    rooms: state.rooms
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    addLog: log => {
-      dispatch(addLog(log))
-    },
-    parse: command => {
-      dispatch(parseCommand(command))
-    },
-
-    updateItems: item => {
-      dispatch(updateItems(item))
-    },
+    addLog: log => dispatch(addLog(log)),
+    clearCommand: () => dispatch(clearCommand()),
+    parse: command => dispatch(parseCommand(command)),
+    updateItem: item => dispatch(updateItem(item)),
+    movePlayer: loc => dispatch(movePlayer(loc)),
+    LOOK: props => LOOK(props)
   }
 }
 

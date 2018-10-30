@@ -27,6 +27,7 @@
     "axios": "^0.18.0",
     "chai": "^4.2.0",
     "concurrently": "^4.0.1",
+    "eslint-config-react": "^1.1.7",
     "express": "^4.16.2",
     "pg": "^7.4.3",
     "sequelize": "^4.41.0"

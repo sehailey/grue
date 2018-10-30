@@ -1,54 +1,48 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import {Navbar, Log, CommandLine} from '../components'
-import {getMap, getAllItems, updateItems, addLog} from '../store'
-
-import * as VERB from '../verbs'
+import { Navbar, Log, CommandLine } from '../components'
+import { getMap, getAllItems, updateItem, movePlayer, addLog, clearCommand } from '../store'
+import LOOK from '../verbs/LOOK'
 
 class Game extends Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
-      input: '',
       moves: 0,
-      loading: true,
+      visibleItems: []
     }
   }
-
-  componentDidMount() {
-    this.props.fetchMap()
-    this.props.fetchItems()
+  // componentWillMount () {
+  //   console.log('Game component will mount')
+  // }
+  async componentDidMount () {
+    await this.props.fetchData()
+    //console.log('Game component did mount')
+    this.setState({ loading: false })
+    LOOK(this.props)
+  }
+  componentWillUpdate (nextProps) {
+    console.log('Game component will update')
+  }
+  componentDidUpdate (prevProps) {
+    console.log('Game component did update')
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.location.name !== this.props.location.name) {
-  //     VERB.LOOK(this.props)
-  //   }
-  // }
-
-  incrementMoves() {
+  incrementMoves () {
     let newMoves = this.state.moves
     newMoves++
-    this.setState(() => ({moves: newMoves}))
+    this.setState(() => ({ moves: newMoves }))
   }
-
-  render() {
-    const {log, player, Map, items, addLog} = this.props
-    const currentLoc = Map.find(room => room.name === player.currentLoc)
-    if (!currentLoc) return <div />
-    if (log.length === 0) addLog(currentLoc.description)
+  render () {
+    const { log, player, rooms, items } = this.props
+    if (!player || rooms.length === 0 || items.length === 0) return <div />
 
     return (
       <div className="container">
         <Navbar moves={this.state.moves} />
         <Log log={log} />
-
-        <CommandLine
-          value={this.state.input}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-        />
+        <CommandLine />
       </div>
     )
   }
@@ -57,28 +51,21 @@ class Game extends Component {
 const mapState = state => {
   return {
     log: state.log,
-    Map: state.Map,
+    rooms: state.rooms,
     items: state.items,
-    player: state.player,
+    player: state.player
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchMap: () => {
-      dispatch(getMap())
-    },
-    fetchItems: () => {
-      dispatch(getAllItems())
-    },
-
-    addLog: log => {
-      dispatch(addLog(log))
+    fetchData: async () => {
+      await dispatch(getAllItems())
+      await dispatch(getMap())
+      await dispatch(clearCommand())
     },
 
-    updateItems: item => {
-      dispatch(updateItems(item))
-    },
+    addLog: log => dispatch(addLog(log))
   }
 }
 

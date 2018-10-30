@@ -1,48 +1,14 @@
-import {listItems} from '../classes'
+import { listItems } from '../functions'
 
 const LOOK = props => {
-    let itemsInCurrentLoc = props.items.filter(
-        item => item.loc === props.location.name
-    )
-
-    let invItemsInCurrentLoc = itemsInCurrentLoc.filter(item => item.isInvItem)
-
-    let containers = itemsInCurrentLoc.filter(
-        item => item.isContainer && item.isOpen
-    )
-    let itemDescription = ''
-    let containerDescription = ''
-
-    if (containers) {
-        for (let i = 0; i < containers.length; i++) {
-            let itemsInContainer = props.items.filter(
-                item => item.loc === containers[i].name
-            )
-
-            if (itemsInContainer.length === 0) {
-                containerDescription +=
-                    'The ' + containers[i].name + ' is empty.'
-            } else {
-                containerDescription +=
-                    'The ' +
-                    containers[i].name +
-                    ' contains ' +
-                    listItems(itemsInContainer) +
-                    '.'
-            }
-        }
-    }
-
-    let itemList = listItems(invItemsInCurrentLoc)
-
-    if (itemList.length > 0) itemDescription = 'You see ' + itemList + ' here.'
-
-    let description = [
-        props.location.description,
-        itemDescription,
-        containerDescription,
-    ].join(' ')
-    props.addLog(description)
+  const complete = true
+  const { player, rooms, addLog, items } = props
+  const loc = rooms.find(room => room.name === player.currentLoc)
+  const invItems = items.filter(item => item.loc === player.currentLoc && item.isInvItem).map(item => item.aName)
+  let description = loc.title + '\n' + loc.description
+  if (invItems.length) description += ` You see ${listItems(invItems)} here.`
+  addLog(description)
+  return complete
 }
 
 export default LOOK

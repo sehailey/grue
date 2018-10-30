@@ -1,9 +1,20 @@
-import {listItems} from '../classes'
-
 const INV = props => {
-    const inv = props.items.filter(item => item.loc === 'player')
-    if (inv.length === 0) props.addLog('You are empty-handed.')
-    else props.addLog('You are carrying ' + listItems(inv) + '.')
+  const { addLog, items } = props
+  let complete = true
+
+  const invItems = items
+    .filter(item => item.loc === 'player')
+    .map(item => item.aName)
+    .join('\n')
+
+  if (!invItems.length) {
+    addLog('You are empty-handed.')
+    return complete
+  } else {
+    const invDesc = 'You are carrying:\n' + invItems
+    addLog(invDesc)
+    return complete
+  }
 }
 
 export default INV
