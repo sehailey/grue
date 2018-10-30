@@ -5,13 +5,11 @@
   "homepage": "https://grue.herokuapp.com/",
   "proxy": "http://localhost:1337/",
   "scripts": {
-    "client": "yarn start",
-    "server": "nodemon server",
+    "client": "npm run start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "yarn && yarn run build"
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "react": "^16.5.1",

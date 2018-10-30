@@ -1,6 +1,5 @@
-import * as ITEMS from '../../items'
+import * as ITEMS from './items'
 import axios from 'axios'
-console.log(ITEMS)
 
 /*
   Constructs the objects by retrieving them from the database, importing all of

@@ -1,9 +1,19 @@
 import axios from 'axios'
-import * as ROOMS from '../../rooms'
-// /*** ACTION TYPES ***/
+import * as ROOMS from './rooms'
+
+const defaultMap = []
+
+/*
+  Constructs the rooms by retrieving the from the database, importing all of
+  the constructors as ITEMS, and then mapping over the constructors to create
+  new objects.
+*/
+
+/*** ACTION TYPES ***/
 const GOT_MAP = 'GOT_MAP'
 const MAP_ERROR = 'MAP_ERROR'
 
+/*** ACTIONS ***/
 export const gotMap = map => ({
   type: GOT_MAP,
   map
@@ -13,8 +23,6 @@ export const mapError = error => ({
   type: MAP_ERROR,
   error
 })
-
-const defaultMap = []
 
 /*** HELPER FUNCTION ***/
 const constructRooms = rooms => {

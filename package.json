@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production node server",
     "server": "nodemon server",
     "client": "cd client && npm run start",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "dev": "npm run seed && concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "prod": "concurrently --kill-others-on-fail \"npm run start\" \"npm run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
