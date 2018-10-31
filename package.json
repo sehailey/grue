@@ -11,7 +11,7 @@
     "client": "cd client && npm run start",
     "dev": "npm run seed && concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "prod": "concurrently --kill-others-on-fail \"npm run start\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "npm run seed && cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -27,9 +27,14 @@
     "axios": "^0.18.0",
     "chai": "^4.2.0",
     "concurrently": "^4.0.1",
-    "eslint-config-react": "^1.1.7",
     "express": "^4.16.2",
     "pg": "^7.4.3",
     "sequelize": "^4.41.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-react": "^7.11.1"
   }
 }

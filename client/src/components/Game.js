@@ -1,42 +1,42 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import { Navbar, Log, CommandLine } from '../components'
-import { getMap, getAllItems, addLog, clearCommand } from '../store'
-import LOOK from '../verbs/LOOK'
+import { Navbar, Log, CommandLine } from "../components";
+import { getMap, getAllItems, addLog, clearCommand } from "../store";
+import LOOK from "../verbs/LOOK";
 
 class Game extends Component {
-  constructor () {
-    super()
+  constructor() {
+    super();
     this.state = {
       moves: 0,
       visibleItems: []
-    }
+    };
   }
   // componentWillMount () {
   //   console.log('Game component will mount')
   // }
-  async componentDidMount () {
-    await this.props.fetchData()
+  async componentDidMount() {
+    await this.props.fetchData();
     //console.log('Game component did mount')
-    this.setState({ loading: false })
-    LOOK(this.props)
+    this.setState({ loading: false });
+    LOOK(this.props);
   }
   // componentWillUpdate (nextProps) {
   //   console.log('Game component will update')
   // }
-  componentDidUpdate (prevProps) {
-    console.log('Game component did update')
+  componentDidUpdate(prevProps) {
+    console.log("Game component did update");
   }
 
-  incrementMoves () {
-    let newMoves = this.state.moves
-    newMoves++
-    this.setState(() => ({ moves: newMoves }))
+  incrementMoves() {
+    let newMoves = this.state.moves;
+    newMoves++;
+    this.setState(() => ({ moves: newMoves }));
   }
-  render () {
-    const { log, player, rooms, items } = this.props
-    if (!player || rooms.length === 0 || items.length === 0) return <div />
+  render() {
+    const { log, player, rooms, items } = this.props;
+    if (!player || rooms.length === 0 || items.length === 0) return <div />;
 
     return (
       <div className="container">
@@ -44,7 +44,7 @@ class Game extends Component {
         <Log log={log} />
         <CommandLine />
       </div>
-    )
+    );
   }
 }
 
@@ -54,22 +54,22 @@ const mapState = state => {
     rooms: state.rooms,
     items: state.items,
     player: state.player
-  }
-}
+  };
+};
 
 const mapDispatch = dispatch => {
   return {
     fetchData: async () => {
-      await dispatch(getAllItems())
-      await dispatch(getMap())
-      await dispatch(clearCommand())
+      await dispatch(getAllItems());
+      await dispatch(getMap());
+      await dispatch(clearCommand());
     },
 
     addLog: log => dispatch(addLog(log))
-  }
-}
+  };
+};
 
 export default connect(
   mapState,
   mapDispatch
-)(Game)
+)(Game);

@@ -1,6 +1,6 @@
-const Player = require("./player")
-const Room = require("./room")
-const Item = require("./item")
+const Player = require('./player')
+const Room = require('./room')
+const Item = require('./item')
 
 Player.hasMany(Item)
 Item.belongsTo(Player)

@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize");
-const db = require("../db");
+const Sequelize = require('sequelize')
+const db = require('../db')
 
-const Room = db.define("room", {
+const Room = db.define('room', {
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -10,6 +10,6 @@ const Room = db.define("room", {
   description: {
     type: Sequelize.TEXT
   }
-});
+})
 
-module.exports = Room;
+module.exports = Room
