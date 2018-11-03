@@ -10,6 +10,7 @@ const OPEN = (props, visibleItems) => {
 
   const target = visibleItems.find(item => item.name === command.item1)
 
+  console.log(target)
   if (!target) {
     addLog('You don\'t see that here!')
     return complete
@@ -28,6 +29,10 @@ const OPEN = (props, visibleItems) => {
   if (target.isContainer && visibleItems.includes(target)) {
     const result = target.OPEN(props)
     if (result) updateItem(target)
+    return complete
+  }
+  if (target.isWindow) {
+    target.OPEN(props)
     return complete
   }
 

@@ -1,8 +1,8 @@
 import { InvItem } from '../classes'
 
 class egg extends InvItem {
-  constructor () {
-    super()
+  constructor (egg) {
+    super(egg)
     this.isInvItem = false
   }
   EXAMINE = props => {

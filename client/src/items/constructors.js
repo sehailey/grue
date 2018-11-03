@@ -21,14 +21,21 @@ module.exports = [
     loc: 'westOfHouse',
     isContainer: true
   },
-  {
-    name: 'house',
-    description: 'It\'s an ordinary looking house.',
-    loc: 'westOfHouse'
-  },
+
   {
     name: 'window',
     description: 'It\'s an ordinary looking window.',
-    loc: 'behindHouse'
+    loc: 'behindHouse',
+    isOpen: true
+  },
+  {
+    name: 'leaves',
+    description: 'There\'s nothing special about the pile of leaves.',
+    loc: 'clearing'
+  },
+  {
+    name: 'grating',
+    description: 'The grating is closed.',
+    loc: 'clearing'
   }
 ]

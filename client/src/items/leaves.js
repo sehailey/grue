@@ -1,6 +1,6 @@
-import { InvItem } from '../classes'
+import { Item } from '../classes'
 
-class leaves extends InvItem {
+class leaves extends Item {
   EXAMINE = props =>
     props.addLog('You see nothing special about the pile of leaves.')
   MOVE = props => {

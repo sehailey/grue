@@ -29,6 +29,13 @@ module.exports = [
   },
 
   {
+    name: 'kitchen',
+    title: 'Kictchen',
+    description:
+      'You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\nOn the table is an elongated brown sack, smelling of hot peppers.\nA bottle is sitting on the table.\nThe glass bottle contains:\nA quantity of water'
+  },
+
+  {
     name: 'forestPath',
     title: 'Forest Path',
     description:
@@ -47,5 +54,26 @@ module.exports = [
     title: 'Clearing',
     description:
       'You are in a clearing, with a forest surrounding you on all sides. A path leads south.\nOn the ground is a pile of leaves'
+  },
+  {
+    name: 'forest1',
+    title: 'Forest',
+    description:
+      'This is a forest, with trees in all directions. To the east, there appears to be sunlight. You hear in the distance the chirping of a song bird.'
+  },
+  {
+    name: 'forest2',
+    title: 'Forest',
+    description: 'This is a dimly lit forest, with large trees all around.'
+  },
+  {
+    name: 'forest3',
+    title: 'Forest',
+    description: 'This is a forest, with trees in all directions.'
+  },
+  {
+    name: 'forest4',
+    title: 'Forest',
+    description: 'The forest thins out, revealing impassable mountains.'
   }
 ]

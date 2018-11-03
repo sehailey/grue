@@ -25,7 +25,7 @@ const CLOSE = (props, visibleItems) => {
     addLog('It\'s already closed.')
     return complete
   }
-  if (target.isContainer && visibleItems.includes(target)) {
+  if (target.isContainer || target.isWindow) {
     target.CLOSE(props)
     return complete
   }

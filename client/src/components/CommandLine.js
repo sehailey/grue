@@ -6,7 +6,8 @@ import {
   clearCommand,
   parseCommand,
   updateItem,
-  movePlayer
+  movePlayer,
+  updateRoom
 } from '../store'
 import LOOK from '../verbs/LOOK'
 class CommandLine extends Component {
@@ -70,6 +71,7 @@ const mapDispatch = dispatch => {
     clearCommand: () => dispatch(clearCommand()),
     parse: command => dispatch(parseCommand(command)),
     updateItem: item => dispatch(updateItem(item)),
+    updateRoom: room => dispatch(updateRoom(room)),
     movePlayer: loc => dispatch(movePlayer(loc)),
     LOOK: props => LOOK(props)
   }

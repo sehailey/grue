@@ -13,7 +13,11 @@ export const directions = [
   'U',
   'UP',
   'D',
-  'DOWN'
+  'DOWN',
+  'NW',
+  'NE',
+  'SW',
+  'SE'
 ]
 export const prepositions = [
   'WITH',

@@ -12,6 +12,7 @@ const defaultMap = []
 /*** ACTION TYPES ***/
 const GOT_MAP = 'GOT_MAP'
 const MAP_ERROR = 'MAP_ERROR'
+const UPDATE_ROOM = 'UPDATE_ROOM'
 
 /*** ACTIONS ***/
 export const gotMap = map => ({
@@ -22,6 +23,11 @@ export const gotMap = map => ({
 export const mapError = error => ({
   type: MAP_ERROR,
   error
+})
+
+export const updateRoom = room => ({
+  type: UPDATE_ROOM,
+  room
 })
 
 /*** HELPER FUNCTION ***/
@@ -57,6 +63,10 @@ export default function (map = defaultMap, action) {
   }
   case MAP_ERROR: {
     return action.error
+  }
+  case UPDATE_ROOM: {
+    const oldRooms = map.filter(room => room.name !== action.room.name)
+    return oldRooms.concat(action.room)
   }
   default: {
     return map
