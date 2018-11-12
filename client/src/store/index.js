@@ -14,7 +14,9 @@ const reducer = combineReducers({ items, player, rooms, log, command })
 let middleware
 if (process.env.NODE_ENV === 'development') {
   // add `redux-logger`
-  middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({ collapsed: true })))
+  middleware = composeWithDevTools(
+    applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+  )
 } else middleware = applyMiddleware(thunkMiddleware)
 
 const store = createStore(reducer, middleware)
