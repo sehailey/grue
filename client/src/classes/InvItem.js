@@ -1,10 +1,6 @@
 import Item from './Item'
 
 class InvItem extends Item {
-  constructor (item) {
-    super(item)
-  }
-
   describe = () => {
     return this.description
   }
@@ -15,8 +11,7 @@ class InvItem extends Item {
 
   TAKE = props => {
     if (!this.isInvItem) props.addLog('You can\'t take that!')
-    else if (this.loc === 'player') props.addLog(`You already have the ${this.name}`)
-    else {
+    else if (this.loc === 'player') {props.addLog(`You already have the ${this.name}`)} else {
       this.loc = 'player'
       props.addLog('Taken.')
       return true

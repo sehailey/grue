@@ -5,9 +5,9 @@ const port = process.env.PORT || 1337
 
 app.use('/api', require('./api'))
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname, 'build'))
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(__dirname, '../client/build'))
+// }
 
 app.get('*', (request, response) => {
   response.sendFile(path.join(__dirname, '../client/build', 'index.html'))
