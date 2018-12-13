@@ -16,12 +16,14 @@ class CommandLine extends Component {
 
   handleSubmit (event) {
     event.preventDefault()
-    this.props.addLog('>', this.state.input)
-    this.props.handleCommand(this.state.input)
+    const input = this.state.input
+    this.props.addLog('> ' + input)
+    this.props.handleCommand(input)
     this.setState(defaultState)
   }
 
   handleChange (event) {
+    console.log(this.state)
     this.setState({ input: event.target.value })
   }
 

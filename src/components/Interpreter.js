@@ -1,48 +1,57 @@
 import Dictionary from './Dictionary'
 const dictionary = new Dictionary()
+
 class Interpreter {
   constructor () {
-    this.verb = ''
+    this.verb = null
     this.items = []
-    this.prep = ''
-    //console.log(this)
+    this.prep = null
   }
 
-  parseString (string) {
-    const command = string.split(' ').map(word => word.toLowerCase())
-    this.parseCommand(command)
-    return command
+  splitString (string) {
+    return string.split(' ').map(word => word.toLowerCase())
   }
 
-  parseUnknown (command) {
-    return command.find(word => dictionary.isUnknown(word))
+  parseUnknown (wordArr) {
+    return wordArr.find(word => dictionary.isUnknown(word))
   }
 
-  parseVerb (command) {
-    if (dictionary.isVerb(command[0])) this.verb = command[0]
+  parseVerb (wordArr) {
+    const verb = dictionary.findVerb(wordArr[0])
+    if (verb) this.verb = verb
+    return verb
   }
 
-  parseItems (command) {
-    if (this.verb) {
-      this.items = command.filter(word => dictionary.items.includes(word))
-    }
+  parseItems (wordArr) {
+    const items = wordArr.filter(word => dictionary.items.includes(word))
+    if (this.verb) this.items = items
+    return items
   }
-  parsePrep (command) {
-    if (this.items.length > 1) this.prep = command[2]
-  }
-  parseCommand (command) {
-    this.parseVerb(command)
-    this.parseItems(command)
-    this.parsePrep(command)
-    return { verb: this.verb, items: this.items, prep: this.prep }
+  parsePrep (wordArr) {
+    const prep = wordArr[2]
+    if (dictionary.preps.includes(prep)) this.prep = prep
+    return prep
   }
 
-  interpretCommand () {}
+  parseCommand (wordArr) {
+    let verb, items, prep, unknown
+    verb = this.parseVerb(wordArr)
+    items = this.parseItems(wordArr)
+    prep = this.parsePrep(wordArr)
+    unknown = this.parseUnknown(wordArr)
+    return { verb, items, prep, unknown }
+  }
 
   interpret (string) {
-    const command = this.parseString(string)
-    const result = this.parseCommand(command)
-    return result
+    const splitString = this.splitString(string)
+    const command = this.parseCommand(splitString)
+    this.clearCommand()
+    return command
+  }
+  clearCommand () {
+    this.verb = null
+    this.items = []
+    this.prep = null
   }
 }
 

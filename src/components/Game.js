@@ -3,17 +3,19 @@ import { connect } from 'react-redux'
 import { CommandLine, Navbar, Log } from '../views'
 import Interpreter from './Interpreter'
 import Actions from './Actions'
-import { getAllItems, addLog } from '../store'
+import World from '../World'
+import { getWorld, getAllItems, addLog, logInvalid, logUnknown } from '../store'
 
 class Game extends Component {
   constructor () {
     super()
     this.state = { loading: true }
     this.interpreter = new Interpreter()
-    this.actions = new Actions(this)
+    this.actionHandler = new Actions(this)
     this.handleCommand = this.handleCommand.bind(this)
   }
   componentDidMount () {
+    this.props.getWorld()
     this.props.fetchData()
   }
 
@@ -25,10 +27,17 @@ class Game extends Component {
     return <div> error... </div>
   }
 
+  handleAction (command) {
+    const result = this.actionHandler.handleAction({ command, ...this.props })
+    this.props.addLog(result.log)
+  }
+
   handleCommand (input) {
-    const action = this.interpreter.interpret(input)
-    const result = this.actions.dispatch({ action, ...this.props })
-    console.log('jandleCommand result: ', result)
+    const command = this.interpreter.interpret(input)
+    console.log(command)
+    if (command.unknown) this.props.logUnknown(command.unknown)
+    else if (!command.verb) this.props.logInvalid()
+    else this.handleAction(command)
   }
 
   renderGame () {
@@ -50,14 +59,16 @@ class Game extends Component {
 
 const mapState = state => ({
   player: state.player,
-  items: state.items,
-  rooms: state.rooms,
+  world: state.world,
   log: state.log
 })
 
 const mapDispatch = dispatch => ({
   fetchData: () => dispatch(getAllItems()),
-  addLog: text => dispatch(addLog(text))
+  getWorld: () => dispatch(getWorld()),
+  addLog: text => dispatch(addLog(text)),
+  logInvalid: () => dispatch(logInvalid()),
+  logUnknown: word => dispatch(logUnknown(word))
 })
 export default connect(
   mapState,

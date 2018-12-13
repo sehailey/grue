@@ -3,10 +3,11 @@ class Actions {
     this.actions = []
   }
 
-  dispatch (props) {
-    const { dictionary, action, player, currentLoc, items, addLog } = props
-    console.log(action)
-    addLog('You can\'t go that way.')
+  handleAction (props) {
+    console.log(props)
+    const { verb, items, prep } = props.command
+    if (verb === 'look') return 'It is pitch black...'
+    return { log: 'You are handling actions! ' }
   }
 }
 

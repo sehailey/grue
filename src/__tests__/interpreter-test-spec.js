@@ -8,25 +8,31 @@ describe('Interpreter', () => {
   beforeEach(() => {
     interpreter = new Interpreter()
   })
-  it('interpreter.parseString takes a string and returns an array of individual lower-case words', () => {
-    const parsed = interpreter.parseString('Hello world')
-    expect(parsed).to.deep.equal(['hello', 'world'])
+  it('interpreter.splitString takes a string and returns an array of individual lower-case words', () => {
+    const wordArr = interpreter.splitString('Hello world')
+    expect(wordArr).to.deep.equal(['hello', 'world'])
   })
 
-  it('interpreter.parseUnknown takes a command and returns the first unknown word', () => {
-    const command = interpreter.parseString('Hello sdfgfgsgs world')
-    const unknown = interpreter.parseUnknown(command)
+  xit('interpreter.parseUnknown takes a command and returns the first unknown word', () => {
+    const wordArr = interpreter.splitString('Hello sdfgfgsgs world')
+    const unknown = interpreter.parseUnknown(wordArr)
     expect(unknown).to.equal('hello')
   })
 
-  it('interpreter.interpretCommand() does something with the words set on state', () => {
-    const result = interpreter.interpret('take mailbox')
-    expect(result.verb).to.equal('take')
-    expect(result.items[0]).to.equal('mailbox')
-    expect(result.prep).to.equal('')
+  it('interpreter.parseVerb takes an array and returns the first word if it\'s a verb', () => {
+    const parsed = interpreter.parseVerb(['take', 'Mailbox'])
+    expect(parsed).to.equal('take')
+    interpreter.clearCommand()
+    const parsed2 = interpreter.parseVerb(['mailbox'])
+    expect(parsed2).to.equal(undefined)
   })
 
-  it('if there is no verb, it does not return any items', () => {
+  it('interpreter.parseItems returns an array of items from the command', () => {
+    const items = interpreter.parseItems(['take', 'mailbox'])
+    expect(items.length).to.equal(1)
+  })
+
+  xit('interpreter.interpret does not return any items if there\'s no verb', () => {
     const result = interpreter.interpret('mailbox')
     expect(result.items.length).to.equal(0)
   })

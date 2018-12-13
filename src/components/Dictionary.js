@@ -44,7 +44,7 @@ class Dictionary {
     this.inv = inventory
     this.directions = directions
     this.verbs = verbs
-    this.prepositions = prepositions
+    this.preps = prepositions
     this.all = items
       .concat(look)
       .concat(inventory)
@@ -54,8 +54,8 @@ class Dictionary {
       .concat(prepositions)
   }
 
-  isVerb (word) {
-    return this.verbs.includes(word)
+  findVerb (word) {
+    return this.verbs.find(verb => word === verb)
   }
 
   isUnknown (word) {
