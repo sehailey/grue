@@ -7,6 +7,8 @@ export const mailbox = new Item({
   loc: 'here'
 })
 
+mailbox.take = () => 'It is securely fastened.'
+
 export const torch = new InvItem({
   id: 2,
   name: 'torch',

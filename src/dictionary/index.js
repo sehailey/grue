@@ -48,7 +48,7 @@ class Dictionary {
     this.look = look
     this.inv = inventory
     this.directions = directions
-    this.verbs = verbs
+    this.verbs = [...look, ...inventory, ...verbs]
     this.prepositions = prepositions
   }
 }

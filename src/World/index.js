@@ -19,6 +19,10 @@ class World {
     this.currentLoc = this.locations[0]
   }
 
+  look () {
+    return this.currentLoc.description
+  }
+
   move (direction) {
     const { log, loc } = this.currentLoc.compass[direction]
     if (loc) this.setLoc(loc)
@@ -27,6 +31,10 @@ class World {
 
   setLoc (newLoc) {
     this.currentLoc = newLoc
+  }
+
+  findItems () {
+    return this.currentLoc.items.filter(item => item.isInvItem)
   }
 }
 

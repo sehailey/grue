@@ -4,7 +4,7 @@ const dictionary = new Dictionary()
 class Interpreter {
   constructor () {
     this.verb = null
-    this.items = []
+    this.itemNames = []
     this.prep = null
   }
 
@@ -22,10 +22,10 @@ class Interpreter {
     return verb
   }
 
-  parseItems (wordArr) {
-    const items = wordArr.filter(word => dictionary.items.includes(word))
-    if (this.verb) this.items = items
-    return items
+  parseItemNames (wordArr) {
+    const itemNames = wordArr.filter(word => dictionary.items.includes(word))
+    if (this.verb) this.itemNames = itemNames
+    return itemNames
   }
   parsePrep (wordArr) {
     const prep = wordArr[2]
@@ -34,23 +34,24 @@ class Interpreter {
   }
 
   parseCommand (wordArr) {
-    let verb, items, prep, unknown
+    let verb, itemNames, prep, unknown
     verb = this.parseVerb(wordArr)
-    items = this.parseItems(wordArr)
+    itemNames = this.parseItemNames(wordArr)
     prep = this.parsePrep(wordArr)
     unknown = this.parseUnknown(wordArr)
-    return { verb, items, prep, unknown }
+    return { verb, itemNames, prep, unknown }
   }
 
   interpret (string) {
     const splitString = this.splitString(string)
     const command = this.parseCommand(splitString)
+    console.log(splitString, command)
     this.clearCommand()
     return command
   }
   clearCommand () {
     this.verb = null
-    this.items = []
+    this.itemNames = []
     this.prep = null
   }
 }
