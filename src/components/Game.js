@@ -4,12 +4,13 @@ import { CommandLine, Navbar, Log } from '../views'
 import Interpreter from './Interpreter'
 import Actions from './Actions'
 import {
-  getWorld,
+  getLocation,
   getPlayer,
   getAllItems,
   addLog,
   logInvalid,
-  logUnknown
+  logUnknown,
+  move
 } from '../store'
 
 class Game extends Component {
@@ -17,8 +18,8 @@ class Game extends Component {
     super()
     this.state = { loading: true }
     this.interpreter = new Interpreter()
-    this.actionHandler = new Actions(this)
-    this.handleCommand = this.handleCommand.bind(this)
+    this.verbHandler = new Actions()
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount () {
     this.fetchData()
@@ -26,7 +27,7 @@ class Game extends Component {
 
   async fetchData () {
     await this.props.fetchData()
-    await this.props.getWorld()
+    await this.props.getLocation()
     await this.props.getPlayer()
     await this.setState({ loading: false })
   }
@@ -40,16 +41,20 @@ class Game extends Component {
   }
 
   handleAction (command) {
-    const result = this.actionHandler.handleAction({ command, ...this.props })
-    this.props.addLog(result.log)
+    const result = this.interpreter.handleAction({ command, ...this.props })
+    console.log(result)
   }
 
-  handleCommand (input) {
+  handleMove (loc) {
+    this.props.move(loc)
+    this.props.addLog(loc.look())
+  }
+
+  handleSubmit (input) {
     const command = this.interpreter.interpret(input)
-    console.log(command, typeof command.unknown)
-    if (typeof command.unknown === 'string') {
-      this.props.logUnknown(command.unknown)
-    } else if (!command.verb) this.props.logInvalid()
+    const result = this.interpreter.handleCommand({ command, ...this.props })
+    if (result.log) this.props.addLog(result.log)
+    else if (result.loc) this.handleMove(result.loc)
     else this.handleAction(command)
   }
 
@@ -58,7 +63,7 @@ class Game extends Component {
       <div className="container">
         <Navbar />
         <Log log={this.props.log} />
-        <CommandLine handleCommand={this.handleCommand} />
+        <CommandLine handleCommand={this.handleSubmit} />
       </div>
     )
   }
@@ -72,18 +77,21 @@ class Game extends Component {
 
 const mapState = state => ({
   player: state.player,
-  world: state.world,
+  location: state.location,
   log: state.log
 })
 
-const mapDispatch = dispatch => ({
-  fetchData: () => dispatch(getAllItems()),
-  getWorld: () => dispatch(getWorld()),
-  getPlayer: () => dispatch(getPlayer()),
-  addLog: text => dispatch(addLog(text)),
-  logInvalid: () => dispatch(logInvalid()),
-  logUnknown: word => dispatch(logUnknown(word))
-})
+const mapDispatch = dispatch => {
+  return {
+    fetchData: () => dispatch(getAllItems()),
+    getLocation: () => dispatch(getLocation()),
+    getPlayer: () => dispatch(getPlayer()),
+    addLog: text => dispatch(addLog(text)),
+    logInvalid: () => dispatch(logInvalid()),
+    logUnknown: word => dispatch(logUnknown(word)),
+    move: loc => dispatch(move(loc))
+  }
+}
 export default connect(
   mapState,
   mapDispatch

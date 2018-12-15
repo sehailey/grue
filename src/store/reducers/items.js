@@ -1,4 +1,4 @@
-import * as ITEMS from '../../items/'
+import * as ITEMS from '../../components/Items/'
 // import axios from 'axios'
 
 /*** ACTION TYPES ***/

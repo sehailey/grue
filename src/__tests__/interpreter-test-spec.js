@@ -1,39 +1,30 @@
 import Interpreter from '../components/Interpreter'
-
-const chai = require('chai')
-const expect = chai.expect
-
+const expect = require('chai').expect
+const interpreter = new Interpreter()
 describe('Interpreter', () => {
-  let interpreter
-  beforeEach(() => {
-    interpreter = new Interpreter()
-  })
-  it('interpreter.splitString takes a string and returns an array of individual lower-case words', () => {
-    const wordArr = interpreter.splitString('Hello world')
-    expect(wordArr).to.deep.equal(['hello', 'world'])
+  it('returns an object with a verb if the first word in the sentence is a verb', () => {
+    const result = interpreter.interpret('taKe MailBox')
+    expect(result.verb).to.equal('take')
   })
 
-  xit('interpreter.parseUnknown takes a command and returns the first unknown word', () => {
-    const wordArr = interpreter.splitString('Hello sdfgfgsgs world')
-    const unknown = interpreter.parseUnknown(wordArr)
-    expect(unknown).to.equal('hello')
+  it('interprets directions as verbs', () => {
+    const result = interpreter.interpret('n')
+    expect(result.verb).to.equal('n')
   })
 
-  it('interpreter.parseVerb takes an array and returns the first word if it\'s a verb', () => {
-    const parsed = interpreter.parseVerb(['take', 'Mailbox'])
-    expect(parsed).to.equal('take')
-    interpreter.clearCommand()
-    const parsed2 = interpreter.parseVerb(['mailbox'])
-    expect(parsed2).to.equal(undefined)
+  it('does NOT return a verb if it\'s not the first word', () => {
+    const result = interpreter.interpret('mailbox take')
+    expect(result.verb).to.equal(undefined)
   })
 
-  it('interpreter.parseItems returns an array of items from the command', () => {
-    const items = interpreter.parseItems(['take', 'mailbox'])
-    expect(items.length).to.equal(1)
-  })
-
-  xit('interpreter.interpret does not return any items if there\'s no verb', () => {
+  it('does NOT return items if there isn\'t a verb', () => {
     const result = interpreter.interpret('mailbox')
-    expect(result.items.length).to.equal(0)
+    expect(result.items).to.equal(undefined)
+  })
+
+  it('does NOT return items or a verb if there\'s an unknown word', () => {
+    const result = interpreter.interpret('take mailbox eadsad')
+    expect(result.items).to.equal(undefined)
+    expect(result.unknown).to.equal('eadsad')
   })
 })
