@@ -9,8 +9,5 @@ class clearing extends Location {
     this.compass.addLoc('S', forestPath)
     this.compass.addLoc('W', forest1)
   }
-  E = props => props.movePlayer('forest2')
-  S = props => props.movePlayer('forestPath')
-  W = props => props.movePlayer('forest1')
 }
 export default clearing

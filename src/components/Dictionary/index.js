@@ -1,4 +1,4 @@
-import * as ITEMS from '../Items'
+import * as ITEMS from '../Items/items'
 import { look, inventory, verbs } from './verbs'
 import directions from './directions'
 import prepositions from './prepositions'

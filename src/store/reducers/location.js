@@ -1,39 +1,41 @@
-import constructors from '../../components/Location/constructors'
-//import * as locations from '../../components/Location/locations'
-// import Compass from '../../components/Location/Compass'
-import { Item, InvItem, Container } from '../../components/Items'
+import locConstructors from '../../components/Location/constructors'
+import * as locations from '../../components/Location/locations'
+
+import itemConstructors from '../../components/Items/constructors'
+import * as ITEMS from '../../components/Items/items'
 
 //import axios from 'axios'
 //import Location from '../../components/Location'
 
-// const buildWorld = () => {
-//   const allLocations = constructors.map(constructor => {
-//     try {
-//       return new locations[constructor.name](constructor)
-//     } catch (e) {
-//       console.log(constructor.name + ' not a valid location.')
-//       return e
-//     }
-//   })
-//   return allLocations
-// }
-import { westOfHouse, northOfHouse } from '../../components/Location/locations'
-const item1 = { name: 'item1', description: 'This is a test item' }
-const invItem2 = { name: 'invItem2', description: 'This is a test item' }
-const container1 = {
-  name: 'container',
-  description: 'This is a test container'
+const buildWorld = () => {
+  let world = {}
+  locConstructors.map(constructor => {
+    try {
+      world[constructor.name] = new locations[constructor.name](constructor)
+      return new locations[constructor.name](constructor)
+    } catch (e) {
+      console.log(constructor.name + ' not a valid location.')
+      return e
+    }
+  })
+  let itemMap = {}
+  itemConstructors.map(constructor => {
+    try {
+      itemMap[constructor.name] = new ITEMS[constructor.name](constructor)
+      return new ITEMS[constructor.name](constructor)
+    } catch (e) {
+      console.log(constructor.name + ' not a valid item.')
+      return e
+    }
+  })
+  itemMap.mailbox.addItem(itemMap.leaflet)
+  world.westOfHouse._addItem(itemMap.mailbox)
+
+  return world
 }
 
-//const world = buildWorld()
-const wos = constructors.find(cons => cons.name === 'westOfHouse')
-const nos = constructors.find(cons => cons.name === 'northOfHouse')
-const defaultLocation = new westOfHouse(wos)
-const northofhouse = new northOfHouse(nos)
-defaultLocation.compass.addLoc('N', northofhouse)
-defaultLocation._addItem(new Item(item1))
-defaultLocation._addItem(new InvItem(invItem2))
-defaultLocation._addItem(new Container(container1))
+const world = buildWorld()
+const defaultLocation = world['westOfHouse']
 
 /*** ACTION TYPES ***/
 const GOT_LOCATION = 'GOT_LOCATION'

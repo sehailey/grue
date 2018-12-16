@@ -8,7 +8,6 @@ class behindHouse extends Location {
     this.compass.addLoc('S', southOfHouse)
     this.compass.addLoc('E', clearing)
     this.window = { name: 'window', open: false }
-    this.addItem(this.window)
   }
 
   openWindow () {
