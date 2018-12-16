@@ -3,7 +3,7 @@ import Item from './Item'
 class InvItem extends Item {
   constructor (data) {
     super(data)
-    this.isInvItem = true
+    this.isInv = true
   }
   TAKE = props => {
     if (this.loc === 'player') return 'You already have that!'

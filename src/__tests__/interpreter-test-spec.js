@@ -21,10 +21,4 @@ describe('Interpreter', () => {
     const result = interpreter.interpret('mailbox')
     expect(result.items).to.equal(undefined)
   })
-
-  it('does NOT return items or a verb if there\'s an unknown word', () => {
-    const result = interpreter.interpret('take mailbox eadsad')
-    expect(result.items).to.equal(undefined)
-    expect(result.unknown).to.equal('eadsad')
-  })
 })

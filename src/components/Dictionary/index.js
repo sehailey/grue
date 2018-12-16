@@ -10,7 +10,7 @@ class Dictionary {
     this.verbs = [...verbs, ...inventory, ...look, ...directions].map(word =>
       word.toLowerCase()
     )
-    this.items = items.map(word => word.toLowerCase())
+    this.items = items.concat(['all']).map(word => word.toLowerCase())
     this.filler = filler.map(word => word.toLowerCase())
     this.look = look.map(word => word.toLowerCase())
     this.inv = inventory.map(word => word.toLowerCase())

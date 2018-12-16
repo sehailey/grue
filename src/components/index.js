@@ -1,1 +1,5 @@
 export { default as Game } from './Game'
+export { default as Location } from './Location'
+export { default as Player } from './Player'
+export { default as Interpreter } from './Interpreter'
+export { Item, InvItem, Container, ItemSet } from './Items'

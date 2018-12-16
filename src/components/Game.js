@@ -41,8 +41,8 @@ class Game extends Component {
   }
 
   handleAction (command) {
-    const result = this.interpreter.handleAction({ command, ...this.props })
-    console.log(result)
+    const actions = command.actions
+    const result = actions.map(action => this.props.addLog(action.log))
   }
 
   handleMove (loc) {
@@ -53,9 +53,11 @@ class Game extends Component {
   handleSubmit (input) {
     const command = this.interpreter.interpret(input)
     const result = this.interpreter.handleCommand({ command, ...this.props })
-    if (result.log) this.props.addLog(result.log)
-    else if (result.loc) this.handleMove(result.loc)
-    else this.handleAction(command)
+    if (result.log) return this.props.addLog(result.log)
+    else if (result.loc) return this.handleMove(result.loc)
+    else if (result.actions) this.handleActions(result.actions)
+    //it should only get here if there is a valid verb that takes items
+    else this.props.addLog('error after interpreter handlecommand')
   }
 
   renderGame () {

@@ -24,8 +24,20 @@ class Location {
     this.compass = new Compass()
   }
 
+  _removeItem (itemName) {
+    return this._items.removeItem(itemName)
+  }
+
+  _addItem (item) {
+    return this._items.addItem(item)
+  }
+
   get items () {
     return this._items.items
+  }
+
+  get invItems () {
+    return this._items.items.filter(item => item.isInv)
   }
   look () {
     return this.description
@@ -35,12 +47,12 @@ class Location {
     return this.compass[direction.toUpperCase()]
   }
 
-  drop (item) {
-    return this._items.addItem(item)
+  hasItem (item) {
+    return this._items.hasItem(item)
   }
 
-  take (itemName) {
-    return this._items.removeItem(itemName)
+  findItem (item) {
+    return this._items.findItem(item)
   }
 }
 

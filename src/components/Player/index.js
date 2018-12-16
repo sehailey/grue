@@ -29,7 +29,7 @@ class Player {
   }
 
   drop (item) {
-    return this._inv.addItem(item)
+    return this._inv.removeItem(item)
   }
 
   hasItem (item) {

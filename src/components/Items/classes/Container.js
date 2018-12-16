@@ -3,10 +3,16 @@ import ItemSet from './ItemSet'
 class Container extends Item {
   constructor (data) {
     super(data)
-    this.isOpen = false
-    this.items = new ItemSet(data.items || [])
+    this.isOpen = data.isOpen
+    this._items = new ItemSet(data.items)
+  }
+  get items () {
+    return this._items.items
   }
 
+  set items (newItems) {
+    return (this._items.items = newItems)
+  }
   open (props) {
     this.isOpen = true
     return { log: `You open the ${this.name}`, item: this }
@@ -17,7 +23,7 @@ class Container extends Item {
     return { log: `You close the ${this.name}`, item: this }
   }
   countItems () {
-    return this.items.countItems()
+    return this.items.length()
   }
 
   addItem (item) {
@@ -46,7 +52,7 @@ class Container extends Item {
     return this.items.findItem(itemName)
   }
   getItems () {
-    if (this.isOpen) return this.items
+    if (this.isOpen) return this._items
     else return []
   }
 }
