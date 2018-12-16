@@ -16,7 +16,6 @@ class ItemSet {
 
   findItem (itemName) {
     const visibleItems = this.findVisibleItems()
-    //console.log('ITEMS VISIBLE INSIDE ITEMSET:', visibleItems)
     const result = visibleItems.find(item => item.name === itemName)
     return result
   }
@@ -39,15 +38,7 @@ class ItemSet {
   _findItemsInOpenContainers () {
     const result = []
     const containers = this.items.filter(item => item.isOpen)
-    const containerItems = containers.map(container => container.getItems())
-    console.log(
-      '@@@@@@@@@@@@@@@@@@@@',
-      'containers',
-      containers,
-      'containerItems',
-      containerItems
-    )
-
+    containers.map(container => result.push(...container.items))
     return result
   }
   findVisibleItems () {

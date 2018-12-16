@@ -15,7 +15,7 @@ const invItem = new InvItem({
 const container = new Container({
   name: 'container',
   description: 'this is a test container in the loc',
-  items: new ItemSet([itemInsideContainer]),
+  items: [itemInsideContainer],
   isOpen: true
 })
 describe('ItemSet', () => {
@@ -25,7 +25,6 @@ describe('ItemSet', () => {
   })
 
   it('findVisibleItems finds items in a loc plus items in an open container', () => {
-    console.log('**********', itemset)
     const result = itemset.findVisibleItems()
     console.log('visibleItems:', result.map(item => item.name))
     expect(result.length).to.equal(4)
@@ -34,5 +33,11 @@ describe('ItemSet', () => {
   it('findItem returns an item even if it\'s in a container', () => {
     const result = itemset.findItem(itemInsideContainer.name)
     expect(result.name).to.equal(itemInsideContainer.name)
+  })
+
+  it('findItem returns an item even if it\'s in a container', () => {
+    container.close()
+    const result = itemset.findItem(itemInsideContainer.name)
+    expect(result).to.equal(undefined)
   })
 })
