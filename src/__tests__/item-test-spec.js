@@ -10,32 +10,32 @@ const container1 = {
 //const testItem3 = { name: 'testItem3', description: 'This is a test item' }
 
 describe('Item', () => {
+  let item
+  beforeEach(() => {
+    item = new Item(item1)
+  })
+
+  it('describe returns the item description', () => {
+    expect(item.describe()).to.equal(item.description)
+  })
+})
+
+describe('container', () => {
   let item, container
   beforeEach(() => {
     item = new Item(item1)
     container = new Container(container1)
   })
 
-  it('describe returns the item description', () => {
-    expect(item.describe()).to.equal(item.description)
+  xit('if the container is open it returns its items, otherwise it returns null(?)', () => {
+    expect(container.open().log).to.equal(`You open the ${container.name}`)
   })
 
-  describe('container', () => {
-    beforeEach(() => {
-      item = new Item(item1)
-      container = new Container(container1)
-    })
-
-    it('if the container is open it returns its items, otherwise it returns null(?)', () => {
-      expect(container.open().log).to.equal(`You open the ${container.name}`)
-    })
-
-    it('if container is closed it returns this as a log', () => {
-      expect(container.addItem(item2).log).to.equal('The container is closed.')
-      container.open()
-      expect(container.addItem(item2).log).to.equal(
-        'You put the item2 in the container.'
-      )
-    })
+  xit('if container is closed it returns this as a log', () => {
+    expect(container.addItem(item2).log).to.equal('The container is closed.')
+    container.open()
+    expect(container.addItem(item2).log).to.equal(
+      'You put the item2 in the container.'
+    )
   })
 })
