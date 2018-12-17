@@ -19,7 +19,6 @@ class Compass {
   }
 
   addLog (direction, log) {
-    console.log(direction, log)
     this[direction].log = log
   }
 }

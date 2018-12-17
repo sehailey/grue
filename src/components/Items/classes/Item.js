@@ -1,11 +1,11 @@
 class Item {
-  constructor ({ id, name, description, loc }) {
-    this.id = id
-    this._name = name
-    this.aName = 'a ' + name
-    this.pName = name + 's'
-    this.loc = loc
-    this.description = description
+  constructor (data) {
+    this.id = data.id
+    this._name = data.name
+    this.aName = 'a ' + data.name
+    this.pName = data.name + 's'
+    this.loc = data.loc
+    this.description = data.description
   }
 
   get name () {

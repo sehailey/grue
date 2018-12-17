@@ -17,11 +17,6 @@ class Location {
     return this._items.addItem(item)
   }
 
-  addContingency (direction, contingency) {
-    console.log(contingency)
-    this.compass.addContingency(direction, contingency)
-  }
-
   addLoc (direction, loc) {
     this.compass.addLoc(direction, loc)
   }

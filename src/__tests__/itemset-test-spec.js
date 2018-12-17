@@ -4,9 +4,10 @@ const bgItem = new Item({
   name: 'bgItem',
   description: 'you should not be able to take this item'
 })
-const itemInsideContainer = new Item({
+const itemInsideContainer = new InvItem({
   name: 'itemInsideContainer',
-  description: 'this item should be visible when its parent container is open'
+  description: 'this item should be visible when its parent container is open',
+  isInv: true
 })
 const invItem = new InvItem({
   name: 'invItem',
@@ -24,26 +25,26 @@ describe('ItemSet', () => {
     itemset = new ItemSet([container, bgItem, invItem])
   })
 
-  it('findVisibleItems finds items in a loc plus items in an open container', () => {
-    const result = itemset.findVisibleItems()
-    console.log('visibleItems:', result.map(item => item.name))
-    expect(result.length).to.equal(4)
+  it('visibleItems returns items in a loc plus items in an open container', () => {
+    expect(itemset.visibleItems.length).to.equal(4)
   })
 
+  it('findVisibleInvItems finds invtems in a loc plus items in an open container', () => {
+    expect(itemset.visibleInvItems.length).to.equal(2)
+  })
   it('findItem returns an item even if it\'s in a container', () => {
     const result = itemset.findItem(itemInsideContainer.name)
     expect(result.name).to.equal(itemInsideContainer.name)
   })
 
   it('findItem returns an item even there\'s only one inside of a container', () => {
-    itemset.removeItem(invItem)
-    const invItems = itemset.getInvItems()
-    expect(invItems.length).to.equal(1)
+    const itemset2 = (itemset = new ItemSet([container, bgItem]))
+    expect(itemset2.visibleInvItems.length).to.equal(1)
     const result = itemset.findItem(itemInsideContainer.name)
     expect(result.name).to.equal(itemInsideContainer.name)
   })
 
-  it('findItem returns an item even if it\'s in a container', () => {
+  it('findItem does not return an item if it\'s inside of a closed container', () => {
     container.close()
     const result = itemset.findItem(itemInsideContainer.name)
     expect(result).to.equal(undefined)

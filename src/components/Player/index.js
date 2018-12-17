@@ -13,9 +13,6 @@ class Player {
   isAlive () {
     return this.alive
   }
-  getInv () {
-    return this._inv
-  }
 
   listInv () {
     if (this._inv.countItems() === 0) return { log: 'You are empty-handed.' }
