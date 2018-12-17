@@ -41,7 +41,7 @@ class Location {
   }
 
   get invItems () {
-    return this._items.items.filter(item => item.isInv)
+    return this._items.getInvItems()
   }
   look () {
     return this.description

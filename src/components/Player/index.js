@@ -35,6 +35,10 @@ class Player {
   hasItem (item) {
     return this._inv.hasItem(item)
   }
+
+  findItem (item) {
+    return this._inv.findItem(item)
+  }
 }
 
 export default Player

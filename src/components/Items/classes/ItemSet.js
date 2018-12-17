@@ -26,7 +26,8 @@ class ItemSet {
   }
 
   removeItem (itemName) {
-    const itemToRemove = this.items.find(item => (item.name = itemName))
+    const itemToRemove = this.items.find(item => item.name === itemName)
+    console.log(itemToRemove, this.items)
     if (itemToRemove) {
       this.items = this.items.filter(item => item !== itemToRemove)
       return itemToRemove
@@ -34,6 +35,10 @@ class ItemSet {
   }
   getItems () {
     return this.items
+  }
+
+  getInvItems () {
+    return this.items.filter(item => item.isInv === true)
   }
   _findItemsInOpenContainers () {
     const result = []

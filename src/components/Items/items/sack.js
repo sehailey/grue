@@ -11,7 +11,7 @@ class Sack extends Container {
   }
 
   drop () {
-    return { log: 'Dropped.' }
+    return { log: 'Dropped.', item: this }
   }
 }
 

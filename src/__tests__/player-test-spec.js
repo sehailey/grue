@@ -9,4 +9,12 @@ describe('player', () => {
     expect(result).to.equal(true)
     expect(player.hasItem('mailbox')).to.equal(false)
   })
+
+  it('player drop', () => {
+    const result = player.findItem('testItem')
+    expect(result.name).to.equal('testItem')
+    expect(player.inv.length).to.equal(1)
+    player.drop('testItem')
+    expect(player.inv.length).to.equal(0)
+  })
 })

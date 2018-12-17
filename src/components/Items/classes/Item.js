@@ -1,13 +1,16 @@
 class Item {
   constructor ({ id, name, description, loc }) {
     this.id = id
-    this.name = name
+    this._name = name
     this.aName = 'a ' + name
     this.pName = name + 's'
     this.loc = loc
     this.description = description
   }
 
+  get name () {
+    return this._name
+  }
   take () {
     return { log: `You can't take the ${this.name}` }
   }
@@ -17,7 +20,7 @@ class Item {
   }
 
   examine () {
-    return this.description
+    return { log: this.description }
   }
 }
 

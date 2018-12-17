@@ -1,6 +1,6 @@
 import store, { playerAddItem, locRemoveItem, addLog } from '../../../store'
 
-const take = (player, location, itemName) => {
+const take = (player, location, itemName, isAll) => {
   if (player.hasItem(itemName)) {
     return store.dispatch(addLog('You already have that!'))
   }
@@ -12,7 +12,10 @@ const take = (player, location, itemName) => {
     store.dispatch(playerAddItem(result.item))
     store.dispatch(locRemoveItem(result.item))
   }
-  store.dispatch(addLog(result.log))
+  let log
+  if (isAll) log = itemName + ': ' + result.log
+  else log = result.log
+  store.dispatch(addLog(log))
   return result
 }
 
@@ -22,7 +25,8 @@ const takeAll = props => {
   if (itemNames.length === 0) {
     return store.dispatch(addLog('There isn\'t anything here to take.'))
   }
-  return itemNames.map(itemName => take(player, location, itemName))
+  const isAll = true
+  return itemNames.map(itemName => take(player, location, itemName, isAll))
 }
 
 const handleTake = props => {
