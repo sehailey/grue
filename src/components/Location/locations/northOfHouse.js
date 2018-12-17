@@ -1,9 +1,5 @@
 import Location from '../'
 
-class northOfHouse extends Location {
-  constructor (data) {
-    super(data)
-  }
-}
+class northOfHouse extends Location {}
 
 export default northOfHouse

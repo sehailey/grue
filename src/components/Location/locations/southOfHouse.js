@@ -1,7 +1,4 @@
 import Location from '../'
 
-class southOfHouse extends Location {
-  N = props => props.addLog('The windows are all boarded.')
-  W = props => props.movePlayer('westOfHouse')
-}
+class southOfHouse extends Location {}
 export default southOfHouse

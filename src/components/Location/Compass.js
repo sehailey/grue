@@ -15,13 +15,12 @@ class Compass {
   }
 
   addLoc (direction, loc) {
-    this[direction] = { log: loc.description, loc }
-    return this[direction]
+    this[direction] = { log: loc.description, loc: loc }
   }
 
   addLog (direction, log) {
+    console.log(direction, log)
     this[direction].log = log
-    return this[direction]
   }
 }
 

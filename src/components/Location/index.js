@@ -1,20 +1,5 @@
-// import constructors from './constructors'
-// import * as locations from './locations'
 import Compass from './Compass'
 import { ItemSet } from '../Items'
-//export * as locations from './locations'
-
-// const buildWorld = () => {
-//   const allLocations = constructors.map(constructor => {
-//     try {
-//       return new locations[constructor.name](constructor)
-//     } catch (e) {
-//       console.log(constructor.name + ' not a valid location.')
-//       return e
-//     }
-//   })
-//   return allLocations
-// }
 
 class Location {
   constructor (data) {
@@ -34,6 +19,10 @@ class Location {
 
   addLoc (direction, loc) {
     this.compass.addLoc(direction, loc)
+  }
+
+  addLog (direction, log) {
+    this.compass.addLog(direction, log)
   }
 
   get items () {

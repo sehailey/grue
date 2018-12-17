@@ -1,9 +1,5 @@
 import Location from '../'
 
-class upTree extends Location {
-  D = props => props.movePlayer('forestPath')
-
-  U = props => props.addLog('You can\'t go any higher')
-}
+class upTree extends Location {}
 
 export default upTree
