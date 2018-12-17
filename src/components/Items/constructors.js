@@ -11,5 +11,16 @@ export default [
   {
     name: 'sack',
     description: 'this is a container'
+  },
+
+  {
+    name: 'window',
+    description: 'this is a window',
+    isOpen: false
+  },
+
+  {
+    name: 'sack',
+    description: 'this is a window'
   }
 ]

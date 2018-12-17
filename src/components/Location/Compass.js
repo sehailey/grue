@@ -1,5 +1,5 @@
+import store from '../../store'
 const defaultResult = { log: 'You can\'t go that way.', loc: null }
-
 class Compass {
   constructor () {
     this.N = defaultResult
@@ -23,5 +23,4 @@ class Compass {
     this[direction].log = log
   }
 }
-
 export default Compass

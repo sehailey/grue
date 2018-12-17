@@ -1,6 +1,6 @@
 import locConstructors from '../../components/Location/constructors'
 import * as locations from '../../components/Location/locations'
-
+import store from '../../store'
 import itemConstructors from '../../components/Items/constructors'
 import * as ITEMS from '../../components/Items/items'
 
@@ -32,13 +32,15 @@ export const buildWorld = () => {
 
   itemMap.mailbox._addItem(itemMap.leaflet)
   world.westOfHouse._addItem(itemMap.mailbox)
-  world.westOfHouse._addItem(itemMap.sack)
+  world.behindHouse._addItem(itemMap.sack)
+  world.behindHouse._addItem(itemMap.window)
+  world.kitchen._addItem(itemMap.window)
 
   return world
 }
 
 const world = buildWorld()
-console.log(world['westOfHouse'])
+
 const {
   westOfHouse,
   northOfHouse,
@@ -57,6 +59,8 @@ const {
 westOfHouse.addLoc('N', northOfHouse)
 westOfHouse.addLoc('S', southOfHouse)
 westOfHouse.addLog('E', 'The door is boarded and you can\'t remove the boards.')
+
+kitchen.addLoc('E', behindHouse)
 
 northOfHouse.addLoc('N', forestPath)
 northOfHouse.addLoc('E', behindHouse)
@@ -99,27 +103,30 @@ forest4.addLog('E', 'The mountains are impassable.')
 forest4.addLoc('S', forest2)
 forest4.addLog('W', 'You can\'t go that way.')
 
-const defaultLocation = world['westOfHouse']
+const defaultLocation = world['behindHouse']
 
 /*** ACTION TYPES ***/
 const GOT_LOCATION = 'GOT_LOCATION'
 const MOVE = 'MOVE'
 const LOC_REMOVE_ITEM = 'LOC_REMOVE_ITEM'
 const LOC_ADD_ITEM = 'LOC_ADD_ITEM'
-
+const OPEN_WINDOW = 'OPEN_WINDOW'
 /*** ACTIONS ***/
 export const gotLocation = location => ({
   type: GOT_LOCATION,
   location
 })
 
-/*** ACTIONS ***/
 export const move = location => ({
   type: MOVE,
   location
 })
 
-/*** ACTIONS ***/
+export const openWindow = location => ({
+  type: GOT_LOCATION,
+  location
+})
+
 export const locRemoveItem = item => ({
   type: LOC_REMOVE_ITEM,
   item
@@ -145,6 +152,9 @@ export default function (location = defaultLocation, action) {
     return location
   case LOC_ADD_ITEM:
     location._addItem(action.item)
+    return location
+  case OPEN_WINDOW:
+    location.openWindow()
     return location
   default:
     return location

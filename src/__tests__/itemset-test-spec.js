@@ -35,6 +35,14 @@ describe('ItemSet', () => {
     expect(result.name).to.equal(itemInsideContainer.name)
   })
 
+  it('findItem returns an item even there\'s only one inside of a container', () => {
+    itemset.removeItem(invItem)
+    const invItems = itemset.getInvItems()
+    expect(invItems.length).to.equal(1)
+    const result = itemset.findItem(itemInsideContainer.name)
+    expect(result.name).to.equal(itemInsideContainer.name)
+  })
+
   it('findItem returns an item even if it\'s in a container', () => {
     container.close()
     const result = itemset.findItem(itemInsideContainer.name)

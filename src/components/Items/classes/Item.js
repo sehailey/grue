@@ -22,6 +22,10 @@ class Item {
   examine () {
     return { log: this.description }
   }
+
+  read () {
+    return { log: `How does one read a ${this.name}?` }
+  }
 }
 
 export default Item

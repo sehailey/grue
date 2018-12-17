@@ -55,7 +55,8 @@ class ItemSet {
   }
   _findItemsInOpenContainers () {
     const result = []
-    const containers = this.items.filter(item => item.isOpen)
+    const containers = this.items.filter(item => typeof item === 'Container')
+    console.log(containers)
     containers.map(container => result.push(...container.items))
     return result
   }
