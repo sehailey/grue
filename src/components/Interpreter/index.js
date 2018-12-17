@@ -1,5 +1,6 @@
+import store, { addLog } from '../../store'
 import parseCommand, { dictionary } from './parser'
-import { handleTake, handleDrop } from './verbs'
+import { take, drop } from './verbs'
 
 class Interpreter {
   constructor () {
@@ -26,13 +27,14 @@ class Interpreter {
     this.command = command
     return { log: `What do you want to ${command.verb}?` }
   }
+
   handleVerbWithItems (props) {
     const { command } = props
     if (command.itemNames.length === 0) {
       return this.handleIncompleteVerb(command)
     }
-    if (command.verb === 'take') return handleTake(props)
-    if (command.verb === 'drop') return handleDrop(props)
+    if (command.verb === 'take') return take(props)
+    if (command.verb === 'drop') return drop(props)
 
     return {
       log: `You entered: ${command.verb} ${command.items}`
@@ -43,7 +45,7 @@ class Interpreter {
     const { command, location } = props
     const { log, loc } = location.move(command.verb)
     props.addLog(log)
-    if (loc) props.move(loc)
+    if (loc) return props.move(loc)
   }
   handleCommand (props) {
     const { command, location, player } = props
@@ -54,7 +56,6 @@ class Interpreter {
     if (dictionary.isDirection(command.verb)) return this.handleMove(props)
 
     const verbWithItems = this.handleVerbWithItems(props)
-
     if (verbWithItems) return verbWithItems
     // return result
     return props.logInvalid()

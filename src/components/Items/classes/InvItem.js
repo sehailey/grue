@@ -5,6 +5,14 @@ class InvItem extends Item {
     super(data)
     this.isInv = true
   }
+
+  take () {
+    return { log: `${this.name}: Taken.`, item: this }
+  }
+
+  drop () {
+    return { log: 'Dropped.' }
+  }
 }
 
 export default InvItem

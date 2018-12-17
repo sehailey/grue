@@ -11,7 +11,7 @@ class ItemSet {
   hasItem (itemName) {
     const visibleItems = this.findVisibleItems()
     const result = visibleItems.find(item => item.name === itemName)
-    return result
+    return !!result
   }
 
   findItem (itemName) {

@@ -1,10 +1,11 @@
 import * as ITEMS from '../Items/items'
-import { look, inventory, verbs } from './verbs'
+import * as VERBS from '../Interpreter/verbs'
+import { look, inventory } from './verbs'
 import directions from './directions'
 import prepositions from './prepositions'
 import filler from './filler'
 const items = Object.keys(ITEMS).map(word => word.toLowerCase())
-
+const verbs = Object.keys(VERBS).map(word => word.toLowerCase())
 class Dictionary {
   constructor () {
     this.verbs = [...verbs, ...inventory, ...look, ...directions].map(word =>

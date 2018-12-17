@@ -32,6 +32,10 @@ describe('InvItem', () => {
     expect(sack.take()).to.have.any.keys('log')
     expect(sack.drop()).to.have.any.keys('log')
   })
+
+  it('invItems can be taken', () => {
+    expect(sack.take().log).to.equal('Taken.')
+  })
 })
 
 describe('container', () => {

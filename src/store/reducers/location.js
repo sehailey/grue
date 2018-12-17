@@ -45,7 +45,8 @@ const defaultLocation = world['westOfHouse']
 /*** ACTION TYPES ***/
 const GOT_LOCATION = 'GOT_LOCATION'
 const MOVE = 'MOVE'
-const LOC_REMOVE_ITEM = 'REMOVE_ITEM'
+const LOC_REMOVE_ITEM = 'LOC_REMOVE_ITEM'
+const LOC_ADD_ITEM = 'LOC_ADD_ITEM'
 
 /*** ACTIONS ***/
 export const gotLocation = location => ({
@@ -65,6 +66,11 @@ export const locRemoveItem = item => ({
   item
 })
 
+export const locAddItem = item => ({
+  type: LOC_ADD_ITEM,
+  item
+})
+
 export const getLocation = () => dispatch => {
   dispatch(gotLocation(defaultLocation))
 }
@@ -76,10 +82,11 @@ export default function (location = defaultLocation, action) {
   case MOVE:
     return action.location
   case LOC_REMOVE_ITEM:
-    return {
-      items: location.removeItem(action.item),
-      ...location
-    }
+    location._removeItem(action.item)
+    return location
+  case LOC_ADD_ITEM:
+    location._addItem(action.item)
+    return location
   default:
     return location
   }

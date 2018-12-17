@@ -46,6 +46,11 @@ class Game extends Component {
 
   handleSubmit (input) {
     const command = this.interpreter.interpret(input)
+    if (command.verb === 'test') {
+      console.log('testing!')
+      console.log(this.props.player.hasItem('sack'))
+      return
+    }
 
     // if functional, should be instructions for the game on what actions to do
     // if OO, should just be the result.
