@@ -1,7 +1,8 @@
 export default [
   {
     name: 'mailbox',
-    description: 'this is not an inventory item but it is a container'
+    description: 'this is not an inventory item but it is a container',
+    isOpen: false
   },
   {
     name: 'leaflet',

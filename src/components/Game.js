@@ -40,24 +40,23 @@ class Game extends Component {
     return <div> error... </div>
   }
 
-  handleAction (command) {
-    const actions = command.actions
-    const result = actions.map(action => this.props.addLog(action.log))
-  }
-
-  handleMove (loc) {
-    this.props.move(loc)
-    this.props.addLog(loc.look())
+  handleAction (result) {
+    const { actions } = result
   }
 
   handleSubmit (input) {
     const command = this.interpreter.interpret(input)
+
+    // if functional, should be instructions for the game on what actions to do
+    // if OO, should just be the result.
+    // interested in a blend, though. necessary for saving...
+    // the blend I had in mind was keeping constructor info on state.
     const result = this.interpreter.handleCommand({ command, ...this.props })
-    if (result.log) return this.props.addLog(result.log)
-    else if (result.loc) return this.handleMove(result.loc)
-    else if (result.actions) this.handleActions(result.actions)
-    //it should only get here if there is a valid verb that takes items
-    else this.props.addLog('error after interpreter handlecommand')
+    // console.log('%%%%%%%%%%%%%', result)
+    // if (result.log) return this.props.addLog(result.log)
+    // else if (result.loc) this.handleMove(result.loc)
+    // else return this.handleActions(result)
+    console.log(result)
   }
 
   renderGame () {
@@ -91,7 +90,9 @@ const mapDispatch = dispatch => {
     addLog: text => dispatch(addLog(text)),
     logInvalid: () => dispatch(logInvalid()),
     logUnknown: word => dispatch(logUnknown(word)),
-    move: loc => dispatch(move(loc))
+    move: loc => {
+      dispatch(move(loc))
+    }
   }
 }
 export default connect(

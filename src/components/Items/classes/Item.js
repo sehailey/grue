@@ -9,10 +9,14 @@ class Item {
   }
 
   take () {
-    return `You can't take the ${this.name}`
+    return { log: `You can't take the ${this.name}` }
   }
 
-  describe () {
+  drop () {
+    return { log: 'You don\'t have that!' }
+  }
+
+  examine () {
     return this.description
   }
 }

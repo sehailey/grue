@@ -32,6 +32,10 @@ class Location {
     return this._items.addItem(item)
   }
 
+  addLoc (direction, loc) {
+    this.compass.addLoc(direction, loc)
+  }
+
   get items () {
     return this._items.items
   }

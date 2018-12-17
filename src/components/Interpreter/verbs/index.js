@@ -1,30 +1,31 @@
-const take = (player, location, item) => {
-  //console.log(player, location, item)
-  if (player.hasItem(item)) return { log: 'You already have that!' }
-  if (!location.hasItem(item)) return { log: 'You don\'t see that here!' }
-  return { log: item.take(), item }
+const take = (player, location, itemName) => {
+  console.log('PLAYER LOCATION ITEM', player, location, itemName)
+  if (player.hasItem(itemName)) return { log: 'You already have that!' }
+  if (!location.hasItem(itemName)) return { log: 'You don\'t see that here!' }
+  const item = location.findItem(itemName)
+  return item.take()
 }
 
 const takeAll = (player, location) => {
   let result
   const items = location.invItems
   if (items.length === 0) {
-    result = [{ log: 'There isn\'t anything here to take.' }]
+    result = { log: 'There isn\'t anything here to take.' }
   } else result = items.map(item => take(player, location, item))
   return result
 }
 
 export const handleTake = props => {
-  let result = {}
+  const result = {}
   const { command, player, location } = props
-  // console.log('*************\n', command, player, location, '***********\n')
-  if (command.itemNames.includes('all')) {
-    result.items = takeAll(player, location)
-  } else {
-    result.items = command.itemNames.map(item => take(player, location, item))
+
+  if (command.itemNames.includes('all')) return takeAll(player, location)
+  else {
+    const test = command.itemNames.map(item => take(player, location, item))
+    result.log = test.map(res => res.log).join('\n')
+    result.items = test.map(res => res.item)
   }
-  console.log(result)
-  //I expect this to ba an array each with a log, and an item if it gets taken.
+
   return result
 }
 

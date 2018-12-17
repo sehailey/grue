@@ -7,7 +7,7 @@ import * as ITEMS from '../../components/Items/items'
 //import axios from 'axios'
 //import Location from '../../components/Location'
 
-const buildWorld = () => {
+export const buildWorld = () => {
   let world = {}
   locConstructors.map(constructor => {
     try {
@@ -30,11 +30,16 @@ const buildWorld = () => {
   })
   itemMap.mailbox.addItem(itemMap.leaflet)
   world.westOfHouse._addItem(itemMap.mailbox)
+  world.westOfHouse._addItem(itemMap.sack)
 
   return world
 }
 
 const world = buildWorld()
+
+const { westOfHouse, northOfHouse } = world
+westOfHouse.addLoc('N', northOfHouse)
+northOfHouse.addLoc('S', westOfHouse)
 const defaultLocation = world['westOfHouse']
 
 /*** ACTION TYPES ***/

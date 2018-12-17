@@ -7,20 +7,23 @@ class Container extends Item {
     this._items = new ItemSet(data.items)
   }
   get items () {
-    return this._items.items
+    if (this.isOpen) return this._items.items
+    else return []
   }
 
   set items (newItems) {
-    return (this._items.items = newItems)
+    this._items.items = newItems
   }
   open (props) {
+    if (this.isOpen) return { log: 'It\'s already open.' }
     this.isOpen = true
-    return { log: `You open the ${this.name}`, item: this }
+    return { log: `You open the ${this.name}`, result: this }
   }
 
   close (props) {
+    if (!this.isOpen) return { log: 'It\'s already closed.' }
     this.isOpen = false
-    return { log: `You close the ${this.name}`, item: this }
+    return { log: `You close the ${this.name}`, result: this }
   }
   countItems () {
     return this.items.length()
@@ -28,10 +31,10 @@ class Container extends Item {
 
   addItem (item) {
     if (this.isOpen) {
-      this.items.addItem(item)
+      this._items.addItem(item)
       return {
         log: `You put the ${item.name} in the ${this.name}.`,
-        item: this
+        result: this
       }
     } else return { log: `The ${this.name} is closed.`, item: this }
   }
@@ -42,7 +45,7 @@ class Container extends Item {
       if (item) {
         return {
           log: `You take the ${item.name} from the ${this.name}.`,
-          item
+          result: this
         }
       }
     } else return { log: `The ${this.name} is closed.` }
@@ -52,8 +55,7 @@ class Container extends Item {
     return this.items.findItem(itemName)
   }
   getItems () {
-    if (this.isOpen) return this._items
-    else return []
+    return this.items
   }
 }
 

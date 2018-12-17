@@ -22,13 +22,6 @@ class Interpreter {
     return command
   }
 
-  handleInvalid (command) {
-    if (command.unknown) {
-      return { log: `I don't know the word ${command.unknown}.` }
-    }
-    if (!command.verb) return { log: 'I\'m not sure what you\'re trying to say.' }
-  }
-
   handleIncompleteVerb (command) {
     this.command = command
     return { log: `What do you want to ${command.verb}?` }
@@ -40,31 +33,31 @@ class Interpreter {
     }
     if (command.verb === 'take') return handleTake(props)
     if (command.verb === 'drop') return handleDrop(props)
-    //return this.handleItems(props)
-    return { log: `edge case for handleVerbWithItems: ${command}` }
+
+    return {
+      log: `You entered: ${command.verb} ${command.items}`
+    }
   }
-  handleVerbWithoutItems (props) {
-    const { command, player, location } = props
-    if (dictionary.isLook(command.verb)) return location.look()
-    if (dictionary.isInv(command.verb)) return player.listInv()
-    if (dictionary.isDirection(command.verb)) return location.move(command.verb)
-    //return { log: `edge case for handleVerbWithoutItems: ${command.verb}` }
+
+  handleMove (props) {
+    const { command, location } = props
+    const { log, loc } = location.move(command.verb)
+    props.addLog(log)
+    if (loc) props.move(loc)
   }
   handleCommand (props) {
-    const { command } = props
-    //console.log('HANDLECOMMAND COMMAND', command)
-    const invalid = this.handleInvalid(command)
-    const verbWithoutItems = this.handleVerbWithoutItems(props)
-    const verbWithItems = this.handleVerbWithItems(props)
-    if (invalid) return invalid
-    if (verbWithoutItems) return verbWithoutItems
-    if (verbWithItems) return verbWithItems
+    const { command, location, player } = props
+    if (command.unknown) return props.logUnknown(command.unknown)
+    if (!command.verb) return props.logInvalid()
+    if (dictionary.isLook(command.verb)) return props.addLog(location.look())
+    if (dictionary.isInv(command.verb)) return props.addLog(player.listInv())
+    if (dictionary.isDirection(command.verb)) return this.handleMove(props)
 
-    return [
-      {
-        log: `edge case for handleCommand ${command.verb}, ${command.items}`
-      }
-    ]
+    const verbWithItems = this.handleVerbWithItems(props)
+
+    if (verbWithItems) return verbWithItems
+    // return result
+    return props.logInvalid()
   }
 }
 
