@@ -53,11 +53,22 @@ describe('container', () => {
   })
 
   it('open returns the container with isOpen = true', () => {
-    const { log, result } = mailbox.open()
-    expect(log).to.equal(`You open the ${mailbox.name}`)
-    expect(result).to.equal(mailbox)
-    expect(result.isOpen).to.equal(true)
-    const items = result.getItems()
+    const { log, item } = mailbox.open()
+
+    expect(item).to.equal(mailbox)
+    expect(item.isOpen).to.equal(true)
+    const items = item.getItems()
+    expect(items.length).to.equal(2)
+  })
+
+  it('logs the contents of what\'s in the container', () => {
+    const { log, item } = mailbox.open()
+    expect(log).to.equal(
+      'Opening the small mailbox reveals a leaflet and a sack.'
+    )
+    expect(item).to.equal(mailbox)
+    expect(item.isOpen).to.equal(true)
+    const items = item.getItems()
     expect(items.length).to.equal(2)
   })
 

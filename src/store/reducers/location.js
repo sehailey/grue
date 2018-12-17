@@ -12,7 +12,6 @@ export const buildWorld = () => {
   locConstructors.map(constructor => {
     try {
       let result = new locations[constructor.name](constructor)
-      console.log('%%%%%%%%%%%%%%%%', constructor.name, constructor, result)
       world[constructor.name] = result
       return new locations[constructor.name](constructor)
     } catch (e) {
@@ -31,7 +30,7 @@ export const buildWorld = () => {
     }
   })
 
-  itemMap.mailbox.addItem(itemMap.leaflet)
+  itemMap.mailbox._addItem(itemMap.leaflet)
   world.westOfHouse._addItem(itemMap.mailbox)
   world.westOfHouse._addItem(itemMap.sack)
 

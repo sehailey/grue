@@ -17,13 +17,17 @@ class Container extends Item {
   open (props) {
     if (this.isOpen) return { log: 'It\'s already open.' }
     this.isOpen = true
-    return { log: `You open the ${this.name}`, result: this }
+    return { log: `You open the ${this.name}`, item: this }
+  }
+
+  getContentsString () {
+    return this._items.getItemString()
   }
 
   close (props) {
     if (!this.isOpen) return { log: 'It\'s already closed.' }
     this.isOpen = false
-    return { log: `You close the ${this.name}`, result: this }
+    return { log: `You close the ${this.name}`, item: this }
   }
   countItems () {
     return this.items.length()
@@ -37,6 +41,10 @@ class Container extends Item {
         result: this
       }
     } else return { log: `The ${this.name} is closed.`, item: this }
+  }
+
+  _addItem (item) {
+    this._items.addItem(item)
   }
 
   removeItem (itemName) {
