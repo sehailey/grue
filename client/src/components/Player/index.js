@@ -31,9 +31,10 @@ class Player {
     return this._inv.addItem(item)
   }
 
-  drop (item) {
-    console.log(item, this._inv)
-    return this._inv.removeItem(item)
+  drop (itemName) {
+    const item = this.inv.findItem(itemName)
+    console.log('PLAYER DROP ITEM', item)
+    if (item) return this.inv.removeItem(item)
   }
 
   hasItem (item) {
@@ -42,6 +43,10 @@ class Player {
 
   findItem (item) {
     return this._inv.findItem(item)
+  }
+
+  moveInc () {
+    return this.moves++
   }
 }
 

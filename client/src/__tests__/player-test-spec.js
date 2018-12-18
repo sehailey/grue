@@ -1,15 +1,17 @@
 import Player from '../components/Player'
-
+import Sack from '../components/Items/items/sack'
+const sack = new Sack({ name: 'sack' })
+console.log(sack)
 const expect = require('chai').expect
 const player = new Player({
   name: 'notnull',
-  inv: [{ name: 'testItem', isInv: true }]
+  inv: [sack]
 })
 
 describe('player', () => {
   it('player.findItem(itemName) should return true if the player has the item (and it\'s visible)', () => {
     console.log(player.inv)
-    const result = player.findItem('testItem')
+    const result = player.findItem('sack')
     expect(result).to.equal(true)
     expect(player.hasItem('mailbox')).to.equal(false)
   })

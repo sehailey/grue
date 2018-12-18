@@ -6,7 +6,9 @@ const Navbar = props => {
       <a href="grue.herokuapp.com" className="navbar-brand">
         <img src="grue-grey.png" alt="grue" width="40px" />
       </a>
-      <span className="navbar-text">moves: 0 </span>
+      <span className="navbar-text">
+        moves: {props.moves} | score: {props.score}
+      </span>
     </nav>
   )
 }

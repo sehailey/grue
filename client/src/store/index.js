@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 const store = createStore(reducer, middleware)
 export * from './reducers/location'
 export { getLocation, locAddItem, locRemoveItem } from './reducers/location'
-export { playerAddItem } from './reducers/player'
+export { playerAddItem, playerMove } from './reducers/player'
 export * from './reducers/player'
 export * from './reducers/items'
 export * from './reducers/log'

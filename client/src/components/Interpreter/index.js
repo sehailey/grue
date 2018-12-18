@@ -24,9 +24,9 @@ class Interpreter {
     return command
   }
 
-  handleIncompleteVerb (command) {
-    this.command = command
-    return { log: `What do you want to ${command.verb}?` }
+  handleIncompleteVerb (props) {
+    const { command, addLog } = props
+    addLog(`What do you want to ${command.verb}?`)
   }
 
   findItem (itemName, player, location) {
@@ -49,8 +49,9 @@ class Interpreter {
 
   handleVerb (props) {
     const { command } = props
+    console.log('HANDLEVERB', command)
     if (command.itemNames.length === 0) {
-      return this.handleIncompleteVerb(command)
+      return this.handleIncompleteVerb(props)
     }
     if (command.verb === 'take') return take(props)
     if (command.verb === 'drop') return drop(props)
@@ -63,36 +64,30 @@ class Interpreter {
   }
 
   handleMove (props) {
-    let log, loc
-    const { command, location } = props
+    let loc, log
+    const { addLog, move, command, location } = props
     const result = location.move(command.verb)
-    console.log(result)
     if (result.loc) {
       loc = result.loc
       log = loc.look()
     } else log = result.log
-    props.addLog(log)
-    if (loc) return props.move(loc)
-    return result
+    addLog(log)
+    if (loc) move(loc)
   }
 
   handleAction (props) {
-    if (dictionary.isDirection(props.command.verb)) {
+    let { command } = props
+    if (dictionary.isDirection(command.verb)) {
       return this.handleMove(props)
-    }
-    const result = this.handleVerb(props)
-    if (result) return result
+    } else return this.handleVerb(props)
   }
   handleCommand (props) {
-    const { command, location, player } = props
-    if (!command.verb) return props.addLog(command.unknown)
-    if (command.unknown) return props.logUnknown(command.unknown)
-    if (!command.verb) return props.logInvalid()
-    if (dictionary.isLook(command.verb)) return props.addLog(location.look())
-    if (dictionary.isInv(command.verb)) {
-      return props.addLog(player.listInv().log)
-    }
-    return this.handleAction(props)
+    const { addLog, logUnknown, logInvalid, command, location, player } = props
+    if (!command.verb) return logInvalid()
+    else if (command.unknown) return logUnknown(command.unknown)
+    else if (dictionary.isLook(command.verb)) return addLog(location.look())
+    else if (dictionary.isInv(command.verb)) return addLog(player.listInv().log)
+    else return this.handleAction(props)
   }
 }
 

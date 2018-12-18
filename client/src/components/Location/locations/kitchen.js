@@ -20,7 +20,8 @@ class kitchen extends Location {
   }
 
   moveEast () {
-    const win = this.itemset.find(item => item.name === 'window')['isOpen']
+    console.log(this.items)
+    const win = this.items.find(item => item.name === 'window')['isOpen']
     console.log(win)
     if (win) return this.compass['E']
     return { log: 'The window is closed' }

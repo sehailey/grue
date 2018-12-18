@@ -49,6 +49,8 @@ const {
   westOfHouse,
   northOfHouse,
   behindHouse,
+  livingRoom,
+  attic,
   clearing,
   forest1,
   forest2,
@@ -65,6 +67,20 @@ westOfHouse.addLoc('S', southOfHouse)
 westOfHouse.addLog('E', 'The door is boarded and you can\'t remove the boards.')
 
 kitchen.addLoc('E', behindHouse)
+kitchen.addLoc('W', livingRoom)
+kitchen.addLoc('U', attic)
+attic.addLoc('DEATH', forest1)
+attic.addLog(
+  'DEATH',
+  `Oh, no! You have walked into the slavering fangs of a lurking grue!
+
+****  You have died  ****
+
+Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.`
+)
 
 northOfHouse.addLoc('N', forestPath)
 northOfHouse.addLoc('E', behindHouse)
