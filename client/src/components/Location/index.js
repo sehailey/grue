@@ -4,6 +4,7 @@ import { ItemSet } from '../Items'
 class Location {
   constructor (data) {
     this.name = data.name
+    this.title = data.title
     this.description = data.description
     this._items = new ItemSet(data.items)
     this.compass = new Compass()
@@ -41,7 +42,8 @@ class Location {
   }
 
   look () {
-    return this.description
+    return `${this.title}
+    ${this.description}`
   }
 
   move (direction) {

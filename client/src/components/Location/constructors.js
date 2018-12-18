@@ -1,12 +1,27 @@
 // These are used for seeding the database.
-const { mailbox, leaflet, sack, bottle } = require('../Items/constructors')
+//onst { mailbox, leaflet, sack, bottle } = require('../Items/constructors')
 module.exports = [
+  {
+    name: 'livingRoom',
+    title: 'Living Room',
+    description: `You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.
+Above the trophy case hangs an elvish sword of great antiquity.
+A battery-powered brass lantern is on the trophy case.`
+  },
   {
     name: 'westOfHouse',
     title: 'West of House',
     description:
       'This is an open field west of a white house, with a boarded front door. There is a small mailbox here.',
-    items: [mailbox]
+    items: []
+  },
+
+  {
+    name: 'attic',
+    title: 'Attic',
+    description: `You have moved into a dark place.
+      It is pitch black. You are likely to be eaten by a grue.`,
+    items: []
   },
 
   {
@@ -21,7 +36,7 @@ module.exports = [
     name: 'southOfHouse',
     title: 'South of House',
     description:
-      'This is an open field west of a white house, with a boarded front door. There is a small mailbox here.',
+      'You are facing the south side of a white house. There is no door here, and all the windows are boarded.',
     items: []
   },
 

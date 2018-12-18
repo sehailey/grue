@@ -1,11 +1,6 @@
-import Container from '../classes/Container'
 import Surface from '../classes/Surface'
 
 class Table extends Surface {
-  constructor (data) {
-    super(data)
-  }
-
   open () {
     return { log: 'How does one do that to a table?' }
   }
@@ -15,7 +10,7 @@ class Table extends Surface {
   }
 
   examine () {
-    console.log(this.invItems)
+    //console.log(this.invItems)
     const items = this.invItems.map(item => item.dName).join('\n')
     return { log: `Sitting on the table is:\n${items}` }
   }

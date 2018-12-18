@@ -1,9 +1,6 @@
 import { Container } from '../classes'
 
 class Mailbox extends Container {
-  constructor (data) {
-    super(data)
-  }
   open () {
     if (this.isOpen) return { log: 'It\'s already open.' }
     this.isOpen = true

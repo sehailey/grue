@@ -31,7 +31,6 @@ export const buildWorld = () => {
   })
 
   itemMap.mailbox._addItem(itemMap.leaflet)
-  itemMap.mailbox._addItem(itemMap.leaflet)
   world.westOfHouse._addItem(itemMap.mailbox)
   world.behindHouse._addItem(itemMap.sack)
   world.behindHouse._addItem(itemMap.window)
@@ -49,6 +48,8 @@ const {
   westOfHouse,
   northOfHouse,
   behindHouse,
+  livingRoom,
+  attic,
   clearing,
   forest1,
   forest2,
@@ -65,6 +66,11 @@ westOfHouse.addLoc('S', southOfHouse)
 westOfHouse.addLog('E', 'The door is boarded and you can\'t remove the boards.')
 
 kitchen.addLoc('E', behindHouse)
+kitchen.addLoc('W', livingRoom)
+livingRoom.addLoc('E', kitchen)
+kitchen.addLoc('U', attic)
+attic.addLoc('DEATH', forest1)
+attic.addLog('N', clearing)
 
 northOfHouse.addLoc('N', forestPath)
 northOfHouse.addLoc('E', behindHouse)
@@ -107,7 +113,7 @@ forest4.addLog('E', 'The mountains are impassable.')
 forest4.addLoc('S', forest2)
 forest4.addLog('W', 'You can\'t go that way.')
 
-const defaultLocation = world['kitchen']
+const defaultLocation = world['westOfHouse']
 
 /*** ACTION TYPES ***/
 const GOT_LOCATION = 'GOT_LOCATION'

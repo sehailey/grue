@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { CommandLine, Navbar, Log } from '../views'
 import Interpreter from './Interpreter'
+import axios from 'axios'
 import {
   getLocation,
   getPlayer,
@@ -9,7 +10,8 @@ import {
   addLog,
   logInvalid,
   logUnknown,
-  move
+  move,
+  playerMove
 } from '../store'
 
 class Game extends Component {
@@ -21,6 +23,7 @@ class Game extends Component {
   }
   componentDidMount () {
     this.fetchData()
+    this.props.fetchServerData()
   }
 
   async fetchData () {
@@ -39,18 +42,13 @@ class Game extends Component {
     return <div> error... </div>
   }
 
-  handleAction (result) {
-    if (result.log) console.log(this.props.log)
-  }
   handleSubmit (input) {
-    let command, result
-    command = this.interpreter.interpret(input)
+    const command = this.interpreter.interpret(input)
+
     try {
-      result = this.interpreter.handleCommand({ command, ...this.props })
-      return this.handleAction(result)
+      return this.interpreter.handleCommand({ command, ...this.props })
     } catch (err) {
       console.log(err)
-      this.props.logInvalid()
     }
   }
 
@@ -67,7 +65,10 @@ class Game extends Component {
   renderGame () {
     return (
       <div className="container">
-        <Navbar />
+        <Navbar
+          moves={this.props.player.moves}
+          score={this.props.player.score}
+        />
         <Log log={this.props.log} />
         <CommandLine handleCommand={this.handleSubmit} />
       </div>
@@ -91,12 +92,17 @@ const mapState = state => ({
 const mapDispatch = dispatch => {
   return {
     fetchData: () => dispatch(getAllItems()),
+    fetchServerData: async () => {
+      const { data } = await axios.get('./api')
+      console.log(data)
+    },
     getLocation: () => dispatch(getLocation()),
     getPlayer: () => dispatch(getPlayer()),
     addLog: text => dispatch(addLog(text)),
     logInvalid: () => dispatch(logInvalid()),
     logUnknown: word => dispatch(logUnknown(word)),
     move: loc => {
+      dispatch(playerMove())
       dispatch(move(loc))
     }
   }
