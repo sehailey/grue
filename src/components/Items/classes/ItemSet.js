@@ -1,21 +1,33 @@
 class ItemSet {
   constructor (items) {
     if (!items) this.items = []
-    else this._items = items
-  }
-
-  set items (newItems) {
-    this._items = newItems
-  }
-
-  get items () {
-    return this._items
+    else this.items = items
   }
 
   get invItems () {
     return this.items.filter(item => item.isInv)
   }
 
+  get visibleItems () {
+    const thisItems = this.items
+    const containerItems = this._findItemsInOpenContainers()
+    const surfaceItems = this._findItemsOnSurfaces()
+    const result = thisItems.concat(containerItems).concat(surfaceItems)
+    return result
+  }
+
+  get visibleInvItems () {
+    const thisInvItems = this.invItems
+    const containerItems = this._findItemsInOpenContainers()
+    const surfaceItems = this._findItemsOnSurfaces()
+    const surfaceInvItems = surfaceItems.filter(item => item.isInv)
+    const containerInvItems = containerItems.filter(item => item.isInv)
+    const result = thisInvItems
+      .concat(containerInvItems)
+      .concat(surfaceInvItems)
+
+    return result
+  }
   countItems () {
     return this.items.length
   }
@@ -31,19 +43,19 @@ class ItemSet {
   }
 
   addItem (item) {
-    this.items = [item, ...this.items]
+    const newItems = [...this.items].concat([item])
+    this.items = newItems
     return item
   }
-
   removeItem (itemName) {
-    const itemToRemove = this.items.find(item => item.name === itemName)
+    const itemToRemove = this.findItem(itemName)
     if (itemToRemove) {
       this.items = this.items.filter(item => item !== itemToRemove)
       return itemToRemove
     }
   }
 
-  getItemString () {
+  get itemString () {
     let result = this.items.map(item => item.aName)
     if (result.length === 0) return ''
     if (result.length === 1) return result[0]
@@ -59,24 +71,17 @@ class ItemSet {
 
   _findItemsInOpenContainers () {
     const result = []
-    const containers = this.items.filter(
-      item => item.constructor.name === 'Container' && item.isOpen
-    )
-    containers.map(container => result.push(...container.items))
-    return result
-  }
-  get visibleItems () {
-    const thisItems = this.items
-    const containerItems = this._findItemsInOpenContainers()
-    const result = thisItems.concat(containerItems)
+    const containers = this.items.filter(item => item.isOpen)
+    const containerItems = containers.map(container => container.items)
+    containerItems.map(itemset => result.push(...itemset))
     return result
   }
 
-  get visibleInvItems () {
-    const thisInvItems = this.invItems
-    const containerItems = this._findItemsInOpenContainers()
-    const containerInvItems = containerItems.filter(item => item.isInv)
-    const result = thisInvItems.concat(containerInvItems)
+  _findItemsOnSurfaces () {
+    const result = []
+    const surfaces = this.items.filter(item => item.isSurface)
+    const surfaceItems = surfaces.map(surface => surface.items)
+    surfaceItems.map(itemset => result.push(...itemset))
     return result
   }
 }

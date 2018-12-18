@@ -40,7 +40,7 @@ describe('Dictionary', () => {
 
   describe('isUnknown', () => {
     it('returns true if the word is an item', () => {
-      expect(dictionary.isUnknown('asdfasd')).to.equal(true)
+      expect(dictionary.isUnknown('asdDasd')).to.equal(true)
     })
   })
 })

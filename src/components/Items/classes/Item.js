@@ -3,6 +3,7 @@ class Item {
     this.id = data.id
     this._name = data.name
     this.aName = 'a ' + data.name
+    this.dName = data.dName
     this.pName = data.name + 's'
     this.loc = data.loc
     this.description = data.description

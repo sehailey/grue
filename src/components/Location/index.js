@@ -30,8 +30,13 @@ class Location {
   }
 
   get invItems () {
-    return this._items.getInvItems()
+    return this._items.invItems
   }
+
+  get visibleInvItems () {
+    return this._items.visibleInvItems
+  }
+
   look () {
     return this.description
   }

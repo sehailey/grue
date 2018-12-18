@@ -4,24 +4,36 @@ class Container extends Item {
   constructor (data) {
     super(data)
     this.isOpen = data.isOpen
-    this._items = new ItemSet(data.items)
+    this.itemset = new ItemSet(data.items)
   }
   get items () {
-    if (this.isOpen) return this._items.items
+    if (this.isOpen) return this.itemset.items
     else return []
   }
 
   set items (newItems) {
-    this._items.items = newItems
+    this.itemset.items = newItems
   }
+
+  get invItems () {
+    return this.itemset.invItems
+  }
+
+  get visibleItems () {
+    return this.itemset.visibleItems
+  }
+
+  get visibleInvItems () {
+    return this.itemset.visibleInvItems
+  }
+  getContentsString () {
+    return this.itemset.getItemString()
+  }
+
   open (props) {
     if (this.isOpen) return { log: 'It\'s already open.' }
     this.isOpen = true
     return { log: `You open the ${this.name}`, item: this }
-  }
-
-  getContentsString () {
-    return this._items.getItemString()
   }
 
   close (props) {
@@ -29,27 +41,31 @@ class Container extends Item {
     this.isOpen = false
     return { log: `You close the ${this.name}`, item: this }
   }
-  countItems () {
-    return this.items.length()
+  get count () {
+    return this.items.length
   }
 
   addItem (item) {
     if (this.isOpen) {
-      this._items.addItem(item)
+      this.itemset.addItem(item)
       return {
         log: `You put the ${item.name} in the ${this.name}.`,
         result: this
       }
-    } else return { log: `The ${this.name} is closed.`, item: this }
+    } else return { log: `The ${this.name} is closed.` }
   }
 
   _addItem (item) {
-    this._items.addItem(item)
+    this.itemset.addItem(item)
+  }
+
+  _removeItem (item) {
+    this.itemset.removeItem(item)
   }
 
   removeItem (itemName) {
     if (this.isOpen) {
-      const item = this.items.removeItem(itemName)
+      const item = this.itemset.removeItem(itemName)
       if (item) {
         return {
           log: `You take the ${item.name} from the ${this.name}.`,
@@ -60,10 +76,7 @@ class Container extends Item {
   }
 
   findItem (itemName) {
-    return this.items.findItem(itemName)
-  }
-  getItems () {
-    return this.items
+    return this.itemset.findItem(itemName)
   }
 }
 

@@ -8,9 +8,9 @@ class Mailbox extends Container {
     if (this.isOpen) return { log: 'It\'s already open.' }
     this.isOpen = true
     let result
-    if (this.items.length === 0) result = 'You open the small mailbox.'
+    if (this.items.count === 0) result = 'You open the small mailbox.'
     else {
-      const itemString = this._items.getItemString()
+      const itemString = this.itemset.itemString
       result = `Opening the small mailbox reveals ${itemString}.`
     }
     return { log: result, item: this }

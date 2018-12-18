@@ -1,4 +1,3 @@
-import store from '../../store'
 const defaultResult = { log: 'You can\'t go that way.', loc: null }
 class Compass {
   constructor () {

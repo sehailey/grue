@@ -6,21 +6,8 @@ class behindHouse extends Location {
   }
 
   windowIsOpen () {
-    const window = this.items.find('window')
-    return window.isOpen
+    return this.items.find(item => item.name === 'window')['isOpen']
   }
-
-  openWindow () {
-    // const win = this.findItem('window')
-    console.log(this.items)
-    // return win.open()
-    //console.log(win)
-  }
-
-  // closeWindow () {
-  //   const window = this.items.find('window')
-  //   return window.close()
-  // }
 
   moveWest () {
     const win = this.items.find(item => item.name === 'window')['isOpen']
@@ -31,6 +18,11 @@ class behindHouse extends Location {
   move (direction) {
     if (direction === 'w') return this.moveWest()
     else return this.compass[direction.toUpperCase()]
+  }
+
+  look () {
+    const winStatus = this.windowIsOpen() ? 'open' : 'slightly ajar'
+    return `You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is ${winStatus}.`
   }
 }
 

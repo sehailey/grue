@@ -21,7 +21,7 @@ const take = (player, location, itemName, isAll) => {
 
 const takeAll = props => {
   const { player, location } = props
-  const itemNames = location.invItems.map(item => item.name)
+  const itemNames = location.visibleInvItems.map(item => item.name)
   if (itemNames.length === 0) {
     return store.dispatch(addLog('There isn\'t anything here to take.'))
   }

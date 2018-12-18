@@ -1,6 +1,6 @@
 import locConstructors from '../../components/Location/constructors'
 import * as locations from '../../components/Location/locations'
-import store from '../../store'
+
 import itemConstructors from '../../components/Items/constructors'
 import * as ITEMS from '../../components/Items/items'
 
@@ -31,10 +31,14 @@ export const buildWorld = () => {
   })
 
   itemMap.mailbox._addItem(itemMap.leaflet)
+  itemMap.mailbox._addItem(itemMap.leaflet)
   world.westOfHouse._addItem(itemMap.mailbox)
   world.behindHouse._addItem(itemMap.sack)
   world.behindHouse._addItem(itemMap.window)
   world.kitchen._addItem(itemMap.window)
+  itemMap.table._addItem(itemMap.bottle)
+  itemMap.table._addItem(itemMap.sack)
+  world.kitchen._addItem(itemMap.table)
 
   return world
 }
@@ -103,7 +107,7 @@ forest4.addLog('E', 'The mountains are impassable.')
 forest4.addLoc('S', forest2)
 forest4.addLog('W', 'You can\'t go that way.')
 
-const defaultLocation = world['behindHouse']
+const defaultLocation = world['kitchen']
 
 /*** ACTION TYPES ***/
 const GOT_LOCATION = 'GOT_LOCATION'

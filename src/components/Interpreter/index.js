@@ -64,7 +64,8 @@ class Interpreter {
 
   handleMove (props) {
     const { command, location } = props
-    const { log, loc } = location.move(command.verb)
+    const { loc } = location.move(command.verb)
+    const log = loc.look()
     props.addLog(log)
     if (loc) return props.move(loc)
   }
