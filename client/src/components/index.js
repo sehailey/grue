@@ -1,7 +1,5 @@
-export { default as Navbar } from './Navbar'
-export { default as CommandLine } from './CommandLine'
 export { default as Game } from './Game'
-
-//export {default as interpret} from './interpret'
-
-export { default as Log } from './Log'
+export { default as Location } from './Location'
+export { default as Player } from './Player'
+export { default as Interpreter } from './Interpreter'
+export { Item, InvItem, Container, ItemSet } from './Items'

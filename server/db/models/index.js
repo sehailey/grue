@@ -1,11 +1,11 @@
 const Player = require('./player')
-const Room = require('./room')
+const Location = require('./location')
 const Item = require('./item')
 
 Player.hasMany(Item)
 Item.belongsTo(Player)
 
-Room.hasMany(Item)
-Item.belongsTo(Room)
+Location.hasMany(Item)
+Item.belongsTo(Location)
 
-module.exports = { Player, Room, Item }
+module.exports = { Player, Location, Item }

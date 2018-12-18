@@ -1,74 +1,106 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import { Navbar, Log, CommandLine } from '../components'
-import { getMap, getAllItems, addLog, clearCommand } from '../store'
-import LOOK from '../verbs/LOOK'
+import { CommandLine, Navbar, Log } from '../views'
+import Interpreter from './Interpreter'
+import {
+  getLocation,
+  getPlayer,
+  getAllItems,
+  addLog,
+  logInvalid,
+  logUnknown,
+  move
+} from '../store'
 
 class Game extends Component {
   constructor () {
     super()
-    this.state = {
-      moves: 0,
-      visibleItems: []
+    this.state = { loading: true }
+    this.interpreter = new Interpreter()
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  componentDidMount () {
+    this.fetchData()
+  }
+
+  async fetchData () {
+    await this.props.fetchData()
+    await this.props.getLocation()
+    await this.props.getPlayer()
+    await this.setState({ loading: false })
+    this.props.addLog(this.props.location.look())
+  }
+
+  renderLoading () {
+    return <div> loading... </div>
+  }
+
+  renderError () {
+    return <div> error... </div>
+  }
+
+  handleAction (result) {
+    if (result.log) console.log(this.props.log)
+  }
+  handleSubmit (input) {
+    let command, result
+    command = this.interpreter.interpret(input)
+    try {
+      result = this.interpreter.handleCommand({ command, ...this.props })
+      return this.handleAction(result)
+    } catch (err) {
+      console.log(err)
+      this.props.logInvalid()
     }
   }
-  // componentWillMount () {
-  //   console.log('Game component will mount')
-  // }
-  async componentDidMount () {
-    await this.props.fetchData()
-    //console.log('Game component did mount')
-    this.setState({ loading: false })
-    LOOK(this.props)
-  }
-  // componentWillUpdate (nextProps) {
-  //   console.log('Game component will update')
-  // }
-  componentDidUpdate (prevProps) {
-    console.log('Game component did update')
-  }
 
-  incrementMoves () {
-    let newMoves = this.state.moves
-    newMoves++
-    this.setState(() => ({ moves: newMoves }))
-  }
-  render () {
-    const { log, player, rooms, items } = this.props
-    if (!player || rooms.length === 0 || items.length === 0) return <div />
-
+  renderDeath () {
     return (
       <div className="container">
-        <Navbar moves={this.state.moves} />
-        <Log log={log} />
-        <CommandLine />
+        <Navbar />
+        <Log log={'YOU HAVE DIED!'} />
+        <CommandLine handleCommand={this.handleSubmit} />
       </div>
     )
   }
-}
 
-const mapState = state => {
-  return {
-    log: state.log,
-    rooms: state.rooms,
-    items: state.items,
-    player: state.player
+  renderGame () {
+    return (
+      <div className="container">
+        <Navbar />
+        <Log log={this.props.log} />
+        <CommandLine handleCommand={this.handleSubmit} />
+      </div>
+    )
+  }
+
+  render () {
+    if (this.state.loading) return this.renderLoading()
+    if (this.props.error) return this.renderError()
+    if (!this.props.player.isAlive) return this.renderDeath()
+    return this.renderGame()
   }
 }
+
+const mapState = state => ({
+  player: state.player,
+  location: state.location,
+  log: state.log
+})
 
 const mapDispatch = dispatch => {
   return {
-    fetchData: async () => {
-      await dispatch(getAllItems())
-      await dispatch(getMap())
-      await dispatch(clearCommand())
-    },
-
-    addLog: log => dispatch(addLog(log))
+    fetchData: () => dispatch(getAllItems()),
+    getLocation: () => dispatch(getLocation()),
+    getPlayer: () => dispatch(getPlayer()),
+    addLog: text => dispatch(addLog(text)),
+    logInvalid: () => dispatch(logInvalid()),
+    logUnknown: word => dispatch(logUnknown(word)),
+    move: loc => {
+      dispatch(move(loc))
+    }
   }
 }
-
 export default connect(
   mapState,
   mapDispatch

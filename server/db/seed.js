@@ -1,8 +1,8 @@
 const db = require('../db')
-const { Item, Room } = require('./models')
+const { Item, Location } = require('./models')
 //const [invItems, nonInvItems, rooms] = require("./constructors");
-const items = require('../../client/src/items/constructors')
-const rooms = require('../../client/src/rooms/constructors')
+const items = require('../../client/src/components/Items/constructors')
+const locations = require('../../client/src/components/Location/constructors')
 const fs = require('fs')
 
 const runSeed = async () => {
@@ -10,7 +10,7 @@ const runSeed = async () => {
   console.log('db synced!')
   console.log('seeding...')
   try {
-    await Promise.all([Item.bulkCreate(items), Room.bulkCreate(rooms)])
+    await Promise.all([Item.bulkCreate(items), Location.bulkCreate(locations)])
     console.log('seeded successfully')
   } catch (err) {
     console.error(err)

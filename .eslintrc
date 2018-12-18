@@ -1,6 +1,4 @@
 {
-  "extends": ["eslint:recommended", "eslint-config-react"],
-  "plugins": ["react"],
   "env": {
     "browser": true,
     "es6": true,

@@ -1,24 +1,52 @@
-const MOVE_PLAYER = 'MOVE_PLAYER'
+import Player from '../../components/Player'
+import { ItemSet } from '../../components/Items'
 
-export const movePlayer = loc => ({
-  type: MOVE_PLAYER,
-  loc
+const GET_PLAYER = 'GET_PLAYER'
+const PLAYER_ADD_ITEM = 'PLAYER_ADD_ITEM'
+const PLAYER_DROP_ITEM = 'PLAYER_DROP_ITEM'
+
+export const getPlayer = () => ({
+  type: GET_PLAYER
 })
 
+export const playerAddItem = item => ({
+  type: PLAYER_ADD_ITEM,
+  item
+})
+
+export const playerDropItem = item => ({
+  type: PLAYER_DROP_ITEM,
+  item
+})
+
+const inv = []
+
 const defaultPlayer = {
-  name: 'notnull',
-  currentLoc: 'westOfHouse',
+  name: 'novatore',
   isAlive: true,
   moves: 0,
-  score: 0
+  score: 0,
+  inv: inv
 }
 
 export default function (player = defaultPlayer, action) {
   switch (action.type) {
-  case MOVE_PLAYER: {
-    player.currentLoc = action.loc
-    return { ...player }
+  case GET_PLAYER: {
+    const player = new Player(defaultPlayer)
+
+    return player
   }
+
+  case PLAYER_ADD_ITEM: {
+    player.addToInv(action.item)
+    return player
+  }
+
+  case PLAYER_DROP_ITEM: {
+    player.drop(action.item)
+    return player
+  }
+
   default: {
     return player
   }

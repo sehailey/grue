@@ -1,0 +1,8 @@
+export { default as westOfHouse } from './westOfHouse'
+export { default as northOfHouse } from './northOfHouse'
+export { default as southOfHouse } from './southOfHouse'
+export { default as behindHouse } from './behindHouse'
+export { default as kitchen } from './kitchen'
+export { default as upTree } from './upTree'
+export { default as clearing } from './clearing'
+export { forestPath, forest1, forest2, forest3, forest4 } from './forest'
