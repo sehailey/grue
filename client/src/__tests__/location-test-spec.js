@@ -10,11 +10,9 @@ const loc = {
 }
 
 describe('Location', () => {
-  describe('addItem', () => {
-    let location
-    beforeEach(() => {
-      location = new Location(loc)
-    })
+  let location
+  beforeEach(() => {
+    location = new Location(loc)
 
     it('look', () => {
       const result = location.look()

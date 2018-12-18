@@ -1,11 +1,6 @@
-import Container from '../classes/Container'
 import Surface from '../classes/Surface'
 
 class Table extends Surface {
-  constructor (data) {
-    super(data)
-  }
-
   open () {
     return { log: 'How does one do that to a table?' }
   }

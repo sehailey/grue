@@ -1,9 +1,6 @@
 import Location from '../'
 
 class kitchen extends Location {
-  constructor (data) {
-    super(data)
-  }
   describe = () => {
     let winStatus, bottleStatus, sackStatus
     const win = this.items.find(item => item.name === 'window')

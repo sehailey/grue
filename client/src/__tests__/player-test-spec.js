@@ -7,14 +7,20 @@ const player = new Player({
 })
 
 describe('player', () => {
-  it('hasItem should return true if the player has the item (and it\'s visible)', () => {
+  it('player.findItem(itemName) should return true if the player has the item (and it\'s visible)', () => {
+    console.log(player.inv)
+    const result = player.findItem('testItem')
+    expect(result).to.equal(true)
+    expect(player.hasItem('mailbox')).to.equal(false)
+  })
+  xit('hasItem should return true if the player has the item (and it\'s visible)', () => {
     console.log(player.inv)
     const result = player.findItem('testItem')
     expect(result).to.equal(true)
     expect(player.hasItem('mailbox')).to.equal(false)
   })
 
-  it('player drop', () => {
+  xit('player drop', () => {
     const result = player.findItem('testItem')
     expect(result.name).to.equal('testItem')
     expect(player.inv.length).to.equal(1)

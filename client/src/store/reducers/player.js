@@ -1,5 +1,4 @@
 import Player from '../../components/Player'
-import { ItemSet } from '../../components/Items'
 
 const GET_PLAYER = 'GET_PLAYER'
 const PLAYER_ADD_ITEM = 'PLAYER_ADD_ITEM'

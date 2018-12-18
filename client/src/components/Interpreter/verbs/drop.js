@@ -14,7 +14,9 @@ const handleDrop = (player, location, itemName, isAll) => {
 }
 const dropAll = props => {
   const { player, location } = props
-  if (player.inv.length === 0) {return store.dispatch(addLog('You\'re not carrying anything.'))}
+  if (player.inv.length === 0) {
+    return store.dispatch(addLog('You\'re not carrying anything.'))
+  }
   const itemNames = player.inv.map(item => item.name)
 
   const isAll = true
@@ -27,8 +29,7 @@ const drop = props => {
   const { command, player, location } = props
   if (command.itemNames.includes('all')) return dropAll(props)
   else {
-    return command.itemNames.map(itemName => {
-      console.log(itemName)
+    return command.itemNames.forEach(itemName => {
       handleDrop(player, location, itemName)
     })
   }

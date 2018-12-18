@@ -1,10 +1,6 @@
 import Location from '../'
 
 class behindHouse extends Location {
-  constructor (data) {
-    super(data)
-  }
-
   windowIsOpen () {
     return this.items.find(item => item.name === 'window')['isOpen']
   }

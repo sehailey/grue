@@ -1,9 +1,5 @@
 import { InvItem } from '../classes'
 
-class Leaflet extends InvItem {
-  constructor (data) {
-    super(data)
-  }
-}
+class Leaflet extends InvItem {}
 
 export default Leaflet
