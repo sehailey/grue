@@ -1,44 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+/*********************************************************
 
-## Available Scripts
+           .oooooooo oooo d8b oooo  oooo   .ooooo.
+            888' `88b  `888""8P `888  `888  d88' `88b
+            888   888   888      888   888  888ooo888
+            `88bod8P'   888      888   888  888    .o
+            `8oooooo.  d888b     `V88V"V8P' `Y8bod8P'
+            d"     YD
+            "Y88888P'
 
-In the project directory, you can run:
+*********************************************************/
 
-### `npm start`
+# About
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+grue is an Object-Oriented clone of the classic Infocom game Zork. The motivation behind this project was to build a prototype for a scalable text-based role-playing game where items, locations, and storylines can be easily added and customized.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+# How to play
 
-### `npm test`
+Like Zork, grue accepts text commands, such as 'open mailbox' or 'take leaflet'. Check your inventory by typing 'inventory' (or just 'i'), and look around by typing 'look' (or just 'l'). Move by typing directions such as 'north' (or simply 'n'). move north, south, east, west, up, and down by typing the first letter, and move northeast, northwest, southeast, southwest by typing the first letters of each word (e.g., 'ne').
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Dictionary
 
-### `npm run build`
+Some words, such as prepositions, are hard-coded into the dictionary, while item and room names are automatically extracted by importing the items and rooms folders as a module and adding the name of each item and room to the dictionary. The game will tell you if you enter an unknown word.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Game Mechanics
+grue uses React and redux to manage game state.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+In Zork, some commands (e.g. "look") do not require an object, others require one object (e.g., "take leaflet") and others require two objects as well as a valid preposition (e.g., "put bottle on table"). In addition, Zork allows users to enter partial commands and will prompt the user for additional information (e.g., typing 'take' will return 'what do you want to take?', and typing 'throw leaflet' will return 'what do you want to throw the leaflet at?')
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To emulate this, commands in grue are first run through a 'parser' that splits each command into words. At this stage the command will be returned as invalid if the first word is not a verb. Next, the parser checks if the verb is a direction Otherwise The parser returns an object with 'slots' for a verb, two items, and a preposition. This is then set on state and passed to a function with the same name as the verb, along with the game state. If the command has the correct parameters and executes correctly, the verb calls the method with it's name on the object, passing in the game's state. If the verb requires more arguments, it leaves the current command on state to await that argument before passing it through the parser again and then through the verb again. If any changes are made to any of the items or rooms, an action is dispatched to the store that updates that item or room. Once the command executes completely, the command stored on state is cleared.  
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# TODO
+- add save functionality
+- break verbs up into classes of verbs that accept one, two, or four arguments.
