@@ -19,7 +19,7 @@ A battery-powered brass lantern is on the trophy case.`
   {
     name: 'attic',
     title: 'Attic',
-    description: `You have moved into a dark place. 
+    description: `You have moved into a dark place.
       It is pitch black. You are likely to be eaten by a grue.`,
     items: []
   },
@@ -36,7 +36,7 @@ A battery-powered brass lantern is on the trophy case.`
     name: 'southOfHouse',
     title: 'South of House',
     description:
-      'This is an open field west of a white house, with a boarded front door. There is a small mailbox here.',
+      'You are facing the south side of a white house. There is no door here, and all the windows are boarded.',
     items: []
   },
 

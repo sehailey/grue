@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { CommandLine, Navbar, Log } from '../views'
 import Interpreter from './Interpreter'
+import axios from 'axios'
 import {
   getLocation,
   getPlayer,
@@ -22,6 +23,7 @@ class Game extends Component {
   }
   componentDidMount () {
     this.fetchData()
+    this.props.fetchServerData()
   }
 
   async fetchData () {
@@ -90,6 +92,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => {
   return {
     fetchData: () => dispatch(getAllItems()),
+    fetchServerData: async () => {
+      const { data } = await axios.get('./api')
+      console.log(data)
+    },
     getLocation: () => dispatch(getLocation()),
     getPlayer: () => dispatch(getPlayer()),
     addLog: text => dispatch(addLog(text)),

@@ -16,13 +16,14 @@ class kitchen extends Location {
       'A bottle is sitting on the table.\nThe glass bottle contains:\nA quantity of water' :
       ''
 
-    return `You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is ${winStatus}.\n${sackStatus}\n${bottleStatus}`
+    return `${this.title}
+    You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is ${winStatus}.\n${sackStatus}\n${bottleStatus}`
   }
 
   moveEast () {
-    console.log(this.items)
+    //console.log(this.items)
     const win = this.items.find(item => item.name === 'window')['isOpen']
-    console.log(win)
+    //console.log(win)
     if (win) return this.compass['E']
     return { log: 'The window is closed' }
   }

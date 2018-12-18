@@ -10,7 +10,7 @@ class Table extends Surface {
   }
 
   examine () {
-    console.log(this.invItems)
+    //console.log(this.invItems)
     const items = this.invItems.map(item => item.dName).join('\n')
     return { log: `Sitting on the table is:\n${items}` }
   }

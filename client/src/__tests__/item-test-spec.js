@@ -86,7 +86,7 @@ describe('Container', () => {
 
   it('visibleInvItems contains all invItems in containers as well', () => {
     mailbox.isOpen = true
-    console.log(mailbox.visibleInvItems.map(item => item.name))
+    //console.log(mailbox.visibleInvItems.map(item => item.name))
     expect(mailbox.visibleInvItems.length).to.equal(2)
   })
 
@@ -104,7 +104,7 @@ describe('Container', () => {
     expect(item).to.equal(mailbox)
     expect(item.isOpen).to.equal(true)
     const items = item.items
-    console.log(items.map(itm => itm.name))
+    //console.log(items.map(itm => itm.name))
     expect(items.length).to.equal(1)
   })
 

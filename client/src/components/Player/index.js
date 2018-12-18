@@ -20,9 +20,9 @@ class Player {
 
   listInv () {
     if (this.inv.length === 0) return { log: 'You are empty-handed.' }
-    console.log(this._inv)
+    //console.log(this._inv)
     const result = this.inv.map(item => item.aName).join('\n')
-    console.log(result)
+    //console.log(result)
     let log = 'You are carrying:\n' + result
     return { log }
   }

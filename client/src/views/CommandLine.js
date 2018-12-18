@@ -23,7 +23,6 @@ class CommandLine extends Component {
   }
 
   handleChange (event) {
-    console.log(this.state)
     this.setState({ input: event.target.value })
   }
 

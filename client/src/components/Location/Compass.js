@@ -14,7 +14,11 @@ class Compass {
   }
 
   addLoc (direction, loc) {
-    this[direction] = { log: loc.description, loc: loc }
+    this[direction] = {
+      log: `${loc.title}
+    ${loc.description}`,
+      loc: loc
+    }
   }
 
   addLog (direction, log) {

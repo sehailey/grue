@@ -31,7 +31,6 @@ export const buildWorld = () => {
   })
 
   itemMap.mailbox._addItem(itemMap.leaflet)
-  itemMap.mailbox._addItem(itemMap.leaflet)
   world.westOfHouse._addItem(itemMap.mailbox)
   world.behindHouse._addItem(itemMap.sack)
   world.behindHouse._addItem(itemMap.window)
@@ -68,19 +67,10 @@ westOfHouse.addLog('E', 'The door is boarded and you can\'t remove the boards.')
 
 kitchen.addLoc('E', behindHouse)
 kitchen.addLoc('W', livingRoom)
+livingRoom.addLoc('E', kitchen)
 kitchen.addLoc('U', attic)
 attic.addLoc('DEATH', forest1)
-attic.addLog(
-  'DEATH',
-  `Oh, no! You have walked into the slavering fangs of a lurking grue!
-
-****  You have died  ****
-
-Now, let's take a look here... Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.
-
-Forest
-This is a forest, with trees in all directions. To the east, there appears to be sunlight.`
-)
+attic.addLog('N', clearing)
 
 northOfHouse.addLoc('N', forestPath)
 northOfHouse.addLoc('E', behindHouse)
@@ -123,7 +113,7 @@ forest4.addLog('E', 'The mountains are impassable.')
 forest4.addLoc('S', forest2)
 forest4.addLog('W', 'You can\'t go that way.')
 
-const defaultLocation = world['kitchen']
+const defaultLocation = world['westOfHouse']
 
 /*** ACTION TYPES ***/
 const GOT_LOCATION = 'GOT_LOCATION'

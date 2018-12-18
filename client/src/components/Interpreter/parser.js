@@ -21,7 +21,7 @@ const parsePrep = wordArr => {
 const parseCommand = string => {
   let verb, itemNames, prep, unknown, count
   const wordArr = string.split(' ').map(word => word.toLowerCase())
-  console.log('parser received: ', wordArr)
+  //console.log('parser received: ', wordArr)
   verb = parseVerb(wordArr)
   //console.log(verb)
   itemNames = verb ? parseItemNames(wordArr) : undefined

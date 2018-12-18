@@ -10,7 +10,7 @@ const handleDrop = (player, location, itemName, isAll) => {
   store.dispatch(playerDropItem(itemName))
   store.dispatch(locAddItem(result.item))
   store.dispatch(addLog(log))
-  console.log(player.inv)
+  //console.log(player.inv)
 }
 const dropAll = props => {
   const { player, location } = props
