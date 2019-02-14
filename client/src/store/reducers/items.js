@@ -1,48 +1,83 @@
 import * as ITEMS from '../../components/Items/'
-// import axios from 'axios'
+import { combineReducers } from 'redux'
+import axios from 'axios'
 
 /*** ACTION TYPES ***/
 
-const GOT_ALL_ITEMS = 'GOT_ALL_ITEMS'
-const TAKE = 'TAKE'
+const INITIALIZE_ITEMS = 'INITIALIZE_ITEMS'
+const ADD_TO_LOC = 'ADD_TO_LOC'
+const REMOVE_FROM_LOC = 'REMOVE_FROM_LOC'
 
 /*** INITIAL STATE ***/
-const defaultItems = {}
 
 /*** ACTION CREATORS ***/
-
-export const gotAllItems = items => ({
-  type: GOT_ALL_ITEMS,
+export const initializeItems = items => ({
+  type: INITIALIZE_ITEMS,
   items
 })
 
-export const take = item => ({
-  type: TAKE,
-  item
+export const addToLoc = (locId, itemId) => ({
+  type: ADD_TO_LOC,
+  payload: { locId, itemId }
+})
+export const removeFromLoc = (locId, itemId) => ({
+  type: REMOVE_FROM_LOC,
+  payload: { locId, itemId }
 })
 
 /*** THUNK CREATORS ***/
 
-export const getAllItems = () => async dispatch => {
-  // const { data } = await axios.get('/api/items')
-  // const items = constructItems(data)
-
-  dispatch(gotAllItems(ITEMS))
+export const fetchItems = () => async dispatch => {
+  const { data } = await axios.get('/api/items')
+  dispatch(initializeItems(data))
 }
 
-/** REDUCER **/
-export default function (items = defaultItems, action) {
+// function addItemToLoc(state, action) {
+//   const { payload } = action
+//   const { itemId, locId } = payload
+//
+//   // Look up the correct post, to simplify the rest of the code
+//   const loc = state[locId]
+//
+//   return {
+//     ...state,
+//     // Update our Post object with a new "comments" array
+//     [locId]: {
+//       ...loc,
+//       items: loc.items.concat(itemId)
+//     }
+//   }
+// }
+
+const updateItemLoc = (state, action) => {
+  const { payload } = action
+  const { itemName, locName } = payload
+  const item = state[itemName]
+  return {
+    ...state,
+    [itemName]: { ...item, loc: locName }
+  }
+}
+/** AllItems REDUCER **/
+const all = (state = {}, action) => {
   switch (action.type) {
-  case GOT_ALL_ITEMS: {
-    return action.items
-  }
-  // case TAKE: {
-  //   const newItem = items.find(item => item.name === action.item.name)
-  //   newItem.TAKE()
-  //   return items.filter(item => item.name !== action.item.nane).conca(newItem)
-  // }
-  default: {
-    return items
-  }
+  case INITIALIZE_ITEMS:
+    return action.all
+  case ADD_TO_LOC:
+    return {}
+
+  default:
+    return state
   }
 }
+
+const current = (state = [], action) => {
+  switch (action.type) {
+  case ADD_TO_LOC:
+    return action.items.concat(item)
+  default:
+    return state
+  }
+}
+
+export default combineReducers({ all, current })
