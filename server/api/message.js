@@ -5,9 +5,9 @@ const message = String.raw`
 .         .                     .       .           .      .
         o                             .                   .
 .              .                  .           .
-          0   .                 grue
- .         .                 ,              ,    ,
-.           \         .                           .
+          0   .                 anarchy
+ .         .                 ,    planet           ,    ,
+.           \         .               IRC              .
    .  .      \   ,
  .            o     .                 .                   .
 .    .   .     \                 ,             .
